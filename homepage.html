@@ -87,48 +87,34 @@ a.button:hover { background-color: #e65c00; }
 </div>
 
 <script>
-    fetch('menu.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('menu-placeholder').innerHTML = data;
+fetch('menu.html')
+  .then(response => response.text())
+  .then(data => {
+      document.getElementById('menu-placeholder').innerHTML = data;
 
-            // Hamburger mobile
-            const mobileMenu = document.getElementById('mobileMenu');
-            const hamburger = document.getElementById('hamburger');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const hamburger = document.getElementById('hamburger');
 
-            if (hamburger && mobileMenu) {
-                hamburger.addEventListener('click', () => {
-                    mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-                });
+      if (hamburger && mobileMenu) {
+          // Toggle hamburger
+          hamburger.addEventListener('click', () => {
+              mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+          });
 
-                mobileMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => mobileMenu.style.display = 'none');
-                });
-            }
-        })
-    .catch(err => console.error('Errore caricamento menu:', err));
+          // Chiude menu al click su un link
+          mobileMenu.querySelectorAll('a').forEach(link => {
+              link.addEventListener('click', () => mobileMenu.style.display = 'none');
+          });
 
-    const mobileMenu = document.getElementById('mobileMenu');
-    const hamburger = document.getElementById('hamburger');
-
-    if (hamburger && mobileMenu) {
-        // Toggle hamburger
-        hamburger.addEventListener('click', () => {
-            mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-        });
-
-        // Chiude menu al click su un link
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => mobileMenu.style.display = 'none');
-        });
-
-        // Reset menu se ridimensioni la finestra
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                mobileMenu.style.display = 'none';
-            }
-        });
-    }
+          // Reset menu se ridimensioni la finestra
+          window.addEventListener('resize', () => {
+              if (window.innerWidth > 768) {
+                  mobileMenu.style.display = 'none';
+              }
+          });
+      }
+  })
+  .catch(err => console.error('Errore caricamento menu:', err));
 </script>
 
 </body>
