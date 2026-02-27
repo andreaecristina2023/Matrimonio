@@ -91,8 +91,27 @@ fetch('menu.html')
   .then(response => response.text())
   .then(data => {
       document.getElementById('menu-placeholder').innerHTML = data;
-      // Inizializza il menu mobile appena viene inserito
-      if(window.initMenu) initMenu();
+
+      // Adesso che il menu è nel DOM, inizializza hamburger
+      const mobileMenu = document.getElementById('mobileMenu');
+      const hamburger = document.getElementById('hamburger');
+
+      if (hamburger && mobileMenu) {
+          hamburger.addEventListener('click', () => {
+              if(mobileMenu.style.display === 'flex'){
+                  mobileMenu.style.display = 'none';
+              } else {
+                  mobileMenu.style.display = 'flex';
+              }
+          });
+
+          // Chiude menu al click su un link
+          mobileMenu.querySelectorAll('a').forEach(link => {
+              link.addEventListener('click', () => {
+                  mobileMenu.style.display = 'none';
+              });
+          });
+      }
   })
   .catch(err => console.error('Errore caricamento menu:', err));
 </script>
