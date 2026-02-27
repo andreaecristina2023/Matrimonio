@@ -19,4 +19,84 @@
         <a href="map.html">La Mappa dei nostri consigli</a>
         <a href="countdown.html">Siete pronti?!</a>
     </div>
+
+    <style>
+        /* Barra nera opaca/trasparente */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 60px;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        nav .logo img {
+            display: block;
+            height: 40px; /* logo più piccolo */
+        }
+
+        nav .menu {
+            display: flex;
+        }
+
+        nav .menu a {
+            font-family: 'Kaushan Script', cursive;
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+
+        nav .menu a:hover { color: #ff6600; }
+
+        .hamburger {
+            display: none;
+            font-size: 2em;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Mobile menu collegato alla fascia */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background-color: rgba(0,0,0,0.8);
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            overflow: hidden;
+        }
+
+        .mobile-menu a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover { color: #ff6600; }
+
+        @media (max-width: 768px) {
+            nav .menu { display: none; }
+            .hamburger { display: block; }
+            nav .logo img { height: 35px; }
+            .mobile-menu { width: 160px; }
+        }
+
+        @media (max-width: 480px) {
+            .mobile-menu { width: 140px; }
+            .mobile-menu a { font-size: 1em; padding: 8px 16px; }
+        }
+    </style>
 </nav>
