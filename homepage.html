@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+
+    <!-- Stile per background e layout responsive -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            background-color: rgba(0,0,0,0.4); /* overlay leggero per leggibilità */
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.5em;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 12px 25px;
+            margin-top: 20px;
+            background-color: #ff6600;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        a.button:hover {
+            background-color: #e65c00;
+        }
+
+        /* Responsive per smartphone e tablet */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            p {
+                font-size: 1.2em;
+            }
+
+            a.button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+
+            a.button {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Benvenuto sul mio sito</h1>
+        <p>Questa è la home page</p>
+        <a href="#" class="button">Scopri di più</a>
+    </div>
+</body>
+</html>
