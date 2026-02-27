@@ -270,13 +270,21 @@ function showNextLine(){
     index++;
     setTimeout(showNextLine, 2200);
   } else {
+    // Dopo l'ultimo elemento, far sparire la sequenza
+    setTimeout(()=>{
+      lines.forEach(line => line.style.opacity = 0); // sparisce tutto
+    }, 1000);
+
+    // Mostrare il testo finale
     setTimeout(()=>{
       finalText.style.opacity = 1;
-    },800);
+    }, 1500);
 
+    // Mostrare il countdown con 4 riquadri orizzontali
     setTimeout(()=>{
       countdown.style.display="grid";
-    },2500);
+      countdown.style.gridTemplateColumns="repeat(4, 1fr)"; // 4 colonne
+    }, 2500);
   }
 }
 
