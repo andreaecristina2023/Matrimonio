@@ -68,14 +68,18 @@ nav {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
+    align-items: center; /* centra verticalmente tutti gli elementi */
+    padding: 0 20px; /* togli padding verticale per non spostare logo */
+    height: 70px; /* altezza barra fissa */
     background-color: rgba(0,0,0,0.5);
     box-sizing: border-box;
     z-index: 1000;
 }
 
-nav .logo img { height: 50px; cursor: pointer; }
+nav .logo img {
+    display: block; /* rimuove eventuali spazi inline */
+    height: 60%; /* scala logo in base all'altezza della barra */
+}
 
 nav .menu {
     display: flex;
