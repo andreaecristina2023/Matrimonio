@@ -152,6 +152,9 @@ nav .menu a:hover{ color:#ff6600; }
   font-size:clamp(18px,4vw,28px);
   transition:opacity 0.6s ease;
 }
+.highlight{ color:#ff0000; } /* rosso */
+.light{ color:#ffffff; }     /* bianco */
+
 #finalText{
   opacity:0;
   font-size:clamp(22px,5vw,32px);
@@ -163,6 +166,7 @@ nav .menu a:hover{ color:#ff6600; }
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:14px;
+  margin-top:60px;
 }
 .box{
   aspect-ratio:1/1;
@@ -171,7 +175,11 @@ nav .menu a:hover{ color:#ff6600; }
   justify-content:center;
   align-items:center;
   border-radius:18px;
-  background:rgba(255,255,255,0.4);
+  background:#ffffff;        /* riquadri bianchi */
+  box-shadow:0 0 15px rgba(255,0,0,0.5); /* shadow rossa */
+}
+.number, .label{
+  color:#ff0000;            /* testo rosso */
 }
 .number{ font-size:32px; }
 .label{ font-size:14px; }
