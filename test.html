@@ -8,6 +8,9 @@
 <!-- Google Fonts: Kaushan Script -->
 <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
+<!-- AUDIO NASCOSTO -->
+<audio id="bgMusic" src="music/Are you ready for this.mp3"></audio>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html, body{
@@ -230,6 +233,7 @@ const lines = document.querySelectorAll("#stageSequence p");
 const finalText = document.getElementById("finalText");
 const playBtn = document.getElementById("playBtn");
 const playTitle = document.getElementById("playTitle");
+const bgMusic = document.getElementById("bgMusic");
 
 function showSequence(){
     // STEP 2: OGGETTI
@@ -253,8 +257,13 @@ function showSequence(){
 
 // STEP 1: PLAY
 playBtn.addEventListener('click', ()=>{
-    playBtn.classList.add('moved');      // trasla pulsante in alto a sinistra
-    playTitle.style.opacity = 0;         // titolo sparisce
+    // Trasla il pulsante in alto
+    playBtn.classList.add('moved');      
+    playTitle.style.opacity = 0;         
+
+    // Avvia la musica
+    bgMusic.play().catch(e => console.log("Autoplay bloccato", e));
+
     setTimeout(showSequence, 800);
 });
 </script>
