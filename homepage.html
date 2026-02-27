@@ -6,32 +6,43 @@
     <title>Home Page</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.jpg">
 
     <!-- Google Fonts: Kaushan Script -->
     <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
-    <!-- Stile per background e layout responsive -->
     <style>
-        body {
-            background-image: url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+        /* Rimuove scroll */
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
             font-family: 'Kaushan Script', cursive;
-            color: #ffffff;
-            text-align: center;
         }
 
+        /* Background full-screen, ritagliato fuori dallo schermo */
+        body {
+            background-image: url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg');
+            background-size: cover; /* copre tutto lo schermo */
+            background-position: center center;
+            background-repeat: no-repeat;
+            color: #fff;
+        }
+
+        /* Overlay centrale */
         .container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            padding: 20px;
-            background-color: rgba(0,0,0,0.4); /* overlay leggero per leggibilità */
+            width: 100%;
+            background-color: rgba(0,0,0,0.35); /* overlay trasparente scuro */
             box-sizing: border-box;
+            text-align: center;
+            padding: 20px;
         }
 
         h1 {
@@ -59,42 +70,62 @@
             background-color: #e65c00;
         }
 
-        /* Responsive per smartphone e tablet */
+        /* Menu a tendina in alto */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: flex-start;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        nav select {
+            background-color: rgba(0,0,0,0.6);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
-            }
-
-            p {
-                font-size: 1.2em;
-            }
-
-            a.button {
-                padding: 10px 20px;
-                font-size: 1em;
-            }
+            h1 { font-size: 2em; }
+            p { font-size: 1.2em; }
+            a.button { padding: 10px 20px; font-size: 1em; }
+            nav select { font-size: 0.9em; padding: 7px 10px; }
         }
 
         @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5em;
-            }
-
-            p {
-                font-size: 1em;
-            }
-
-            a.button {
-                padding: 8px 16px;
-                font-size: 0.9em;
-            }
+            h1 { font-size: 1.5em; }
+            p { font-size: 1em; }
+            a.button { padding: 8px 16px; font-size: 0.9em; }
+            nav select { font-size: 0.8em; padding: 6px 8px; }
         }
     </style>
 </head>
 <body>
+    <!-- Menu a tendina -->
+    <nav>
+        <select onchange="location = this.value;">
+            <option value="#">Seleziona pagina</option>
+            <option value="#">Home</option>
+            <option value="#">Chi siamo</option>
+            <option value="#">Eventi</option>
+            <option value="#">Contatti</option>
+        </select>
+    </nav>
+
+    <!-- Contenuto centrale -->
     <div class="container">
-        <h1>Benvenuto sul mio sito</h1>
-        <p>Questa è la home page</p>
+        <h1>Benvenuti al nostro matrimonio</h1>
+        <p>Una giornata speciale da condividere con voi</p>
         <a href="#" class="button">Scopri di più</a>
     </div>
 </body>
