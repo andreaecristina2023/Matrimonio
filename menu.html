@@ -18,18 +18,10 @@ nav {
     z-index: 1000;
 }
 
-/* Logo */
+/* Logo proporzionale */
 nav .logo img {
     display: block;
     height: 50px; /* desktop */
-}
-
-@media (max-width: 768px) {
-    nav .logo img { height: 40px; }
-}
-
-@media (max-width: 480px) {
-    nav .logo img { height: 35px; }
 }
 
 /* Menu desktop */
@@ -106,32 +98,43 @@ nav .menu a:hover { color: #ff6600; }
         <a href="countdown.html">Siete pronti?!</a>
     </div>
 
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="hamburger" id="hamburger">☰</div>
 
     <div class="mobile-menu" id="mobileMenu">
         <a href="homepage.html">Homepage</a>
         <a href="location.html">I luoghi principali</a>
         <a href="map.html">La Mappa dei nostri consigli</a>
-        <a href="countdown.html">Siete pronti??????!</a>
+        <a href="countdown.html">Siete pronti?!</a>
     </div>
 </nav>
 
 <script>
-const mobileMenu = document.getElementById('mobileMenu');
-const links = mobileMenu.querySelectorAll('a');
+/* Funzione per inizializzare menu mobile */
+function initMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const hamburger = document.getElementById('hamburger');
+    if(!mobileMenu || !hamburger) return;
 
-function toggleMenu() {
-    if(mobileMenu.style.display === 'flex'){
-        mobileMenu.style.display = 'none';
-    } else {
-        mobileMenu.style.display = 'flex';
-    }
+    // Toggle menu hamburger
+    hamburger.addEventListener('click', () => {
+        if(mobileMenu.style.display === 'flex'){
+            mobileMenu.style.display = 'none';
+        } else {
+            mobileMenu.style.display = 'flex';
+        }
+    });
+
+    // Chiude menu al click su un link
+    const links = mobileMenu.querySelectorAll('a');
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.style.display = 'none';
+        });
+    });
 }
 
-// Chiude menu al click su un link
-links.forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenu.style.display = 'none';
-    });
+/* Quando il menu viene caricato via fetch, chiami initMenu */
+document.addEventListener('DOMContentLoaded', () => {
+    initMenu();
 });
 </script>
