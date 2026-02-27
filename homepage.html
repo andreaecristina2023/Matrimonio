@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Andrea e Cristina 04.06.2023</title>
+<title>Andrea e Cristina 04.06.2026</title>
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
@@ -15,7 +15,6 @@
 html, body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
     height: 100%;
     width: 100%;
     font-family: 'Kaushan Script', cursive;
@@ -60,86 +59,14 @@ a.button {
 }
 a.button:hover { background-color: #e65c00; }
 
-/* Menu in alto */
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* centra verticalmente tutti gli elementi */
-    padding: 0 20px; /* togli padding verticale per non spostare logo */
-    height: 70px; /* altezza barra fissa */
-    background-color: rgba(0,0,0,0.5);
-    box-sizing: border-box;
-    z-index: 1000;
-}
-
-nav .logo img {
-    display: block; /* rimuove eventuali spazi inline */
-    height: 60%; /* scala logo in base all'altezza della barra */
-}
-
-nav .menu {
-    display: flex;
-}
-
-nav .menu a {
-    font-family: 'Kaushan Script', cursive;
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 1.2em;
-    transition: color 0.3s;
-}
-
-nav .menu a:hover { color: #ff6600; }
-
-.hamburger {
-    display: none;
-    font-size: 2em;
-    color: #fff;
-    cursor: pointer;
-}
-
-/* Mobile menu collegato alla barra */
-.mobile-menu {
-    display: none;
-    flex-direction: column;
-    background-color: rgba(0,0,0,0.8);
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 200px;
-    overflow: hidden;
-}
-
-.mobile-menu a {
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    padding: 10px 20px;
-    font-size: 1.2em;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    transition: color 0.3s;
-}
-.mobile-menu a:hover { color: #ff6600; }
-
-/* Responsive */
+/* Responsive testo e pulsante */
 @media (max-width: 768px) {
-    nav .menu { display: none; }
-    .hamburger { display: block; }
-    nav .logo img { height: 40px; }
-    .mobile-menu { width: 160px; }
     h1 { font-size: 2em; }
     h2 { font-size: 1.5em; }
     p { font-size: 1.2em; }
     a.button { padding: 10px 20px; font-size: 1em; }
 }
 @media (max-width: 480px) {
-    nav .logo img { height: 35px; }
-    .mobile-menu { width: 140px; }
-    .mobile-menu a { font-size: 1em; padding: 8px 16px; }
     h1 { font-size: 1.5em; }
     h2 { font-size: 1.2em; }
     p { font-size: 1em; }
@@ -149,17 +76,17 @@ nav .menu a:hover { color: #ff6600; }
 </head>
 <body>
 
+<!-- Menu incluso via fetch -->
 <div id="menu-placeholder"></div>
 
 <div class="container">
     <h1>Andrea e Cristina</h1>
     <h2>04.06.2026</h2>
     <p>...una giornata speciale da condividere con voi!</p>
-    <a href="countdown.html" class="button">Siete pronti??????!</a>
+    <a href="countdown.html" class="button">Siete pronti?!</a>
 </div>
 
 <script>
-
 fetch('menu.html')
   .then(response => response.text())
   .then(data => {
