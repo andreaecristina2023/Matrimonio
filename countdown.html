@@ -9,23 +9,36 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+
 html, body{
   width:100%;
   height:100%;
   overflow:hidden;
   font-family:'Kaushan Script', cursive;
-  background:transparent;
+  position:relative;
+}
+
+/* ===== SFONDO ===== */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
+  background-size:cover;
+  z-index:-1;
 }
 
 /* ===== MENU ===== */
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    height: 70px;
-    background-color: rgba(0,0,0,0.7);
-    position: fixed;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 20px;
+    height:70px;
+    background-color:rgba(0,0,0,0.7);
+    position:fixed;
     top:0;
     left:0;
     width:100%;
@@ -33,102 +46,83 @@ nav {
 }
 
 nav .logo img { height:50px; }
-nav .menu { display: flex; }
+
+nav .menu { display:flex; }
+
 nav .menu a {
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 1.2em;
-    transition: color 0.3s;
+    color:rgba(255,255,255,0.85);
+    text-decoration:none;
+    margin-left:20px;
+    font-size:1.2em;
+    transition:color .3s;
 }
 nav .menu a:hover { color:#ff6600; }
+
 .hamburger { display:none; font-size:2em; color:#fff; cursor:pointer; }
 
-/* Mobile menu */
 .mobile-menu {
     display:none;
-    flex-direction: column;
-    background-color: rgba(0,0,0,0.7);
-    position: absolute;
+    flex-direction:column;
+    background-color:rgba(0,0,0,0.7);
+    position:absolute;
     top:100%;
     right:0;
     width:200px;
-    border-radius:0 0 12px 12px;
-    box-shadow:0 4px 8px rgba(0,0,0,0.3);
 }
-.mobile-menu a {
-    color: rgba(255,255,255,0.85);
+
+.mobile-menu a{
+    color:white;
     text-decoration:none;
     padding:10px 20px;
-    font-size:1.2em;
     border-bottom:1px solid rgba(255,255,255,0.2);
-    transition: color 0.3s;
 }
-.mobile-menu a:hover{ color:#ff6600; }
 
-@media(max-width:768px){ nav .menu{ display:none; } .hamburger{ display:block; } nav .logo img{ height:40px; } .mobile-menu{ width:160px; } .mobile-menu a{ font-size:1em; padding:8px 16px; } }
-@media(max-width:480px){ nav .logo img{ height:35px; } .mobile-menu{ width:140px; } .mobile-menu a{ font-size:0.9em; padding:6px 12px; } }
+@media(max-width:768px){
+  nav .menu{display:none;}
+  .hamburger{display:block;}
+}
 
-/* ===== CENTRAL CONTAINER ===== */
+/* ===== CONTENITORE ===== */
 .central-container{
   width:100%;
   height:100vh;
-  position:relative;
-  overflow:hidden;
-  margin-top:70px; /* spazio per nav */
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
-
-/* STAGE */
-.stage{
-  position:absolute;
-  inset:0;
+  margin-top:70px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:flex-start;
-  transition:opacity .8s ease;
-  padding-top:80px;
+  padding-top:40px;
+  text-align:center;
 }
 
-.stage:not(.active){
-  opacity:0;
-  pointer-events:none;
+/* ===== TITOLO ===== */
+#playTitle{
+  font-size:2.5em;
+  color:white;
+  margin-bottom:20px;
 }
 
-/* PLAY/Pause BUTTON */
+/* ===== PULSANTE ===== */
 #playPauseBtn{
   font-family:'Kaushan Script', cursive;
-  font-size:28px;
-  padding:10px 20px;
-  border-radius:20px;
+  font-size:26px;
+  padding:10px 25px;
+  border-radius:30px;
   background:#a32f2f;
   color:white;
   border:none;
   cursor:pointer;
+  margin-bottom:30px;
+  transition:.3s;
   animation:glowBtn 1.5s infinite alternate;
-  position:absolute;
-  top:10px;
-  z-index:100;
 }
 
 @keyframes glowBtn{
-  from{ box-shadow:0 0 0px #a32f2f;}
-  to{ box-shadow:0 0 10px #ff4c4c;}
+  from{ box-shadow:0 0 5px #a32f2f;}
+  to{ box-shadow:0 0 20px #ff4c4c;}
 }
 
-/* TITULO */
-#playTitle{
-  font-size:2.2em;
-  color:white;
-  margin-top:60px;
-  margin-bottom:30px;
-}
-
-/* TESTI */
+/* ===== TESTI ===== */
 .sequence{
   display:flex;
   flex-direction:column;
@@ -139,18 +133,18 @@ nav .menu a:hover { color:#ff6600; }
 .sequence p{
   opacity:0;
   font-size:clamp(18px,4vw,26px);
-  transition:opacity .6s ease;
+  transition:opacity .8s ease;
 }
 
-.light{ color:#ffffff; }
+.light{ color:white; }
 .highlight{ color:#ff0000; }
 
-/* COUNTDOWN */
+/* ===== COUNTDOWN ===== */
 #countdown{
   display:grid;
-  grid-template-columns:repeat(2, 1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:20px;
-  margin-top:50px;
+  margin-top:40px;
 }
 
 .box{
@@ -161,160 +155,125 @@ nav .menu a:hover { color:#ff6600; }
   align-items:center;
   border-radius:20px;
   background:rgba(255,255,255,0.9);
-  box-shadow: 0 0 15px rgba(255,0,0,0.5);
-  width:100px;
-  max-width:120px;
+  width:110px;
+  animation:blinkShadow 1.5s infinite alternate;
+}
+
+@keyframes blinkShadow{
+  from{ box-shadow:0 0 10px rgba(255,0,0,0.4);}
+  to{ box-shadow:0 0 30px rgba(255,0,0,0.9);}
 }
 
 .number{
   font-size:36px;
   color:#ff0000;
-  text-shadow: 1px 1px 4px #ff4c4c;
 }
 
 .label{
   font-size:16px;
   color:#ff0000;
-  text-shadow: 1px 1px 4px #ff4c4c;
 }
 </style>
 </head>
 <body>
 
-<!-- ===== MENU ===== -->
 <nav>
-    <div class="logo">
-        <a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo"></a>
-    </div>
-
-    <div class="menu">
-        <a href="homepage.html">Homepage</a>
-        <a href="location.html">I luoghi principali</a>
-        <a href="map.html">La Mappa dei nostri consigli</a>
-        <a href="countdown.html">Siete pronti?!</a>
-    </div>
-
-    <div class="hamburger" id="hamburger">☰</div>
-
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="homepage.html">Homepage</a>
-        <a href="location.html">I luoghi principali</a>
-        <a href="map.html">La Mappa dei nostri consigli</a>
-        <a href="countdown.html">Siete pronti?!</a>
-    </div>
+<div class="logo">
+<a href="homepage.html">
+<img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+</a>
+</div>
 </nav>
 
 <div class="central-container">
 
-  <!-- PLAY/Pause -->
-  <button id="playPauseBtn">▶️</button>
+<div id="playTitle">Siete pront*?</div>
 
-  <!-- TITLE -->
-  <div id="playTitle">Siete pront*?</div>
+<button id="playPauseBtn">Sì!</button>
 
-  <!-- SEQUENZA -->
-  <div class="stage" id="stageSequence">
-    <div class="sequence">
-      <p class="highlight">Ricordatevi di portare:</p>
-      <p class="light">1. Il vostro sorriso migliore!</p>
-      <p class="light">2. Un costume!</p>
-      <p class="light">3. Tanta voglia di divertirvi!</p>
-      <p class="highlight">4. Scarpe rosse e comode!</p>
-    </div>
-  </div>
+<div class="sequence" id="sequence">
+<p class="highlight">Ricordatevi di portare:</p>
+<p class="light">1. Il vostro sorriso migliore!</p>
+<p class="light">2. Un costume!</p>
+<p class="light">3. Tanta voglia di divertirvi!</p>
+<p class="highlight">4. Scarpe rosse e comode!</p>
+</div>
 
-  <!-- FINALE -->
-  <div class="stage" id="stageFinal">
-    <div class="sequence">
-      <p id="finalText" class="highlight">...perché mancano solo...</p>
-    </div>
-  </div>
+<div id="finalText" class="highlight" style="opacity:0; margin-top:20px;">
+...perché mancano solo...
+</div>
 
-  <!-- COUNTDOWN -->
-  <div class="stage" id="stageCountdown">
-    <div id="countdown">
-      <div class="box"><div class="number" id="days">0</div><div class="label">gg</div></div>
-      <div class="box"><div class="number" id="hours">0</div><div class="label">hh</div></div>
-      <div class="box"><div class="number" id="minutes">0</div><div class="label">mm</div></div>
-      <div class="box"><div class="number" id="seconds">0</div><div class="label">ss</div></div>
-    </div>
-  </div>
+<div id="countdown" style="display:none;">
+<div class="box"><div class="number" id="days">0</div><div class="label">gg</div></div>
+<div class="box"><div class="number" id="hours">0</div><div class="label">hh</div></div>
+<div class="box"><div class="number" id="minutes">0</div><div class="label">mm</div></div>
+<div class="box"><div class="number" id="seconds">0</div><div class="label">ss</div></div>
+</div>
 
 </div>
 
-<!-- MUSICA -->
 <audio id="bgMusic" src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/music/Are_You_Ready_For_This.mp3"></audio>
 
 <script>
-// ===== MENU MOBILE =====
-const mobileMenu = document.getElementById('mobileMenu');
-const hamburger = document.getElementById('hamburger');
-
-hamburger.addEventListener('click', () => {
-    mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-});
-mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => mobileMenu.style.display='none');
-});
-window.addEventListener('resize', ()=>{ if(window.innerWidth > 768) mobileMenu.style.display='none'; });
-
-// ===== COUNTDOWN =====
-const target = new Date("2026-06-04T16:00:00").getTime();
-function updateCountdown(){
-  const diff = target - Date.now();
-  if(diff <= 0) return;
-  document.getElementById('days').innerText = Math.floor(diff/86400000);
-  document.getElementById('hours').innerText = Math.floor(diff/3600000)%24;
-  document.getElementById('minutes').innerText = Math.floor(diff/60000)%60;
-  document.getElementById('seconds').innerText = Math.floor(diff/1000)%60;
-}
-setInterval(updateCountdown,1000);
-updateCountdown();
-
-// ===== PLAY/PAUSE & SEQUENZA =====
 const playBtn = document.getElementById("playPauseBtn");
 const bgMusic = document.getElementById("bgMusic");
-const stageSequence = document.getElementById("stageSequence");
-const stageFinal = document.getElementById("stageFinal");
-const stageCountdown = document.getElementById("stageCountdown");
-const lines = document.querySelectorAll("#stageSequence p");
+const lines = document.querySelectorAll("#sequence p");
 const finalText = document.getElementById("finalText");
-let index = 0;
-let playing = false;
+const countdown = document.getElementById("countdown");
 
+let index = 0;
+let animationStarted = false;
+
+/* PLAY / PAUSE SEMPRE ATTIVO */
 playBtn.addEventListener("click", ()=>{
-  if(!playing){
-    bgMusic.play().catch(e => console.log("Autoplay bloccato", e));
+
+  if(!animationStarted){
+    animationStarted = true;
     playBtn.innerText = "⏸️";
-    playing = true;
-    // Avvia sequenza dopo 1,5s
-    setTimeout(()=>{ 
-      stageSequence.classList.add("active");
-      index = 0;
-      showNextLine();
-    },1500);
+    bgMusic.play();
+    startSequence();
   } else {
-    bgMusic.pause();
-    playBtn.innerText = "▶️";
-    playing = false;
+    if(bgMusic.paused){
+      bgMusic.play();
+      playBtn.innerText="⏸️";
+    } else {
+      bgMusic.pause();
+      playBtn.innerText="▶️";
+    }
   }
 });
+
+/* SEQUENZA */
+function startSequence(){
+  setTimeout(()=> showNextLine(), 2500); // attesa più lunga
+}
 
 function showNextLine(){
   if(index < lines.length){
     lines[index].style.opacity = 1;
     index++;
-    setTimeout(showNextLine, 2000);
+    setTimeout(showNextLine, 2200);
   } else {
-    stageSequence.classList.remove("active");
-    stageFinal.classList.add("active");
-    setTimeout(()=> finalText.style.opacity = 1, 200);
     setTimeout(()=>{
-      stageFinal.classList.remove("active");
-      stageCountdown.classList.add("active");
-    },2200);
+      finalText.style.opacity = 1;
+    },800);
+
+    setTimeout(()=>{
+      countdown.style.display="grid";
+    },2500);
   }
 }
+
+/* COUNTDOWN */
+const target = new Date("2026-06-04T16:00:00").getTime();
+setInterval(()=>{
+  const diff = target - Date.now();
+  if(diff<=0) return;
+  document.getElementById('days').innerText=Math.floor(diff/86400000);
+  document.getElementById('hours').innerText=Math.floor(diff/3600000)%24;
+  document.getElementById('minutes').innerText=Math.floor(diff/60000)%60;
+  document.getElementById('seconds').innerText=Math.floor(diff/1000)%60;
+},1000);
 </script>
 
 </body>
