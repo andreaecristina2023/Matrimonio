@@ -178,11 +178,27 @@ nav .menu a:hover { color:#ff6600; }
 <body>
 
 <nav>
-<div class="logo">
-<a href="homepage.html">
-<img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
-</a>
-</div>
+    <div class="logo">
+        <a href="homepage.html">
+            <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo">
+        </a>
+    </div>
+
+    <div class="menu">
+        <a href="homepage.html">Homepage</a>
+        <a href="location.html">I luoghi principali</a>
+        <a href="map.html">La Mappa dei nostri consigli</a>
+        <a href="countdown.html">Siete pronti?!</a>
+    </div>
+
+    <div class="hamburger" id="hamburger">☰</div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="homepage.html">Homepage</a>
+        <a href="location.html">I luoghi principali</a>
+        <a href="map.html">La Mappa dei nostri consigli</a>
+        <a href="countdown.html">Siete pronti?!</a>
+    </div>
 </nav>
 
 <div class="central-container">
@@ -274,6 +290,28 @@ setInterval(()=>{
   document.getElementById('minutes').innerText=Math.floor(diff/60000)%60;
   document.getElementById('seconds').innerText=Math.floor(diff/1000)%60;
 },1000);
+
+// ===== MENU MOBILE =====
+const mobileMenu = document.getElementById('mobileMenu');
+const hamburger = document.getElementById('hamburger');
+
+hamburger.addEventListener('click', () => {
+    mobileMenu.style.display =
+        mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+});
+
+mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.style.display = 'none';
+    });
+});
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+        mobileMenu.style.display = 'none';
+    }
+});
+
 </script>
 
 </body>
