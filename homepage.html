@@ -76,9 +76,6 @@ a.button:hover { background-color: #e65c00; }
 </head>
 <body>
 
-<!-- Menu incluso via fetch -->
-<div id="menu-placeholder"></div>
-
 <div class="container">
     <h1>Andrea e Cristina</h1>
     <h2>04.06.2026</h2>
@@ -86,11 +83,16 @@ a.button:hover { background-color: #e65c00; }
     <a href="countdown.html" class="button">Siete pronti?!</a>
 </div>
 
+<!-- Menu incluso via fetch -->
+<div id="menu-placeholder"></div>
+
 <script>
 fetch('menu.html')
   .then(response => response.text())
   .then(data => {
       document.getElementById('menu-placeholder').innerHTML = data;
+      // Inizializza il menu mobile appena viene inserito
+      if(window.initMenu) initMenu();
   })
   .catch(err => console.error('Errore caricamento menu:', err));
 </script>
