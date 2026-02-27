@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Page</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+
+<!-- Google Fonts: Kaushan Script -->
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    font-family: 'Kaushan Script', cursive;
+}
+
+body {
+    background-image: url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #fff;
+}
+
+/* Overlay centrale */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0,0,0,0.35);
+    box-sizing: border-box;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 { font-size: 3em; margin-bottom: 10px; }
+h2 { font-size: 2em; margin-bottom: 20px; }
+p { font-size: 1.5em; }
+
+a.button {
+    display: inline-block;
+    padding: 12px 25px;
+    margin-top: 20px;
+    background-color: #ff6600;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+a.button:hover { background-color: #e65c00; }
+
+/* Nav placeholder */
+#menu-placeholder {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Responsive text */
+@media (max-width: 768px) {
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.5em; }
+    p { font-size: 1.2em; }
+    a.button { padding: 10px 20px; font-size: 1em; }
+}
+@media (max-width: 480px) {
+    h1 { font-size: 1.5em; }
+    h2 { font-size: 1.2em; }
+    p { font-size: 1em; }
+    a.button { padding: 8px 16px; font-size: 0.9em; }
+}
+</style>
+</head>
+<body>
+
+<!-- Menu dinamico incluso -->
+<div id="menu-placeholder"></div>
+
+<div class="container">
+    <h1>Andrea e Cristina</h1>
+    <h2>04.06.2026</h2>
+    <p>...una giornata speciale da condividere con voi!</p>
+    <a href="countdown.html" class="button">Siete pronti?!</a>
+</div>
+
+<script>
+fetch('menu.html')
+.then(response => response.text())
+.then(data => {
+    document.getElementById('menu-placeholder').innerHTML = data;
+
+    const mobileMenu = document.getElementById('mobileMenu');
+    const links = mobileMenu.querySelectorAll('a');
+    const hamburger = document.querySelector('.hamburger');
+
+    // Funzione toggle mobile menu con animazione fade+slide
+    window.toggleMenu = function() {
+        if (mobileMenu.style.display === 'flex') {
+            mobileMenu.style.opacity = '0';
+            setTimeout(() => { mobileMenu.style.display = 'none'; }, 300);
+        } else {
+            mobileMenu.style.display = 'flex';
+            setTimeout(() => { mobileMenu.style.opacity = '1'; }, 10);
+        }
+    };
+
+    // Chiudi menu al click su link
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.style.opacity = '0';
+            setTimeout(() => { mobileMenu.style.display = 'none'; }, 300);
+        });
+    });
+
+    // Stili dinamici per fade
+    mobileMenu.style.transition = 'opacity 0.3s';
+    mobileMenu.style.opacity = '0';
+    mobileMenu.style.flexDirection = 'column';
+    mobileMenu.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    mobileMenu.style.position = 'absolute';
+    mobileMenu.style.top = '70px';
+    mobileMenu.style.right = '0';
+    mobileMenu.style.width = '200px';
+    mobileMenu.style.overflow = 'hidden';
+
+    // Logo centrato verticalmente
+    const nav = document.querySelector('nav');
+    nav.style.display = 'flex';
+    nav.style.alignItems = 'center';
+    nav.style.justifyContent = 'space-between';
+    nav.style.padding = '0 20px';
+    nav.style.height = '70px';
+});
+</script>
+
+</body>
+</html>
