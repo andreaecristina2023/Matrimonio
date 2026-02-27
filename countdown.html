@@ -189,7 +189,7 @@ nav .menu a:hover { color:#ff6600; }
 
 <div id="playTitle">Siete pront*?</div>
 
-<button id="playPauseBtn">Sì!</button>
+<button id="playPauseBtn">👠 Sì!</button>
 
 <div class="sequence" id="sequence">
 <p class="highlight">Ricordatevi di portare:</p>
@@ -229,16 +229,16 @@ playBtn.addEventListener("click", ()=>{
 
   if(!animationStarted){
     animationStarted = true;
-    playBtn.innerText = "⏸️";
+    playBtn.innerText = "⏸️ Pause";
     bgMusic.play();
     startSequence();
   } else {
     if(bgMusic.paused){
       bgMusic.play();
-      playBtn.innerText="⏸️";
+      playBtn.innerText="⏸️ Pause";
     } else {
       bgMusic.pause();
-      playBtn.innerText="▶️";
+      playBtn.innerText="▶️ Play";
     }
   }
 });
