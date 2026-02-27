@@ -149,27 +149,7 @@ nav .menu a:hover { color: #ff6600; }
 </head>
 <body>
 
-<nav>
-    <div class="logo">
-        <a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo"></a>
-    </div>
-
-    <div class="menu">
-        <a href="homepage.html">Homepage</a>
-        <a href="location.html">I luoghi principali</a>
-        <a href="map.html">La Mappa dei nostri consigli</a>
-        <a href="countdown.html">Siete pronti?!</a>
-    </div>
-
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="homepage.html">Homepage</a>
-        <a href="location.html">I luoghi principali</a>
-        <a href="map.html">La Mappa dei nostri consigli</a>
-        <a href="countdown.html">Siete pronti?!</a>
-    </div>
-</nav>
+<div id="menu-placeholder"></div>
 
 <div class="container">
     <h1>Andrea e Cristina</h1>
@@ -179,23 +159,13 @@ nav .menu a:hover { color: #ff6600; }
 </div>
 
 <script>
-const mobileMenu = document.getElementById('mobileMenu');
-const links = mobileMenu.querySelectorAll('a');
 
-function toggleMenu() {
-    if(mobileMenu.style.display === 'flex'){
-        mobileMenu.style.display = 'none';
-    } else {
-        mobileMenu.style.display = 'flex';
-    }
-}
-
-// Chiude menu al click su un link
-links.forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenu.style.display = 'none';
-    });
-});
+fetch('menu.html')
+  .then(response => response.text())
+  .then(data => {
+      document.getElementById('menu-placeholder').innerHTML = data;
+  })
+  .catch(err => console.error('Errore caricamento menu:', err));
 </script>
 
 </body>
