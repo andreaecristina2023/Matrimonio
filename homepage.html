@@ -76,6 +76,9 @@ a.button:hover { background-color: #e65c00; }
 </head>
 <body>
 
+<!-- Menu incluso via fetch -->
+<div id="menu-placeholder"></div>
+
 <div class="container">
     <h1>Andrea e Cristina</h1>
     <h2>04.06.2026</h2>
@@ -83,33 +86,23 @@ a.button:hover { background-color: #e65c00; }
     <a href="countdown.html" class="button">Siete pronti?!</a>
 </div>
 
-<!-- Menu incluso via fetch -->
-<div id="menu-placeholder"></div>
-
 <script>
 fetch('menu.html')
   .then(response => response.text())
   .then(data => {
       document.getElementById('menu-placeholder').innerHTML = data;
 
-      // Adesso che il menu è nel DOM, inizializza hamburger
+      // Hamburger mobile
       const mobileMenu = document.getElementById('mobileMenu');
       const hamburger = document.getElementById('hamburger');
 
       if (hamburger && mobileMenu) {
           hamburger.addEventListener('click', () => {
-              if(mobileMenu.style.display === 'flex'){
-                  mobileMenu.style.display = 'none';
-              } else {
-                  mobileMenu.style.display = 'flex';
-              }
+              mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
           });
 
-          // Chiude menu al click su un link
           mobileMenu.querySelectorAll('a').forEach(link => {
-              link.addEventListener('click', () => {
-                  mobileMenu.style.display = 'none';
-              });
+              link.addEventListener('click', () => mobileMenu.style.display = 'none');
           });
       }
   })
