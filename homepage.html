@@ -1,209 +1,198 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Page</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.jpg">
+<!-- Favicon -->
+<link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.jpg">
 
-    <!-- Google Fonts: Kaushan Script -->
-    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+<!-- Google Fonts: Kaushan Script -->
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* rimuove scroll */
-            height: 100%;
-            width: 100%;
-            font-family: 'Kaushan Script', cursive;
-        }
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    font-family: 'Kaushan Script', cursive;
+}
 
-        /* Background full-screen */
-        body {
-            background-image: url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            color: #fff;
-        }
+body {
+    background-image: url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #fff;
+}
 
-        /* Overlay centrale */
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            width: 100%;
-            background-color: rgba(0,0,0,0.35); /* overlay centrale */
-            box-sizing: border-box;
-            text-align: center;
-            padding: 20px;
-        }
+/* Overlay centrale */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0,0,0,0.35);
+    box-sizing: border-box;
+    text-align: center;
+    padding: 20px;
+}
 
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
+h1 { font-size: 3em; margin-bottom: 10px; }
+h2 { font-size: 2em; margin-bottom: 20px; }
+p { font-size: 1.5em; }
 
-        p {
-            font-size: 1.5em;
-        }
+a.button {
+    display: inline-block;
+    padding: 12px 25px;
+    margin-top: 20px;
+    background-color: #ff6600;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+a.button:hover { background-color: #e65c00; }
 
-        a.button {
-            display: inline-block;
-            padding: 12px 25px;
-            margin-top: 20px;
-            background-color: #ff6600;
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
+/* Menu in alto */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: rgba(0,0,0,0.5);
+    box-sizing: border-box;
+    z-index: 1000;
+}
 
-        a.button:hover {
-            background-color: #e65c00;
-        }
+nav .logo img { height: 50px; cursor: pointer; }
 
-        /* Menu in alto */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: rgba(0,0,0,0.5); /* menu opaco */
-            box-sizing: border-box;
-            z-index: 1000;
-        }
+nav .menu {
+    display: flex;
+}
 
-        nav .logo img {
-            height: 50px;
-            cursor: pointer;
-        }
+nav .menu a {
+    font-family: 'Kaushan Script', cursive;
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
 
-        /* Menu desktop */
-        nav .menu {
-            display: flex;
-        }
+nav .menu a:hover { color: #ff6600; }
 
-        nav .menu a {
-            font-family: 'Kaushan Script', cursive;
-            color: rgba(255,255,255,0.85);
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 1.2em;
-            transition: color 0.3s;
-        }
+.hamburger {
+    display: none;
+    font-size: 2em;
+    color: #fff;
+    cursor: pointer;
+}
 
-        nav .menu a:hover {
-            color: #ff6600;
-        }
+/* Mobile menu collegato alla barra */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    background-color: rgba(0,0,0,0.8);
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    overflow: hidden;
+}
 
-        /* Hamburger per mobile */
-        .hamburger {
-            display: none;
-            font-size: 2em;
-            color: #fff;
-            cursor: pointer;
-        }
+.mobile-menu a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    transition: color 0.3s;
+}
+.mobile-menu a:hover { color: #ff6600; }
 
-        /* Menu mobile nascosto inizialmente */
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            background-color: rgba(0,0,0,0.8);
-            position: fixed;
-            top: 70px;
-            right: 0;
-            width: 200px;
-            padding: 10px;
-            border-radius: 0 0 0 10px;
-            z-index: 1001;
-        }
-
-        .mobile-menu a {
-            color: rgba(255,255,255,0.85);
-            text-decoration: none;
-            margin: 10px 0;
-            font-size: 1.2em;
-            transition: color 0.3s;
-        }
-
-        .mobile-menu a:hover {
-            color: #ff6600;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 { font-size: 2em; }
-            p { font-size: 1.2em; }
-            a.button { padding: 10px 20px; font-size: 1em; }
-            nav .menu { display: none; } /* nasconde menu desktop */
-            .hamburger { display: block; } /* mostra hamburger */
-            nav .logo img { height: 40px; }
-        }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 1.5em; }
-            p { font-size: 1em; }
-            a.button { padding: 8px 16px; font-size: 0.9em; }
-            .mobile-menu { width: 160px; top: 60px; }
-            .mobile-menu a { font-size: 1em; margin: 8px 0; }
-            nav .logo img { height: 35px; }
-        }
-    </style>
+/* Responsive */
+@media (max-width: 768px) {
+    nav .menu { display: none; }
+    .hamburger { display: block; }
+    nav .logo img { height: 40px; }
+    .mobile-menu { width: 160px; }
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.5em; }
+    p { font-size: 1.2em; }
+    a.button { padding: 10px 20px; font-size: 1em; }
+}
+@media (max-width: 480px) {
+    nav .logo img { height: 35px; }
+    .mobile-menu { width: 140px; }
+    .mobile-menu a { font-size: 1em; padding: 8px 16px; }
+    h1 { font-size: 1.5em; }
+    h2 { font-size: 1.2em; }
+    p { font-size: 1em; }
+    a.button { padding: 8px 16px; font-size: 0.9em; }
+}
+</style>
 </head>
 <body>
 
-    <!-- Menu in alto -->
-    <nav>
-        <div class="logo">
-            <a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.jpg" alt="Logo"></a>
-        </div>
+<nav>
+    <div class="logo">
+        <a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.jpg" alt="Logo"></a>
+    </div>
 
-        <div class="menu">
-            <a href="homepage.html">Homepage</a>
-            <a href="location.html">I luoghi principali</a>
-            <a href="map.html">La Mappa dei nostri consigli</a>
-            <a href="countdown.html">Siete pronti?!</a>
-        </div>
-
-        <div class="hamburger" onclick="toggleMenu()">☰</div>
-    </nav>
-
-    <!-- Menu mobile -->
-    <div class="mobile-menu" id="mobileMenu">
+    <div class="menu">
         <a href="homepage.html">Homepage</a>
         <a href="location.html">I luoghi principali</a>
         <a href="map.html">La Mappa dei nostri consigli</a>
         <a href="countdown.html">Siete pronti?!</a>
     </div>
 
-    <!-- Contenuto centrale -->
-    <div class="container">
-        <h1>Benvenuti al nostro matrimonio</h1>
-        <p>Una giornata speciale da condividere con voi</p>
-        <a href="#" class="button">Scopri di più</a>
-    </div>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
 
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
-            if(menu.style.display === 'flex'){
-                menu.style.display = 'none';
-            } else {
-                menu.style.display = 'flex';
-            }
-        }
-    </script>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="homepage.html">Homepage</a>
+        <a href="location.html">I luoghi principali</a>
+        <a href="map.html">La Mappa dei nostri consigli</a>
+        <a href="countdown.html">Siete pronti?!</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Andrea e Cristina</h1>
+    <h2>04.06.2026</h2>
+    <p>...una giornata speciale da condividere con voi!</p>
+    <a href="countdown.html" class="button">Siete pronti?!</a>
+</div>
+
+<script>
+const mobileMenu = document.getElementById('mobileMenu');
+const links = mobileMenu.querySelectorAll('a');
+
+function toggleMenu() {
+    if(mobileMenu.style.display === 'flex'){
+        mobileMenu.style.display = 'none';
+    } else {
+        mobileMenu.style.display = 'flex';
+    }
+}
+
+// Chiude menu al click su un link
+links.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.style.display = 'none';
+    });
+});
+</script>
 
 </body>
 </html>
