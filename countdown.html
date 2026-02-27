@@ -14,24 +14,96 @@ html, body{
   width:100%;
   height:100%;
   overflow:hidden; /* blocca scroll */
-}
-
-body{
   font-family:'Kaushan Script', cursive;
   background:transparent;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:red;
-  text-align:center;
 }
 
-/* CONTENITORE FISSO */
+/* ===== MENU ===== */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 70px;
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+}
+
+nav .logo img {
+    height:50px;
+}
+
+nav .menu {
+    display: flex;
+}
+
+nav .menu a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+nav .menu a:hover { color:#ff6600; }
+
+.hamburger {
+    display: none;
+    font-size:2em;
+    color:#fff;
+    cursor:pointer;
+}
+
+/* Mobile menu */
+.mobile-menu {
+    display:none;
+    flex-direction: column;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+    top:100%;
+    right:0;
+    width:200px;
+    border-radius:0 0 12px 12px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.3);
+}
+
+.mobile-menu a {
+    color: rgba(255,255,255,0.85);
+    text-decoration:none;
+    padding:10px 20px;
+    font-size:1.2em;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    transition: color 0.3s;
+}
+.mobile-menu a:hover{ color:#ff6600; }
+
+@media(max-width:768px){
+    nav .menu{ display:none; }
+    .hamburger{ display:block; }
+    nav .logo img{ height:40px; }
+    .mobile-menu{ width:160px; }
+    .mobile-menu a{ font-size:1em; padding:8px 16px; }
+}
+@media(max-width:480px){
+    nav .logo img{ height:35px; }
+    .mobile-menu{ width:140px; }
+    .mobile-menu a{ font-size:0.9em; padding:6px 12px; }
+}
+
+/* ===== CENTRAL CONTAINER ===== */
 .central-container{
   width:360px;
   height:600px;
   position:relative;
-  overflow:hidden; /* niente scroll interno */
+  overflow:hidden;
+  margin-top:70px; /* spazio per nav */
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
 /* STAGE */
@@ -128,6 +200,29 @@ body{
 </head>
 <body>
 
+<!-- ===== MENU ===== -->
+<nav>
+    <div class="logo">
+        <a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo"></a>
+    </div>
+
+    <div class="menu">
+        <a href="homepage.html">Homepage</a>
+        <a href="location.html">I luoghi principali</a>
+        <a href="map.html">La Mappa dei nostri consigli</a>
+        <a href="countdown.html">Siete pronti?!</a>
+    </div>
+
+    <div class="hamburger" id="hamburger">☰</div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="homepage.html">Homepage</a>
+        <a href="location.html">I luoghi principali</a>
+        <a href="map.html">La Mappa dei nostri consigli</a>
+        <a href="countdown.html">Siete pronti?!</a>
+    </div>
+</nav>
+
 <div class="central-container">
 
   <!-- PLAY -->
@@ -166,22 +261,41 @@ body{
 </div>
 
 <script>
-// DATA EVENTO
+// ===== MENU MOBILE =====
+const mobileMenu = document.getElementById('mobileMenu');
+const hamburger = document.getElementById('hamburger');
+
+hamburger.addEventListener('click', () => {
+    mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+});
+
+// Chiude menu al click su un link
+mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.style.display='none');
+});
+
+// Nasconde tendina se ridimensioni
+window.addEventListener('resize', ()=>{
+    if(window.innerWidth > 768){
+        mobileMenu.style.display='none';
+    }
+});
+
+// ===== COUNTDOWN =====
 const target = new Date("2026-06-04T16:00:00").getTime();
 
-// COUNTDOWN
 function updateCountdown(){
   const diff = target - Date.now();
   if(diff <= 0) return;
-  days.innerText = Math.floor(diff/86400000);
-  hours.innerText = Math.floor(diff/3600000)%24;
-  minutes.innerText = Math.floor(diff/60000)%60;
-  seconds.innerText = Math.floor(diff/1000)%60;
+  document.getElementById('days').innerText = Math.floor(diff/86400000);
+  document.getElementById('hours').innerText = Math.floor(diff/3600000)%24;
+  document.getElementById('minutes').innerText = Math.floor(diff/60000)%60;
+  document.getElementById('seconds').innerText = Math.floor(diff/1000)%60;
 }
 setInterval(updateCountdown,1000);
 updateCountdown();
 
-// ELEMENTI
+// ===== SEQUENZA PLAY =====
 const stagePlay = document.getElementById("stagePlay");
 const stageSequence = document.getElementById("stageSequence");
 const stageFinal = document.getElementById("stageFinal");
