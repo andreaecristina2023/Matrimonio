@@ -49,15 +49,18 @@ nav .menu a:hover { color: #ff6600; }
 }
 
 /* Menu mobile */
+/* Menu mobile */
 .mobile-menu {
     display: none;
     flex-direction: column;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(0,0,0,0.7); /* stesso colore del nav */
     position: absolute;
     top: 100%;
     right: 0;
     width: 200px;
     overflow: hidden;
+    border-radius: 0 0 12px 12px; /* arrotonda solo in basso */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* optional, per effetto flottante */
 }
 
 .mobile-menu a {
