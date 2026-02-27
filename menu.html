@@ -1,97 +1,9 @@
 <!-- menu.html -->
-<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-
-<style>
-/* Tutto il menu usa Kaushan Script */
-nav {
-    font-family: 'Kaushan Script', cursive;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    height: 70px;
-    background-image: url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0,0,0,0.5);
-    box-sizing: border-box;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-/* Logo */
-nav .logo img {
-    display: block;
-    height: 60%;
-}
-
-/* Menu desktop */
-nav .menu {
-    display: flex;
-}
-
-nav .menu a {
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 1.2em;
-    transition: color 0.3s;
-}
-
-nav .menu a:hover { color: #ff6600; }
-
-/* Hamburger mobile */
-.hamburger {
-    display: none;
-    font-size: 2em;
-    color: #fff;
-    cursor: pointer;
-}
-
-/* Menu mobile */
-.mobile-menu {
-    display: none;
-    flex-direction: column;
-    background-color: rgba(0,0,0,0.8);
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 200px;
-    overflow: hidden;
-}
-
-.mobile-menu a {
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    padding: 10px 20px;
-    font-size: 1.2em;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    transition: color 0.3s;
-}
-
-.mobile-menu a:hover { color: #ff6600; }
-
-/* Responsive */
-@media (max-width: 768px) {
-    nav .menu { display: none; }
-    .hamburger { display: block; }
-    nav .logo img { height: 40px; }
-    .mobile-menu { width: 160px; }
-    .mobile-menu a { font-size: 1em; padding: 8px 16px; }
-}
-
-@media (max-width: 480px) {
-    nav .logo img { height: 35px; }
-    .mobile-menu { width: 140px; }
-    .mobile-menu a { font-size: 0.9em; padding: 6px 12px; }
-}
-</style>
-
-<nav>
+<nav style="background-image: url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: rgba(0,0,0,0.5);">
     <div class="logo">
         <a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo"></a>
     </div>
@@ -125,7 +37,6 @@ function toggleMenu() {
     }
 }
 
-// Chiude menu al click su un link
 links.forEach(link => {
     link.addEventListener('click', () => {
         mobileMenu.style.display = 'none';
