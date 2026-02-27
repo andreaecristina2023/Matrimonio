@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Countdown Evento</title>
 
+<!-- Google Fonts: Kaushan Script -->
 <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
+<!-- Audio nascosto -->
+<audio id="bgMusic" src="music/Are you ready for this.mp3"></audio>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -13,118 +17,111 @@
 html, body{
   width:100%;
   height:100%;
-  overflow:hidden; /* blocca scroll */
   font-family:'Kaushan Script', cursive;
-  background:transparent;
+  overflow:hidden;
+  background: url('images/background.jpg') no-repeat center center/cover;
 }
 
 /* ===== MENU ===== */
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    height: 70px;
-    background-color: rgba(0,0,0,0.7);
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    z-index:1000;
+nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 20px;
+  height:70px;
+  background: rgba(0,0,0,0.7);
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
+}
+nav .logo img{ height:50px; }
+nav .menu{ display:flex; }
+nav .menu a{
+  color: rgba(255,255,255,0.85);
+  text-decoration:none;
+  margin-left:20px;
+  font-size:1.2em;
+  transition: color 0.3s;
+}
+nav .menu a:hover{ color:#ff6600; }
+
+.hamburger{
+  display:none;
+  font-size:2em;
+  color:#fff;
+  cursor:pointer;
 }
 
-nav .logo img {
-    height:50px;
+.mobile-menu{
+  display:none;
+  flex-direction:column;
+  background: rgba(0,0,0,0.7);
+  position:absolute;
+  top:100%;
+  right:0;
+  width:200px;
+  border-radius:0 0 12px 12px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.3);
 }
-
-nav .menu {
-    display: flex;
-}
-
-nav .menu a {
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 1.2em;
-    transition: color 0.3s;
-}
-
-nav .menu a:hover { color:#ff6600; }
-
-.hamburger {
-    display: none;
-    font-size:2em;
-    color:#fff;
-    cursor:pointer;
-}
-
-/* Mobile menu */
-.mobile-menu {
-    display:none;
-    flex-direction: column;
-    background-color: rgba(0,0,0,0.7);
-    position: absolute;
-    top:100%;
-    right:0;
-    width:200px;
-    border-radius:0 0 12px 12px;
-    box-shadow:0 4px 8px rgba(0,0,0,0.3);
-}
-
-.mobile-menu a {
-    color: rgba(255,255,255,0.85);
-    text-decoration:none;
-    padding:10px 20px;
-    font-size:1.2em;
-    border-bottom:1px solid rgba(255,255,255,0.2);
-    transition: color 0.3s;
+.mobile-menu a{
+  color: rgba(255,255,255,0.85);
+  text-decoration:none;
+  padding:10px 20px;
+  font-size:1.2em;
+  border-bottom:1px solid rgba(255,255,255,0.2);
+  transition: color 0.3s;
 }
 .mobile-menu a:hover{ color:#ff6600; }
 
 @media(max-width:768px){
-    nav .menu{ display:none; }
-    .hamburger{ display:block; }
-    nav .logo img{ height:40px; }
-    .mobile-menu{ width:160px; }
-    .mobile-menu a{ font-size:1em; padding:8px 16px; }
+  nav .menu{ display:none; }
+  .hamburger{ display:block; }
+  nav .logo img{ height:40px; }
+  .mobile-menu{ width:160px; }
+  .mobile-menu a{ font-size:1em; padding:8px 16px; }
 }
 @media(max-width:480px){
-    nav .logo img{ height:35px; }
-    .mobile-menu{ width:140px; }
-    .mobile-menu a{ font-size:0.9em; padding:6px 12px; }
+  nav .logo img{ height:35px; }
+  .mobile-menu{ width:140px; }
+  .mobile-menu a{ font-size:0.9em; padding:6px 12px; }
 }
 
 /* ===== CENTRAL CONTAINER ===== */
 .central-container{
-  width:360px;
-  height:600px;
+  width:100%;
+  height:100%;
   position:relative;
-  overflow:hidden;
-  margin-top:70px; /* spazio per nav */
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
-/* STAGE */
+/* ===== STAGE ===== */
 .stage{
   position:absolute;
   inset:0;
   display:flex;
   flex-direction:column;
-  align-items:center;
   justify-content:center;
-  transition:opacity .8s ease;
+  align-items:center;
+  transition:opacity 0.8s ease;
 }
-
 .stage:not(.active){
   opacity:0;
   pointer-events:none;
 }
 
-/* PLAY BUTTON */
+/* ===== PLAY ===== */
+#stagePlay{
+  text-align:center;
+}
+#playTitle{
+  font-size:2.5em;
+  color:white;
+  margin-bottom:30px;
+}
 #playBtn{
-  font-family:'Kaushan Script', cursive;
   font-size:28px;
   padding:14px 28px;
   border-radius:20px;
@@ -133,52 +130,40 @@ nav .menu a:hover { color:#ff6600; }
   border:none;
   cursor:pointer;
   animation:glowBtn 1.5s infinite alternate;
-  margin-top:80px;
 }
-
 #playBtn.moved{
-  margin-top:10px;
   transform:scale(0.9);
   background:transparent;
 }
-
 @keyframes glowBtn{
-  from{ box-shadow:0 0 0px #a32f2f;}
-  to{ box-shadow:0 0 10px #ff4c4c;}
+  from{ box-shadow:0 0 0px #a32f2f; }
+  to{ box-shadow:0 0 15px #ff4c4c; }
 }
 
-/* TESTI */
+/* ===== SEQUENZA ===== */
 .sequence{
   display:flex;
   flex-direction:column;
   gap:12px;
   align-items:center;
-  margin-top:60px;
 }
-
 .sequence p{
   opacity:0;
-  font-size:clamp(18px,4vw,26px);
-  transition:opacity .6s ease;
+  font-size:clamp(18px,4vw,28px);
+  transition:opacity 0.6s ease;
 }
-
 #finalText{
   opacity:0;
-  font-size:clamp(22px,5vw,30px);
-  transition:opacity .6s ease;
+  font-size:clamp(22px,5vw,32px);
+  color:red;
 }
 
-.light{ color:#ffffff; }
-.highlight{ color:red; }
-
-/* COUNTDOWN */
+/* ===== COUNTDOWN ===== */
 #countdown{
   display:grid;
-  grid-template-columns:repeat(2, 1fr);
+  grid-template-columns:repeat(2,1fr);
   gap:14px;
-  margin-top:60px;
 }
-
 .box{
   aspect-ratio:1/1;
   display:flex;
@@ -188,49 +173,42 @@ nav .menu a:hover { color:#ff6600; }
   border-radius:18px;
   background:rgba(255,255,255,0.4);
 }
+.number{ font-size:32px; }
+.label{ font-size:14px; }
 
-.number{
-  font-size:32px;
-}
-
-.label{
-  font-size:14px;
-}
 </style>
 </head>
 <body>
 
 <!-- ===== MENU ===== -->
 <nav>
-    <div class="logo">
-        <a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo"></a>
-    </div>
-
-    <div class="menu">
-        <a href="homepage.html">Homepage</a>
-        <a href="location.html">I luoghi principali</a>
-        <a href="map.html">La Mappa dei nostri consigli</a>
-        <a href="countdown.html">Siete pronti?!</a>
-    </div>
-
-    <div class="hamburger" id="hamburger">☰</div>
-
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="homepage.html">Homepage</a>
-        <a href="location.html">I luoghi principali</a>
-        <a href="map.html">La Mappa dei nostri consigli</a>
-        <a href="countdown.html">Siete pronti?!</a>
-    </div>
+  <div class="logo">
+    <a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo"></a>
+  </div>
+  <div class="menu">
+    <a href="homepage.html">Homepage</a>
+    <a href="location.html">I luoghi principali</a>
+    <a href="map.html">La Mappa dei nostri consigli</a>
+    <a href="countdown.html">Siete pronti?!</a>
+  </div>
+  <div class="hamburger" id="hamburger">☰</div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="homepage.html">Homepage</a>
+    <a href="location.html">I luoghi principali</a>
+    <a href="map.html">La Mappa dei nostri consigli</a>
+    <a href="countdown.html">Siete pronti?!</a>
+  </div>
 </nav>
 
 <div class="central-container">
 
   <!-- PLAY -->
   <div class="stage active" id="stagePlay">
+    <div id="playTitle">Siete pront*?</div>
     <button id="playBtn">▶️ Play</button>
   </div>
 
-  <!-- SEQUENZA -->
+  <!-- SEQUENZA TESTI -->
   <div class="stage" id="stageSequence">
     <div class="sequence">
       <p class="highlight">Ricordatevi di portare:</p>
@@ -241,11 +219,9 @@ nav .menu a:hover { color:#ff6600; }
     </div>
   </div>
 
-  <!-- FINALE -->
+  <!-- TESTO FINALE -->
   <div class="stage" id="stageFinal">
-    <div class="sequence">
-      <p id="finalText" class="highlight">...perché mancano solo...</p>
-    </div>
+    <p id="finalText">...perché mancano solo...</p>
   </div>
 
   <!-- COUNTDOWN -->
@@ -264,29 +240,21 @@ nav .menu a:hover { color:#ff6600; }
 // ===== MENU MOBILE =====
 const mobileMenu = document.getElementById('mobileMenu');
 const hamburger = document.getElementById('hamburger');
-
 hamburger.addEventListener('click', () => {
-    mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+  mobileMenu.style.display = mobileMenu.style.display==='flex'?'none':'flex';
 });
-
-// Chiude menu al click su un link
 mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => mobileMenu.style.display='none');
+  link.addEventListener('click', () => mobileMenu.style.display='none');
 });
-
-// Nasconde tendina se ridimensioni
 window.addEventListener('resize', ()=>{
-    if(window.innerWidth > 768){
-        mobileMenu.style.display='none';
-    }
+  if(window.innerWidth>768) mobileMenu.style.display='none';
 });
 
 // ===== COUNTDOWN =====
 const target = new Date("2026-06-04T16:00:00").getTime();
-
 function updateCountdown(){
   const diff = target - Date.now();
-  if(diff <= 0) return;
+  if(diff<=0) return;
   document.getElementById('days').innerText = Math.floor(diff/86400000);
   document.getElementById('hours').innerText = Math.floor(diff/3600000)%24;
   document.getElementById('minutes').innerText = Math.floor(diff/60000)%60;
@@ -295,38 +263,38 @@ function updateCountdown(){
 setInterval(updateCountdown,1000);
 updateCountdown();
 
-// ===== SEQUENZA PLAY =====
+// ===== SEQUENZA ANIMATA =====
 const stagePlay = document.getElementById("stagePlay");
 const stageSequence = document.getElementById("stageSequence");
 const stageFinal = document.getElementById("stageFinal");
 const stageCountdown = document.getElementById("stageCountdown");
-
-const lines = document.querySelectorAll("#stageSequence p");
+const lines = stageSequence.querySelectorAll("p");
 const finalText = document.getElementById("finalText");
-let index = 0;
+const playBtn = document.getElementById("playBtn");
+const bgMusic = document.getElementById("bgMusic");
 
-function showNextLine(){
-  if(index < lines.length){
-    lines[index].style.opacity = 1;
-    index++;
-    setTimeout(showNextLine, 2000);
+function showSequence(i=0){
+  if(i<lines.length){
+    lines[i].style.opacity = 1;
+    setTimeout(()=> showSequence(i+1), 2000);
   } else {
     stageSequence.classList.remove("active");
     stageFinal.classList.add("active");
-
-    setTimeout(()=> finalText.style.opacity = 1, 200);
-
-    setTimeout(()=>{
+    setTimeout(()=> finalText.style.opacity=1, 200);
+    setTimeout(()=> {
       stageFinal.classList.remove("active");
       stageCountdown.classList.add("active");
-    },2200);
+    }, 2200);
   }
 }
 
-document.getElementById("playBtn").addEventListener("click", ()=>{
+// Play button
+playBtn.addEventListener("click", ()=>{
   stagePlay.classList.remove("active");
+  playBtn.classList.add("moved");
+  bgMusic.play().catch(()=>console.log("Autoplay bloccato"));
   stageSequence.classList.add("active");
-  setTimeout(showNextLine, 1000);
+  setTimeout(()=> showSequence(), 1000);
 });
 </script>
 
