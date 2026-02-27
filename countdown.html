@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
 <!-- Audio nascosto -->
-<audio id="bgMusic" src="music/Are you ready for this.mp3"></audio>
+<audio id="bgMusic" src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/music/Are_You_Ready_For_This.mp3"></audio>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -170,16 +170,19 @@ nav .menu a:hover{ color:#ff6600; }
 }
 .box{
   aspect-ratio:1/1;
+  min-width:120px;
+  min-height:120px;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   border-radius:18px;
-  background:#ffffff;        /* riquadri bianchi */
+  background: linear-gradient(145deg, #ffffff, #f8f8f8); /* sfumatura bianca */
   box-shadow:0 0 15px rgba(255,0,0,0.5); /* shadow rossa */
 }
 .number, .label{
   color:#ff0000;            /* testo rosso */
+  text-shadow:0 0 8px rgba(255,0,0,0.7); /* glow rosso */
 }
 .number{ font-size:32px; }
 .label{ font-size:14px; }
