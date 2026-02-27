@@ -79,21 +79,24 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            background-color: rgba(0,0,0,0.5); /* più opaco */
+            background-color: rgba(0,0,0,0.5); /* menu opaco */
             box-sizing: border-box;
             z-index: 1000;
         }
 
-        /* Logo a sinistra */
         nav .logo img {
             height: 50px;
             cursor: pointer;
         }
 
-        /* Menu a destra */
+        /* Menu desktop */
+        nav .menu {
+            display: flex;
+        }
+
         nav .menu a {
             font-family: 'Kaushan Script', cursive;
-            color: rgba(255,255,255,0.85); /* leggermente trasparente */
+            color: rgba(255,255,255,0.85);
             text-decoration: none;
             margin-left: 20px;
             font-size: 1.2em;
@@ -104,12 +107,47 @@
             color: #ff6600;
         }
 
+        /* Hamburger per mobile */
+        .hamburger {
+            display: none;
+            font-size: 2em;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Menu mobile nascosto inizialmente */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background-color: rgba(0,0,0,0.8);
+            position: fixed;
+            top: 70px;
+            right: 0;
+            width: 200px;
+            padding: 10px;
+            border-radius: 0 0 0 10px;
+            z-index: 1001;
+        }
+
+        .mobile-menu a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            margin: 10px 0;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+
+        .mobile-menu a:hover {
+            color: #ff6600;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             h1 { font-size: 2em; }
             p { font-size: 1.2em; }
             a.button { padding: 10px 20px; font-size: 1em; }
-            nav .menu a { font-size: 1em; margin-left: 15px; }
+            nav .menu { display: none; } /* nasconde menu desktop */
+            .hamburger { display: block; } /* mostra hamburger */
             nav .logo img { height: 40px; }
         }
 
@@ -117,7 +155,8 @@
             h1 { font-size: 1.5em; }
             p { font-size: 1em; }
             a.button { padding: 8px 16px; font-size: 0.9em; }
-            nav .menu a { font-size: 0.9em; margin-left: 10px; }
+            .mobile-menu { width: 160px; top: 60px; }
+            .mobile-menu a { font-size: 1em; margin: 8px 0; }
             nav .logo img { height: 35px; }
         }
     </style>
@@ -129,13 +168,24 @@
         <div class="logo">
             <a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.jpg" alt="Logo"></a>
         </div>
+
         <div class="menu">
             <a href="homepage.html">Homepage</a>
             <a href="location.html">I luoghi principali</a>
             <a href="map.html">La Mappa dei nostri consigli</a>
             <a href="countdown.html">Siete pronti?!</a>
         </div>
+
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
     </nav>
+
+    <!-- Menu mobile -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="homepage.html">Homepage</a>
+        <a href="location.html">I luoghi principali</a>
+        <a href="map.html">La Mappa dei nostri consigli</a>
+        <a href="countdown.html">Siete pronti?!</a>
+    </div>
 
     <!-- Contenuto centrale -->
     <div class="container">
@@ -143,6 +193,17 @@
         <p>Una giornata speciale da condividere con voi</p>
         <a href="#" class="button">Scopri di più</a>
     </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if(menu.style.display === 'flex'){
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'flex';
+            }
+        }
+    </script>
 
 </body>
 </html>
