@@ -9,14 +9,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
-html, body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:'Kaushan Script', cursive;
-  position:relative;
-}
+html, body{width:100%;height:100%;overflow:hidden;font-family:'Kaushan Script', cursive;position:relative;}
 
 /* ===== SFONDO ===== */
 body::before{
@@ -31,56 +24,15 @@ body::before{
 }
 
 /* ===== MENU ===== */
-nav {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 20px;
-    height:70px;
-    background-color:rgba(0,0,0,0.7);
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    z-index:1000;
-}
-
-nav .logo img { height:50px; }
-
-nav .menu { display:flex; }
-
-nav .menu a {
-    color:rgba(255,255,255,0.85);
-    text-decoration:none;
-    margin-left:20px;
-    font-size:1.2em;
-    transition:color .3s;
-}
-nav .menu a:hover { color:#ff6600; }
-
-.hamburger { display:none; font-size:2em; color:#fff; cursor:pointer; }
-
-.mobile-menu {
-    display:none;
-    flex-direction:column;
-    background-color:rgba(0,0,0,0.7);
-    position:absolute;
-    top:100%;
-    right:0;
-    width:200px;
-}
-
-.mobile-menu a{
-    color:white;
-    text-decoration:none;
-    padding:10px 20px;
-    border-bottom:1px solid rgba(255,255,255,0.2);
-}
-
-@media(max-width:768px){
-  nav .menu{display:none;}
-  .hamburger{display:block;}
-}
+nav{display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:70px;background-color:rgba(0,0,0,0.7);position:fixed;top:0;width:100%;z-index:1000;}
+nav .logo img{height:50px;}
+nav .menu{display:flex;}
+nav .menu a{color:rgba(255,255,255,0.85);text-decoration:none;margin-left:20px;font-size:1.2em;transition:color .3s;}
+nav .menu a:hover{color:#ff6600;}
+.hamburger{display:none;font-size:2em;color:#fff;cursor:pointer;}
+.mobile-menu{display:none;flex-direction:column;background-color:rgba(0,0,0,0.7);position:absolute;top:100%;right:0;width:200px;}
+.mobile-menu a{color:white;text-decoration:none;padding:10px 20px;border-bottom:1px solid rgba(255,255,255,0.2);}
+@media(max-width:768px){nav .menu{display:none;}.hamburger{display:block;}}
 
 /* ===== CONTENITORE ===== */
 .central-container{
@@ -95,12 +47,8 @@ nav .menu a:hover { color:#ff6600; }
   text-align:center;
 }
 
-/* ===== TITOLO ===== */
-#playTitle{
-  font-size:2.5em;
-  color:white;
-  margin-bottom:20px;
-}
+/* ===== TITOLO PRINCIPALE ===== */
+#playTitle{font-size:2.5em;color:white;margin-bottom:20px;}
 
 /* ===== PULSANTE ===== */
 #playPauseBtn{
@@ -116,37 +64,61 @@ nav .menu a:hover { color:#ff6600; }
   transition:.3s;
   animation:glowBtn 1.5s infinite alternate;
 }
+@keyframes glowBtn{from{ box-shadow:0 0 0px #a32f2f;}to{ box-shadow:0 0 0px #ff4c4c;}}
 
-@keyframes glowBtn{
-  from{ box-shadow:0 0 0px #a32f2f;}
-  to{ box-shadow:0 0 0px #ff4c4c;}
-}
-
-/* ===== TESTI ===== */
+/* ===== TESTI SEQUENZA ===== */
 .sequence{
   display:flex;
   flex-direction:column;
   gap:15px;
   align-items:center;
-}
-
-.sequence p{
+  position:relative;
   opacity:0;
-  font-size:clamp(18px,4vw,26px);
-  transition:opacity .8s ease;
+  z-index:5;
+  transition:opacity 0.6s ease;
 }
+.sequence p{opacity:0;font-size:clamp(18px,4vw,26px);transition:opacity 0.6s ease;}
+.light{color:white;}
+.highlight{color:#ff0000;}
 
-.light{ color:white; }
-.highlight{ color:#ff0000; }
+/* ===== TITLE WRAPPER ===== */
+.title-wrapper{
+  position:relative;
+  height:40px; 
+  margin-bottom:15px;
+}
+.title-wrapper .main-title{
+  position:absolute;
+  left:50%;
+  top:0;
+  transform:translateX(-50%);
+  opacity:0;
+  transition:opacity 0.6s ease, color 0.6s ease;
+  white-space:nowrap;
+}
+#titleStart, #finalText {
+    font-size: clamp(24px, 6vw, 60px); /* da 28px a max 60px */
+    line-height: 1.1;
+    opacity: 0;   /* invisibile all’inizio */
+    color: #ff0000; /* rosso subito */
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    transition: opacity 0.6s ease;
+}
 
 /* ===== COUNTDOWN ===== */
 #countdown{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:20px;
-  margin-top:40px;
+  margin-top:20px;
+  opacity:0;
+  transform:scale(0.8);
+  transition:opacity 1.5s ease, transform 1.5s ease;
 }
-
 .box{
   aspect-ratio:1/1;
   display:flex;
@@ -158,73 +130,55 @@ nav .menu a:hover { color:#ff6600; }
   width:110px;
   animation:blinkShadow 1.5s infinite alternate;
 }
+@keyframes blinkShadow{from{box-shadow:0 0 10px rgba(255,0,0,0.4);}to{box-shadow:0 0 30px rgba(255,0,0,0.9);}}
+.number{font-size:36px;color:#ff0000;}
+.label{font-size:16px;color:#ff0000;}
+@media(max-width:768px){#countdown{grid-template-columns:repeat(2,1fr);}.box{width:90px;}}
 
-@keyframes blinkShadow{
-  from{ box-shadow:0 0 10px rgba(255,0,0,0.4);}
-  to{ box-shadow:0 0 30px rgba(255,0,0,0.9);}
-}
-
-.number{
-  font-size:36px;
-  color:#ff0000;
-}
-
-.label{
-  font-size:16px;
-  color:#ff0000;
-}
 </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">
-        <a href="homepage.html">
-            <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo">
-        </a>
-    </div>
-
-    <div class="menu">
-        <a href="homepage.html">Homepage</a>
-        <a href="location.html">I luoghi principali</a>
-        <a href="map.html">La Mappa dei nostri consigli</a>
-        <a href="countdown.html">Siete pronti?!</a>
-    </div>
-
-    <div class="hamburger" id="hamburger">☰</div>
-
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="homepage.html">Homepage</a>
-        <a href="location.html">I luoghi principali</a>
-        <a href="map.html">La Mappa dei nostri consigli</a>
-        <a href="countdown.html">Siete pronti?!</a>
-    </div>
+  <div class="logo"><a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo"></a></div>
+  <div class="menu">
+    <a href="homepage.html">Homepage</a>
+    <a href="location.html">I luoghi principali</a>
+    <a href="map.html">La Mappa dei nostri consigli</a>
+    <a href="countdown.html">Siete pronti?!</a>
+  </div>
+  <div class="hamburger" id="hamburger">☰</div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="homepage.html">Homepage</a>
+    <a href="location.html">I luoghi principali</a>
+    <a href="map.html">La Mappa dei nostri consigli</a>
+    <a href="countdown.html">Siete pronti?!</a>
+  </div>
 </nav>
 
 <div class="central-container">
 
-<div id="playTitle">Siete pront*?</div>
+  <div id="playTitle">Siete pront*?</div>
+  <button id="playPauseBtn">SI!!!</button>
 
-<button id="playPauseBtn">👠 Sì!</button>
+  <div class="title-wrapper">
+    <div id="titleStart" class="main-title light">Ricordatevi di portare:</div>
+    <div id="finalText" class="main-title highlight">...perché mancano solo...</div>
+  </div>
 
-<div class="sequence" id="sequence">
-<p class="highlight">Ricordatevi di portare:</p>
-<p class="light">1. Il vostro sorriso migliore!</p>
-<p class="light">2. Un costume!</p>
-<p class="light">3. Tanta voglia di divertirvi!</p>
-<p class="highlight">4. Scarpe rosse e comode!</p>
-</div>
+  <div class="sequence" id="sequence">
+    <p class="light">1. Il vostro sorriso migliore!</p>
+    <p class="light">2. Un costume!</p>
+    <p class="light">3. Tanta voglia di divertirvi!</p>
+    <p class="highlight">4. Scarpe rosse e comode!</p>
+  </div>
 
-<div id="finalText" class="highlight" style="opacity:0; margin-top:20px;">
-...perché mancano solo...
-</div>
-
-<div id="countdown" style="display:none;">
-<div class="box"><div class="number" id="days">0</div><div class="label">gg</div></div>
-<div class="box"><div class="number" id="hours">0</div><div class="label">hh</div></div>
-<div class="box"><div class="number" id="minutes">0</div><div class="label">mm</div></div>
-<div class="box"><div class="number" id="seconds">0</div><div class="label">ss</div></div>
-</div>
+  <div id="countdown">
+    <div class="box"><div class="number" id="days">0</div><div class="label">gg</div></div>
+    <div class="box"><div class="number" id="hours">0</div><div class="label">hh</div></div>
+    <div class="box"><div class="number" id="minutes">0</div><div class="label">mm</div></div>
+    <div class="box"><div class="number" id="seconds">0</div><div class="label">ss</div></div>
+  </div>
 
 </div>
 
@@ -234,61 +188,59 @@ nav .menu a:hover { color:#ff6600; }
 const playBtn = document.getElementById("playPauseBtn");
 const bgMusic = document.getElementById("bgMusic");
 const lines = document.querySelectorAll("#sequence p");
+const titleStart = document.getElementById("titleStart");
 const finalText = document.getElementById("finalText");
+const sequence = document.getElementById("sequence");
 const countdown = document.getElementById("countdown");
 
 let index = 0;
 let animationStarted = false;
 
-/* PLAY / PAUSE SEMPRE ATTIVO */
 playBtn.addEventListener("click", ()=>{
-
   if(!animationStarted){
     animationStarted = true;
     playBtn.innerText = "⏸️ Pause";
     bgMusic.play();
-    startSequence();
+
+    // Fade-in rosso
+    setTimeout(()=>{ titleStart.style.opacity=1; }, 600);
+
+    // Parte la sequenza
+    setTimeout(()=>{ startSequence(); }, 1500);
+
   } else {
-    if(bgMusic.paused){
-      bgMusic.play();
-      playBtn.innerText="⏸️ Pause";
-    } else {
-      bgMusic.pause();
-      playBtn.innerText="▶️ Play";
-    }
+    if(bgMusic.paused){ bgMusic.play(); playBtn.innerText="⏸️ Pause"; }
+    else { bgMusic.pause(); playBtn.innerText="▶️ Play"; }
   }
 });
 
-/* SEQUENZA */
 function startSequence(){
-  setTimeout(()=> showNextLine(), 2500); // attesa più lunga
+  sequence.style.opacity = 1;
+  showNextLine();
 }
 
 function showNextLine(){
-  if(index < lines.length){
-    lines[index].style.opacity = 1;
+  if(index<lines.length){
+    lines[index].style.opacity=1;
     index++;
-    setTimeout(showNextLine, 2200);
+    setTimeout(showNextLine, 1000);
   } else {
-    // Dopo l'ultimo elemento, far sparire la sequenza
+    // Fade-out lista
+    setTimeout(()=>{ sequence.style.opacity=0; }, 500);
+    // Cambio titolo
     setTimeout(()=>{
-      lines.forEach(line => line.style.opacity = 0); // sparisce tutto
-    }, 1000);
-
-    // Mostrare il testo finale
+      titleStart.style.opacity=0;
+      finalText.style.opacity=1;
+    }, 600);
+    // Mostra countdown
     setTimeout(()=>{
-      finalText.style.opacity = 1;
-    }, 1500);
-
-    // Mostrare il countdown con 4 riquadri orizzontali
-    setTimeout(()=>{
-      countdown.style.display="grid";
-      countdown.style.gridTemplateColumns="repeat(4, 1fr)"; // 4 colonne
-    }, 2500);
+      countdown.style.opacity=1;
+      countdown.style.transform="scale(1)";
+    }, 1200);
   }
 }
 
-/* COUNTDOWN */
+// COUNTDOWN
 const target = new Date("2026-06-04T16:00:00").getTime();
 setInterval(()=>{
   const diff = target - Date.now();
@@ -299,28 +251,13 @@ setInterval(()=>{
   document.getElementById('seconds').innerText=Math.floor(diff/1000)%60;
 },1000);
 
-// ===== MENU MOBILE =====
+// MENU MOBILE
 const mobileMenu = document.getElementById('mobileMenu');
 const hamburger = document.getElementById('hamburger');
-
-hamburger.addEventListener('click', () => {
-    mobileMenu.style.display =
-        mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-});
-
-mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-        mobileMenu.style.display = 'none';
-    });
-});
-
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        mobileMenu.style.display = 'none';
-    }
-});
+hamburger.addEventListener('click', ()=>{ mobileMenu.style.display = mobileMenu.style.display==='flex'?'none':'flex'; });
+mobileMenu.querySelectorAll('a').forEach(link=>{ link.addEventListener('click', ()=>{ mobileMenu.style.display='none'; }); });
+window.addEventListener('resize', ()=>{ if(window.innerWidth>768) mobileMenu.style.display='none'; });
 
 </script>
-
 </body>
 </html>
