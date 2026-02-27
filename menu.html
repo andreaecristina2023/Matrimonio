@@ -2,6 +2,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
 <style>
+/* Menu fisso in cima */
 nav {
     font-family: 'Kaushan Script', cursive;
     display: flex;
@@ -18,7 +19,7 @@ nav {
     z-index: 1000;
 }
 
-/* Logo proporzionale */
+/* Logo proporzionato */
 nav .logo img {
     display: block;
     height: 50px; /* desktop */
@@ -107,34 +108,3 @@ nav .menu a:hover { color: #ff6600; }
         <a href="countdown.html">Siete pronti?!</a>
     </div>
 </nav>
-
-<script>
-/* Funzione per inizializzare menu mobile */
-function initMenu() {
-    const mobileMenu = document.getElementById('mobileMenu');
-    const hamburger = document.getElementById('hamburger');
-    if(!mobileMenu || !hamburger) return;
-
-    // Toggle menu hamburger
-    hamburger.addEventListener('click', () => {
-        if(mobileMenu.style.display === 'flex'){
-            mobileMenu.style.display = 'none';
-        } else {
-            mobileMenu.style.display = 'flex';
-        }
-    });
-
-    // Chiude menu al click su un link
-    const links = mobileMenu.querySelectorAll('a');
-    links.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.style.display = 'none';
-        });
-    });
-}
-
-/* Quando il menu viene caricato via fetch, chiami initMenu */
-document.addEventListener('DOMContentLoaded', () => {
-    initMenu();
-});
-</script>
