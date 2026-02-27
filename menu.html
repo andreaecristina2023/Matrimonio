@@ -21,7 +21,15 @@ nav {
 /* Logo */
 nav .logo img {
     display: block;
-    height: 50px; /* il logo non supera mai l'altezza del nav */
+    height: 50px; /* desktop */
+}
+
+@media (max-width: 768px) {
+    nav .logo img { height: 40px; }
+}
+
+@media (max-width: 480px) {
+    nav .logo img { height: 35px; }
 }
 
 /* Menu desktop */
