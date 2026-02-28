@@ -1,356 +1,506 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Andrea e Cristina 04.06.2026</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Andrea e Cristina 04.06.2026</title>
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png"
+    href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
 
-<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-html, body{width:100%;height:100%;overflow:hidden;font-family:'Kaushan Script', cursive;position:relative;}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* ===== SFONDO ===== */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-    url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
-  background-size:cover;
-  z-index:-1;
-}
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Kaushan Script', cursive;
+      position: relative;
+    }
 
-/* ===== MENU ===== */
-nav{display:flex;justify-content:space-between;align-items:center;padding:0 20px;height:70px;background-color:rgba(0,0,0,0.7);position:fixed;top:0;width:100%;z-index:1000;}
-nav .logo img{height:50px;}
-nav .menu{display:flex;}
-nav .menu a{color:rgba(255,255,255,0.85);text-decoration:none;margin-left:20px;font-size:1.2em;transition:color .3s;}
-nav .menu a:hover{color:#ff0000;}
-.hamburger{display:none;font-size:2em;color:#fff;cursor:pointer;}
-.mobile-menu{display:none;flex-direction:column;background-color:rgba(0,0,0,0.7);position:absolute;top:100%;right:0;width:200px;
-  border-radius: 0 0 0px 18px;        /* 👈 arrotonda */
-  overflow:hidden;           /* 👈 IMPORTANTISSIMO */}
-.mobile-menu a{color:white;text-decoration:none;padding:10px 20px;border-bottom:1px solid rgba(255,255,255,0.2);}
-@media(max-width:768px){nav .menu{display:none;}.hamburger{display:block;}}
+    /* ===== SFONDO ===== */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
+      background-size: cover;
+      z-index: -1;
+    }
 
-/* ===== CONTENITORE ===== */
-.central-container{
-  width:100%;
-  height:100vh;
-  margin-top:70px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-  padding-top:40px;
-  text-align:center;
-}
+    /* ===== MENU ===== */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      height: 70px;
+      background-color: rgba(0, 0, 0, 0.7);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
 
-/* ===== TITOLO PRINCIPALE ===== */
-#playTitle{font-size:2.5em;color:white;margin-bottom:20px;}
+    nav .logo img {
+      height: 50px;
+    }
 
-/* ===== PULSANTE ===== */
-#playPauseBtn{
-  font-family:'Kaushan Script', cursive;
-  font-size:26px;
-  padding:10px 25px;
-  border-radius:30px;
-  background:#a32f2f;
-  color:white;
-  border:none;
-  cursor:pointer;
-  margin-bottom:30px;
-  transition:.3s;
-  animation:glowBtn 1.5s infinite alternate;
-}
-@keyframes glowBtn{from{ box-shadow:0 0 0px #a32f2f;}to{ box-shadow:0 0 0px #ff4c4c;}}
+    nav .menu {
+      display: flex;
+    }
 
-/* ===== TESTI SEQUENZA ===== */
-.sequence{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  flex-direction:column;
-  gap:15px;
-  align-items:center;
-  opacity:0;
-  z-index:10;
-  transition:opacity 0.6s ease;
-  pointer-events:none;   /* 🔥 AGGIUNGI QUESTO */
-}
-.sequence p{opacity:0;font-size:clamp(18px,4vw,24px);transition:opacity 0.6s ease;}
-.light{color:white;}
-.highlight{color:#ff0000;}
+    nav .menu a {
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 1.2em;
+      transition: color .3s;
+    }
 
-/* ===== TITLE WRAPPER ===== */
-.title-wrapper{
-  position:relative;
-  height:40px; 
-  margin-bottom:15px;
-}
-.title-wrapper .main-title{
-  position:absolute;
-  left:50%;
-  top:0;
-  transform:translateX(-50%);
-  opacity:0;
-  transition:opacity 0.35s ease; /* più veloce = più secco */
-  white-space:nowrap;
-}
-#titleStart, #finalText {
-    font-size: clamp(24px, 6vw, 30px); /* da 28px a max 60px */
-    line-height: 1.1;
-    opacity: 0;   /* invisibile all’inizio */
-    color: #ff0000; /* rosso subito */
-    position: absolute;
-    left: 50%;
-    top: 5%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    transition: opacity 0.6s ease;
-}
+    nav .menu a:hover {
+      color: #ff0000;
+    }
 
-/* ===== COUNTDOWN ===== */
-#countdown{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translateX(-50%) scale(0.6); /* parte più piccolo */
-  transition:opacity 0.4s ease, transform 0.4s cubic-bezier(.68,-0.55,.27,1.55);
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:20px;
-  opacity:0;
-  transition:opacity 0.6s ease, transform 0.6s ease;
-  pointer-events:none;   /* 🔥 AGGIUNGI QUESTO */
-}
-.box{
-  aspect-ratio:1/1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  border-radius:20px;
-  background:rgba(255,255,255,0.9);
-  width:110px;
-  opacity:0;
-  transition:opacity 0.6s ease;
-  animation:blinkShadow 1.5s infinite alternate;
-}
-@keyframes blinkShadow{from{box-shadow:0 0 10px rgba(255,0,0,0.4);}to{box-shadow:0 0 30px rgba(255,0,0,0.9);}}
-.number{font-size:36px;color:#ff0000;}
-.label{font-size:16px;color:#ff0000;}
-@media(max-width:768px){#countdown{grid-template-columns:repeat(2,1fr);}.box{width:90px;}}
+    .hamburger {
+      display: none;
+      font-size: 2em;
+      color: #fff;
+      cursor: pointer;
+    }
 
-</style>
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background-color: rgba(0, 0, 0, 0.7);
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 200px;
+      border-radius: 0 0 0px 18px;
+      /* 👈 arrotonda */
+      overflow: hidden;
+      /* 👈 IMPORTANTISSIMO */
+    }
+
+    .mobile-menu a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    @media(max-width:768px) {
+      nav .menu {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+
+    /* ===== CONTENITORE ===== */
+    .central-container {
+      width: 100%;
+      height: 100vh;
+      margin-top: 70px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 40px;
+      text-align: center;
+    }
+
+    /* ===== TITOLO PRINCIPALE ===== */
+    #playTitle {
+      font-size: 2.5em;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    /* ===== PULSANTE ===== */
+    #playPauseBtn {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 26px;
+      padding: 10px 25px;
+      border-radius: 30px;
+      background: #a32f2f;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 30px;
+      transition: .3s;
+      animation: glowBtn 1.5s infinite alternate;
+    }
+
+    @keyframes glowBtn {
+      from {
+        box-shadow: 0 0 0px #a32f2f;
+      }
+
+      to {
+        box-shadow: 0 0 0px #ff4c4c;
+      }
+    }
+
+    /* ===== TESTI SEQUENZA ===== */
+    .sequence {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+      opacity: 0;
+      z-index: 10;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      /* 🔥 AGGIUNGI QUESTO */
+    }
+
+    .sequence p {
+      opacity: 0;
+      font-size: clamp(18px, 4vw, 24px);
+      transition: opacity 0.6s ease;
+    }
+
+    .light {
+      color: white;
+    }
+
+    .highlight {
+      color: #ff0000;
+    }
+
+    /* ===== TITLE WRAPPER ===== */
+    .title-wrapper {
+      position: relative;
+      height: 40px;
+      margin-bottom: 15px;
+    }
+
+    .title-wrapper .main-title {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      /* più veloce = più secco */
+      white-space: nowrap;
+    }
+
+    #titleStart,
+    #finalText {
+      font-size: clamp(24px, 6vw, 30px);
+      /* da 28px a max 60px */
+      line-height: 1.1;
+      opacity: 0;
+      /* invisibile all’inizio */
+      color: #ff0000;
+      /* rosso subito */
+      position: absolute;
+      left: 50%;
+      top: 5%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      transition: opacity 0.6s ease;
+    }
+
+    /* ===== COUNTDOWN ===== */
+    #countdown {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) scale(0.6);
+      /* parte più piccolo */
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(.68, -0.55, .27, 1.55);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      opacity: 0;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      pointer-events: none;
+      /* 🔥 AGGIUNGI QUESTO */
+    }
+
+    .box {
+      aspect-ratio: 1/1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      width: 110px;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      animation: blinkShadow 1.5s infinite alternate;
+    }
+
+    @keyframes blinkShadow {
+      from {
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+      }
+
+      to {
+        box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+      }
+    }
+
+    .number {
+      font-size: 36px;
+      color: #ff0000;
+    }
+
+    .label {
+      font-size: 16px;
+      color: #ff0000;
+    }
+
+    @media(max-width:768px) {
+      #countdown {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .box {
+        width: 90px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="logo"><a href="homepage.html"><img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo"></a></div>
-  <div class="menu">
-    <a href="homepage.html">Homepage</a>
-    <a href="location.html">I luoghi principali</a>
-    <a href="map.html">La Mappa dei nostri consigli</a>
-    <a href="countdown.html" style="color:#ff0000;"><strong>Siete pronti?!</strong></a>
+  <nav>
+    <div class="logo"><a href="homepage.html"><img
+          src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo"></a>
+    </div>
+    <div class="menu">
+      <a href="homepage.html">Homepage</a>
+      <a href="location.html">I luoghi principali</a>
+      <a href="map.html">La Mappa dei nostri consigli</a>
+      <a href="countdown.html" style="color:#ff0000;"><strong>Siete pronti?!</strong></a>
+    </div>
+    <div class="hamburger" id="hamburger">☰</div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="homepage.html">Homepage</a>
+      <a href="location.html">I luoghi principali</a>
+      <a href="map.html">La Mappa dei nostri consigli</a>
+      <a href="countdown.html" style="color:#ff0000;"><strong>Siete pronti?!</strong></a>
+    </div>
+  </nav>
+
+  <div class="central-container">
+
+    <div id="playTitle">Siete pront*?</div>
+    <button id="playPauseBtn">SI!!!</button>
+
+    <div class="title-wrapper">
+      <div id="titleStart" class="main-title light">Ricordatevi di portare:</div>
+      <div id="finalText" class="main-title highlight">...perché mancano solo...</div>
+    </div>
+
+    <div class="sequence" id="sequence">
+      <p class="light">1. Il vostro sorriso migliore!</p>
+      <p class="light">2. Un costume!</p>
+      <p class="light">3. Tanta voglia di divertirvi!</p>
+      <p class="highlight">4. Scarpe rosse e comode!</p>
+    </div>
+
+    <div id="countdown">
+      <div class="box">
+        <div class="number" id="days">0</div>
+        <div class="label">gg</div>
+      </div>
+      <div class="box">
+        <div class="number" id="hours">0</div>
+        <div class="label">hh</div>
+      </div>
+      <div class="box">
+        <div class="number" id="minutes">0</div>
+        <div class="label">mm</div>
+      </div>
+      <div class="box">
+        <div class="number" id="seconds">0</div>
+        <div class="label">ss</div>
+      </div>
+    </div>
+
   </div>
-  <div class="hamburger" id="hamburger">☰</div>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="homepage.html">Homepage</a>
-    <a href="location.html">I luoghi principali</a>
-    <a href="map.html">La Mappa dei nostri consigli</a>
-    <a href="countdown.html" style="color:#ff0000;"><strong>Siete pronti?!</strong></a>
-  </div>
-</nav>
 
-<div class="central-container">
+  <audio id="bgMusic"
+    src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/music/Are_You_Ready_For_This.mp3"></audio>
 
-  <div id="playTitle">Siete pront*?</div>
-  <button id="playPauseBtn">SI!!!</button>
+  <script>
+    const playBtn = document.getElementById("playPauseBtn");
+    const bgMusic = document.getElementById("bgMusic");
+    const lines = document.querySelectorAll("#sequence p");
+    const titleStart = document.getElementById("titleStart");
+    const finalText = document.getElementById("finalText");
+    const sequence = document.getElementById("sequence");
+    const countdown = document.getElementById("countdown");
 
-  <div class="title-wrapper">
-    <div id="titleStart" class="main-title light">Ricordatevi di portare:</div>
-    <div id="finalText" class="main-title highlight">...perché mancano solo...</div>
-  </div>
+    let index = 0;
+    let animationStarted = false;
+    let timeouts = [];
+    let isPaused = false;
 
-  <div class="sequence" id="sequence">
-    <p class="light">1. Il vostro sorriso migliore!</p>
-    <p class="light">2. Un costume!</p>
-    <p class="light">3. Tanta voglia di divertirvi!</p>
-    <p class="highlight">4. Scarpe rosse e comode!</p>
-  </div>
+    playBtn.addEventListener("click", () => {
 
-  <div id="countdown">
-    <div class="box"><div class="number" id="days">0</div><div class="label">gg</div></div>
-    <div class="box"><div class="number" id="hours">0</div><div class="label">hh</div></div>
-    <div class="box"><div class="number" id="minutes">0</div><div class="label">mm</div></div>
-    <div class="box"><div class="number" id="seconds">0</div><div class="label">ss</div></div>
-  </div>
+      if (!animationStarted) {
 
-</div>
+        animationStarted = true;
+        playBtn.innerText = "⏸️ Pause";
+        bgMusic.play();
 
-<audio id="bgMusic" src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/music/Are_You_Ready_For_This.mp3"></audio>
+        timeouts.push(setTimeout(() => {
+          titleStart.style.opacity = 1;
+        }, 600));
 
-<script>
-const playBtn = document.getElementById("playPauseBtn");
-const bgMusic = document.getElementById("bgMusic");
-const lines = document.querySelectorAll("#sequence p");
-const titleStart = document.getElementById("titleStart");
-const finalText = document.getElementById("finalText");
-const sequence = document.getElementById("sequence");
-const countdown = document.getElementById("countdown");
+        timeouts.push(setTimeout(() => {
+          startSequence();
+        }, 1500));
 
-let index = 0;
-let animationStarted = false;
-let timeouts = [];
-let isPaused = false;
+      } else {
 
-playBtn.addEventListener("click", () => {
+        if (isPaused) {
+          // RIPRENDI
+          isPaused = false;
+          playBtn.innerText = "⏸️ Pause";
+          bgMusic.play();
+          showNextLine();
+        } else {
+          // PAUSA
+          isPaused = true;
+          playBtn.innerText = "▶️ Play";
+          bgMusic.pause();
 
-  if (!animationStarted) {
+          timeouts.forEach(t => clearTimeout(t));
+          timeouts = [];
+        }
+      }
+    });
 
-    animationStarted = true;
-    playBtn.innerText = "⏸️ Pause";
-    bgMusic.play();
-
-    timeouts.push(setTimeout(() => {
-      titleStart.style.opacity = 1;
-    }, 600));
-
-    timeouts.push(setTimeout(() => {
-      startSequence();
-    }, 1500));
-
-  } else {
-
-    if (isPaused) {
-      // RIPRENDI
-      isPaused = false;
-      playBtn.innerText = "⏸️ Pause";
-      bgMusic.play();
+    function startSequence() {
+      sequence.style.opacity = 1;
       showNextLine();
-    } else {
-      // PAUSA
-      isPaused = true;
-      playBtn.innerText = "▶️ Play";
-      bgMusic.pause();
-
-      timeouts.forEach(t => clearTimeout(t));
-      timeouts = [];
     }
-  }
-});
 
-function startSequence() {
-  sequence.style.opacity = 1;
-  showNextLine();
-}
-
-function showNextLine() {
-
-  if (isPaused) return;
-
-  if (index < lines.length) {
-
-    let current = lines[index];
-    current.style.opacity = 1;
-    index++;
-
-    let t = setTimeout(() => {
-      showNextLine();
-    }, 1800);
-
-    timeouts.push(t);
-
-  } else {
-
-    let t = setTimeout(() => {
+    function showNextLine() {
 
       if (isPaused) return;
 
+      if (index < lines.length) {
 
-      // 2️⃣ Sparisce primo titolo
-      let t2 = setTimeout(() => {
+        let current = lines[index];
+        current.style.opacity = 1;
+        index++;
 
-        if (isPaused) return;
+        let t = setTimeout(() => {
+          showNextLine();
+        }, 1800);
 
-        titleStart.style.opacity = 0;
-        // 1️⃣ Sparisce lista
-        sequence.style.opacity = 0;
+        timeouts.push(t);
 
-        // 3️⃣ Micro pausa teatrale
-        let t3 = setTimeout(() => {
+      } else {
+
+        let t = setTimeout(() => {
 
           if (isPaused) return;
 
-          // 4️⃣ Entra nuovo testo
-          finalText.style.opacity = 1;
 
-          // 5️⃣ Countdown con effetto pop
-          countdown.style.opacity = 1;
-          countdown.style.transform = "translateX(-50%) scale(1)";
+          // 2️⃣ Sparisce primo titolo
+          let t2 = setTimeout(() => {
 
-          const boxes = document.querySelectorAll(".box");
-          boxes.forEach(box => box.style.opacity = 1);
+            if (isPaused) return;
 
-        }, 1800);
+            titleStart.style.opacity = 0;
+            // 1️⃣ Sparisce lista
+            sequence.style.opacity = 0;
 
-        timeouts.push(t3);
+            // 3️⃣ Micro pausa teatrale
+            let t3 = setTimeout(() => {
 
-      }, 1000);
+              if (isPaused) return;
 
-      timeouts.push(t2);
+              // 4️⃣ Entra nuovo testo
+              finalText.style.opacity = 1;
 
-    }, 2500);
+              // 5️⃣ Countdown con effetto pop
+              countdown.style.opacity = 1;
+              countdown.style.transform = "translateX(-50%) scale(1)";
 
-    timeouts.push(t);
-  }
-}
+              const boxes = document.querySelectorAll(".box");
+              boxes.forEach(box => box.style.opacity = 1);
+
+            }, 1800);
+
+            timeouts.push(t3);
+
+          }, 1000);
+
+          timeouts.push(t2);
+
+        }, 2500);
+
+        timeouts.push(t);
+      }
+    }
 
 
-// COUNTDOWN
-const target = new Date("2026-06-04T16:00:00").getTime();
+    // COUNTDOWN
+    const target = new Date("2026-06-04T16:00:00").getTime();
 
-setInterval(() => {
+    setInterval(() => {
 
-  const diff = target - Date.now();
-  if (diff <= 0) return;
+      const diff = target - Date.now();
+      if (diff <= 0) return;
 
-  document.getElementById('days').innerText = Math.floor(diff / 86400000);
-  document.getElementById('hours').innerText = Math.floor(diff / 3600000) % 24;
-  document.getElementById('minutes').innerText = Math.floor(diff / 60000) % 60;
-  document.getElementById('seconds').innerText = Math.floor(diff / 1000) % 60;
+      document.getElementById('days').innerText = Math.floor(diff / 86400000);
+      document.getElementById('hours').innerText = Math.floor(diff / 3600000) % 24;
+      document.getElementById('minutes').innerText = Math.floor(diff / 60000) % 60;
+      document.getElementById('seconds').innerText = Math.floor(diff / 1000) % 60;
 
-}, 1000);
+    }, 1000);
 
 
-// MENU MOBILE
-const mobileMenu = document.getElementById('mobileMenu');
-const hamburger = document.getElementById('hamburger');
+    // MENU MOBILE
+    const mobileMenu = document.getElementById('mobileMenu');
+    const hamburger = document.getElementById('hamburger');
 
-hamburger.addEventListener('click', () => {
-  mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-});
+    hamburger.addEventListener('click', () => {
+      mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
 
-mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    mobileMenu.style.display = 'none';
-  });
-});
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.style.display = 'none';
+      });
+    });
 
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 768) {
-    mobileMenu.style.display = 'none';
-  }
-});
-</script>
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        mobileMenu.style.display = 'none';
+      }
+    });
+  </script>
 </body>
+
 </html>
