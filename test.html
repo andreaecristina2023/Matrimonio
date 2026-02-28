@@ -68,14 +68,18 @@ nav .menu a:hover{color:#ff6600;}
 
 /* ===== TESTI SEQUENZA ===== */
 .sequence{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translateX(-50%);
   display:flex;
   flex-direction:column;
   gap:15px;
   align-items:center;
-  position:relative;
   opacity:0;
-  z-index:5;
+  z-index:10;
   transition:opacity 0.6s ease;
+  pointer-events:none;   /* 🔥 AGGIUNGI QUESTO */
 }
 .sequence p{opacity:0;font-size:clamp(18px,4vw,26px);transition:opacity 0.6s ease;}
 .light{color:white;}
@@ -111,13 +115,16 @@ nav .menu a:hover{color:#ff6600;}
 
 /* ===== COUNTDOWN ===== */
 #countdown{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translateX(-50%) scale(0.8);
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:20px;
-  margin-top:20px;
   opacity:0;
-  transform:scale(0.8);
-  transition:opacity 1.5s ease, transform 1.5s ease;
+  transition:opacity 0.6s ease, transform 0.6s ease;
+  pointer-events:none;   /* 🔥 AGGIUNGI QUESTO */
 }
 .box{
   aspect-ratio:1/1;
@@ -128,6 +135,8 @@ nav .menu a:hover{color:#ff6600;}
   border-radius:20px;
   background:rgba(255,255,255,0.9);
   width:110px;
+  opacity:0;
+  transition:opacity 0.6s ease;
   animation:blinkShadow 1.5s infinite alternate;
 }
 @keyframes blinkShadow{from{box-shadow:0 0 10px rgba(255,0,0,0.4);}to{box-shadow:0 0 30px rgba(255,0,0,0.9);}}
@@ -195,22 +204,38 @@ const countdown = document.getElementById("countdown");
 
 let index = 0;
 let animationStarted = false;
+let timeouts = [];
+let isPaused = false;
 
 playBtn.addEventListener("click", ()=>{
+
   if(!animationStarted){
     animationStarted = true;
     playBtn.innerText = "⏸️ Pause";
     bgMusic.play();
 
-    // Fade-in rosso
-    setTimeout(()=>{ titleStart.style.opacity=1; }, 600);
-
-    // Parte la sequenza
-    setTimeout(()=>{ startSequence(); }, 1500);
+    timeouts.push(setTimeout(()=>{ titleStart.style.opacity=1; }, 600));
+    timeouts.push(setTimeout(()=>{ startSequence(); }, 1500));
 
   } else {
-    if(bgMusic.paused){ bgMusic.play(); playBtn.innerText="⏸️ Pause"; }
-    else { bgMusic.pause(); playBtn.innerText="▶️ Play"; }
+
+    if(isPaused){
+      // RIPRENDI
+      isPaused = false;
+      playBtn.innerText="⏸️ Pause";
+      bgMusic.play();
+      showNextLine(); // riparte da dove era rimasto
+    } else {
+      // METTI IN PAUSA
+      isPaused = true;
+      playBtn.innerText="▶️ Play";
+      bgMusic.pause();
+
+      // Blocca tutti i timeout attivi
+      timeouts.forEach(t => clearTimeout(t));
+      timeouts = [];
+    }
+
   }
 });
 
@@ -220,23 +245,49 @@ function startSequence(){
 }
 
 function showNextLine(){
-  if(index<lines.length){
-    lines[index].style.opacity=1;
+
+  if(isPaused) return;
+
+  if(index < lines.length){
+
+    let current = lines[index];
+    current.style.opacity = 1;
     index++;
-    setTimeout(showNextLine, 1000);
-  } else {
-    // Fade-out lista
-    setTimeout(()=>{ sequence.style.opacity=0; }, 500);
-    // Cambio titolo
-    setTimeout(()=>{
-      titleStart.style.opacity=0;
-      finalText.style.opacity=1;
-    }, 600);
-    // Mostra countdown
-    setTimeout(()=>{
-      countdown.style.opacity=1;
-      countdown.style.transform="scale(1)";
+
+    let t = setTimeout(() => {
+      showNextLine();
     }, 1200);
+
+    timeouts.push(t);
+
+  } else {
+
+    let t = setTimeout(() => {
+
+      if(isPaused) return;
+
+      sequence.style.opacity = 0;
+
+      let t2 = setTimeout(()=>{
+
+        if(isPaused) return;
+
+        titleStart.style.opacity = 0;
+        finalText.style.opacity = 1;
+
+        countdown.style.opacity = 1;
+        countdown.style.transform = "translateX(-50%) scale(1)";
+
+        const boxes = document.querySelectorAll(".box");
+        boxes.forEach(box => box.style.opacity = 1);
+
+      }, 600);
+
+      timeouts.push(t2);
+
+    }, 1500);
+
+    timeouts.push(t);
   }
 }
 
