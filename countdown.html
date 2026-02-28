@@ -287,6 +287,8 @@
 </head>
 
 <body>
+  <!-- Menu incluso via fetch -->
+  <div id="menu-placeholder"></div>
 
   <nav>
     <div class="logo"><a href="homepage.html"><img
@@ -361,6 +363,18 @@
     let animationStarted = false;
     let timeouts = [];
     let isPaused = false;
+
+    // Evidenzia la pagina corrente nel menu
+    const currentPage = window.location.pathname.split("/").pop(); // es. "location.html"
+    const menuLinks = document.querySelectorAll('#menu-placeholder a');
+
+    menuLinks.forEach(link => {
+      const linkPage = link.getAttribute('href');
+      if (linkPage === currentPage) {
+        link.style.color = "#ff0000";       // rosso
+        link.style.fontWeight = "bold";     // opzionale: grassetto
+      }
+    });
 
     playBtn.addEventListener("click", () => {
 
