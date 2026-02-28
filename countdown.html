@@ -158,14 +158,14 @@ nav .menu a:hover{color:#ff0000;}
     <a href="homepage.html">Homepage</a>
     <a href="location.html">I luoghi principali</a>
     <a href="map.html">La Mappa dei nostri consigli</a>
-    <a href="countdown.html">Siete pronti?!</a>
+    <a href="countdown.html" style="color:#ff0000;"><strong>Siete pronti?!</strong></a>
   </div>
   <div class="hamburger" id="hamburger">☰</div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="homepage.html">Homepage</a>
     <a href="location.html">I luoghi principali</a>
     <a href="map.html">La Mappa dei nostri consigli</a>
-    <a href="countdown.html">Siete pronti?!</a>
+    <a href="countdown.html" style="color:#ff0000;"><strong>Siete pronti?!</strong></a>
   </div>
 </nav>
 
@@ -264,7 +264,7 @@ function showNextLine() {
 
     let t = setTimeout(() => {
       showNextLine();
-    }, 1200);
+    }, 1800);
 
     timeouts.push(t);
 
@@ -299,7 +299,7 @@ function showNextLine() {
           const boxes = document.querySelectorAll(".box");
           boxes.forEach(box => box.style.opacity = 1);
 
-        }, 800);
+        }, 1800);
 
         timeouts.push(t3);
 
