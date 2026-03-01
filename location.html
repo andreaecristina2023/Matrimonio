@@ -26,8 +26,8 @@ body::before {
 .central-wrapper {
     display:flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
+    justify-content: flex-start;
     text-align: center;
     visibility: hidden;
     width: 100%;
@@ -40,26 +40,22 @@ body::before {
 }
 
 /* ===== MENU ===== */
-nav .menu a,
-.mobile-menu a {
+nav .menu a, .mobile-menu a {
     color: rgba(255,255,255,0.85);
     text-decoration: none;
     border-bottom: 2px solid transparent;
     transition: all 0.3s;
 }
-nav .menu a:hover:not(.active),
-.mobile-menu a:hover:not(.active) {
+nav .menu a:hover:not(.active), .mobile-menu a:hover:not(.active) {
     border-bottom: 2px solid #ff0000;
     color: rgba(255,255,255,0.85);
 }
-nav .menu a.active,
-.mobile-menu a.active {
+nav .menu a.active, .mobile-menu a.active {
     color: #ff0000;
     font-weight: bold;
     border-bottom: 2px solid transparent;
 }
-nav .menu a.active:hover,
-.mobile-menu a.active:hover {
+nav .menu a.active:hover, .mobile-menu a.active:hover {
     border-bottom: 2px solid #ff0000;
     color: #ff0000;
 }
@@ -69,8 +65,7 @@ nav .menu a.active:hover,
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
+    margin: 20px 0 30px 0;
 }
 .slider-container {
     width: 90%;
@@ -79,13 +74,12 @@ nav .menu a.active:hover,
     overflow: hidden;
     border-radius: 15px;
     position: relative;
-    display: flex;
 }
 .slider {
     display: flex;
-    transition: transform 0.5s ease-in-out;
     width: 100%;
     height: 100%;
+    transition: transform 0.5s ease-in-out;
 }
 .slide {
     min-width: 100%;
@@ -134,7 +128,7 @@ nav .menu a.active:hover,
 .prev { left: 10px; }
 .next { right: 10px; }
 
-/* DOTS CENTRATI SOTTO LO SLIDER */
+/* DOTS SOTTO LO SLIDER */
 .dots-container {
     text-align: center;
     margin-top: 10px;
@@ -151,13 +145,13 @@ nav .menu a.active:hover,
 .dot.active { background: red; }
 
 /* ===== RESPONSIVE ===== */
-@media(max-width:768px) { 
+@media(max-width:768px) {
     .slider-container { height: 40vh; }
     .caption { width: 60%; max-width: none; }
     .caption h3 { font-size: 1em; }
     .caption p { font-size: 0.85em; }
 }
-@media(max-width:480px) { 
+@media(max-width:480px) {
     .slider-container { height: 30vh; }
     .caption { width: 80%; }
     .caption h3 { font-size: 0.9em; }
@@ -173,8 +167,7 @@ nav .menu a.active:hover,
 <!-- CENTRAL WRAPPER -->
 <div class="central-wrapper" id="centralWrapper">
     <div class="central-container" id="slider-container-placeholder">
-        <!-- Lo slider sarà caricato qui -->
-        <!-- I dots saranno posizionati sotto automaticamente -->
+        <!-- Slider caricato via fetch -->
         <div class="dots-container" id="dots-container"></div>
     </div>
 </div>
@@ -185,11 +178,9 @@ fetch('menu.html')
 .then(resp => resp.text())
 .then(html => {
     document.getElementById('menu-placeholder').innerHTML = html;
-
     const menuTitle = document.getElementById('menuPageTitle');
     if(menuTitle) menuTitle.textContent = "I nostri luoghi";
 
-    // Menu mobile
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     if(hamburger && mobileMenu){
@@ -198,12 +189,11 @@ fetch('menu.html')
         window.addEventListener('resize', ()=> { if(window.innerWidth>768) mobileMenu.style.display='none'; });
     }
 
-    // Evidenzia voce attiva
     const currentPage = location.pathname.split("/").pop() || 'homepage.html';
     document.querySelectorAll('nav .menu a, nav .mobile-menu a')
         .forEach(link => { if(link.getAttribute('href') === currentPage) link.classList.add('active'); });
 
-    // Centra central-wrapper
+    // Centra wrapper verticale
     function updateCentralPosition(){
         const nav = document.querySelector('nav');
         if(nav){
@@ -228,7 +218,7 @@ fetch('sliderlocation.html')
     placeholder.innerHTML = html;
 
     // Preload immagini
-    placeholder.querySelectorAll('.slide img').forEach(img=>{
+    placeholder.querySelectorAll('.slide img').forEach(img => {
         const tmp = new Image();
         tmp.src = img.src;
     });
@@ -236,33 +226,34 @@ fetch('sliderlocation.html')
     // Slider JS
     const slider = placeholder.querySelector('#slider');
     const slides = placeholder.querySelectorAll('.slide');
-    const dots = placeholder.querySelectorAll('.dot');
+    const dotsContainer = document.getElementById('dots-container');
     const prevBtn = placeholder.querySelector('.prev');
     const nextBtn = placeholder.querySelector('.next');
-    const dotsContainer = document.getElementById('dots-container');
-dotsContainer.innerHTML = ''; // pulisci eventuali contenuti
-dots.forEach((dot, i) => {
-    const newDot = document.createElement('span');
-    newDot.classList.add('dot');
-    if(i === 0) newDot.classList.add('active');
-    newDot.addEventListener('click', ()=> goToSlide(i));
-    dotsContainer.appendChild(newDot);
-});
     let currentIndex = 0;
 
-    function updateSlider() {
+    // Crea dots dinamicamente
+    dotsContainer.innerHTML = '';
+    slides.forEach((_,i)=>{
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        if(i===0) dot.classList.add('active');
+        dot.addEventListener('click', ()=> goToSlide(i));
+        dotsContainer.appendChild(dot);
+    });
+    const dots = dotsContainer.querySelectorAll('.dot');
+
+    function updateSlider(){
         slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-        slides.forEach((s,i)=> s.style.display = i === currentIndex ? 'block' : 'none');
         dots.forEach(dot => dot.classList.remove('active'));
         dots[currentIndex].classList.add('active');
     }
-    function nextSlide() { currentIndex = (currentIndex + 1) % slides.length; updateSlider(); }
-    function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
-    function goToSlide(index) { currentIndex = index; updateSlider(); }
+
+    function nextSlide(){ currentIndex = (currentIndex + 1) % slides.length; updateSlider(); }
+    function prevSlide(){ currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
+    function goToSlide(index){ currentIndex = index; updateSlider(); }
 
     nextBtn.addEventListener('click', nextSlide);
     prevBtn.addEventListener('click', prevSlide);
-    dots.forEach((dot,i) => dot.addEventListener('click',()=>goToSlide(i)));
 
     updateSlider();
     setInterval(nextSlide, 5000);
