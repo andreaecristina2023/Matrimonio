@@ -71,48 +71,64 @@ html, body {
             align-items: center;
         }
 
-        .slider-container {
-            width: 90%;
-            max-width: 900px;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            position: relative;
-            margin-bottom: 20px;
-        }
+        /* SLIDER CON FASCIA DIDASCALIA */
+.slider-container {
+    width: 90%;
+    max-width: 900px;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    position: relative;
+    margin-bottom: 20px;
+}
 
-        .slider {
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 100%;
-        }
+.slide {
+    position: relative; /* importante per posizionare la fascia */
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .slide {
-            min-width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            text-align: center;
-        }
+.slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
 
-        .slide img {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-            display: block;
-            object-fit: contain;
-        }
+/* FASCIA in basso */
+.caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6); /* fascia scura trasparente */
+    color: #fff;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
 
-        .caption {
-            padding: 5px 10px;
-            min-height: 120px;
-            color: #fff;
-        }
+.caption h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #ffdddd;
+}
 
-        .caption h2 { color: red; margin: 0; font-size: 1.5em; }
-        .caption h3 { color: #ff0000; margin: 5px 0 0; font-size: 1.2em; }
-        .caption p { color: #fff; margin: 4px 0 0; font-size: 0.9em; line-height: 1.2; }
+.caption h3 {
+    margin: 2px 0 0;
+    font-size: 1.2em;
+    color: #ffaaaa;
+}
 
+.caption p {
+    margin: 4px 0 0;
+    font-size: 0.9em;
+    line-height: 1.2;
+    color: #fff;
+}
         .nav-btn {
             position: absolute;
             top: 50%;
@@ -160,15 +176,14 @@ html, body {
         <div class="slider-wrapper">
             <div class="slider-container">
                 <div class="slider" id="slider">
-                    <div class="slide">
-                        <img src="https://i.imgur.com/smSAiQw.jpg" alt="Bertinoro">
-                        <div class="caption">
-                            <h2>Bertinoro</h2>
-                            <h3>"Il Balcone di Romagna"</h3>
-                            <p>Bertinoro è il Balcone di Romagna: la sua piazza è una vera terrazza panoramica sul mare
-                                e sulla pianura romagnola.</p>
-                        </div>
-                    </div>
+<div class="slide">
+    <img src="https://i.imgur.com/smSAiQw.jpg" alt="Bertinoro">
+    <div class="caption">
+        <h2>Bertinoro</h2>
+        <h3>Bertinoro - "Il Balcone di Romagna"</h3>
+        <p>Bertinoro è il Balcone di Romagna: la sua piazza è una vera terrazza panoramica sul mare e sulla pianura romagnola.</p>
+    </div>
+</div>
                     <div class="slide">
                         <img src="https://i.imgur.com/x8equD3.jpg" alt="Fratta Terme">
                         <div class="caption">
