@@ -233,8 +233,7 @@
             "countdown.html": "Siete Pronti?!"
         };
         const currentPage = window.location.pathname.split("/").pop();
-        document.getElementById("pageTitle").textContent = titles[currentPage] || "
-        I Luoghi Principali";
+        document.getElementById("pageTitle").textContent = titles[currentPage] || "I Luoghi Principali";
 
         // Carica menu.html
         fetch('menu.html')
