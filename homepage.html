@@ -76,17 +76,17 @@ nav a.active {
     a.button{padding:8px 16px;font-size:0.9em;} 
 }
 
-/* ===== MENU: stato normale con hover ===== */
+/* ===== MENU ===== */
 /* Stato normale dei link */
 nav .menu a {
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.85); /* bianco */
     text-decoration: none;
-    border-bottom: 2px solid transparent; /* bordo invisibile */
+    border-bottom: 2px solid transparent; /* invisibile di base */
     transition: all 0.3s;
 }
 
-/* Sottolineatura al passaggio del mouse solo per link NON attivi */
-nav .menu a:not(.active):hover {
+/* Hover: solo sottolineatura, colore invariato */
+nav .menu a:hover {
     border-bottom: 2px solid #ff0000;
 }
 
@@ -94,7 +94,7 @@ nav .menu a:not(.active):hover {
 nav .menu a.active {
     color: #ff0000;
     font-weight: bold;
-    /*border-bottom: 2px solid #ff0000;*/
+    border-bottom: 2px solid #ff0000;
 }
 </style>
 </head>
