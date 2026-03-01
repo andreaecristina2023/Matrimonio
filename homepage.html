@@ -25,11 +25,11 @@ body::before {
 /* ===== WRAPPER CENTRALE ===== */
 .central-wrapper {
     display:flex;
-    flex-direction: column;   /* asse verticale principale */
-    justify-content: flex-start; 
-    align-items: center;      /* centro orizzontale */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     text-align: center;
-    visibility: hidden;       /* nascosto fino al caricamento menu */
+    visibility: hidden;
 }
 
 .central-container {
@@ -39,7 +39,7 @@ body::before {
 }
 
 h1 { font-size:2.5em; margin-bottom:10px; color:white;}
-h2 { font-size:3em; margin-bottom:10px;  color:white;}
+h2 { font-size:3em; margin-bottom:20px;  color:white;}
 p { font-size:2.0em;  color:white;}
 
 a.button {
@@ -55,11 +55,36 @@ a.button {
 }
 a.button:hover { background-color:#cc0000; }
 
-/* ===== MENU: VOCE ATTIVA ===== */
-nav a.active {
-    color:#ff0000;
-    font-weight:bold;
-    border-bottom:2px solid #ff0000;
+/* ===== MENU ===== */
+/* Stato normale link desktop e mobile */
+nav .menu a,
+.mobile-menu a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+/* Hover link non attivo */
+nav .menu a:hover:not(.active),
+.mobile-menu a:hover:not(.active) {
+    border-bottom: 2px solid #ff0000;
+    color: rgba(255,255,255,0.85);
+}
+
+/* Link attivo */
+nav .menu a.active,
+.mobile-menu a.active {
+    color: #ff0000;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+}
+
+/* Hover su link attivo */
+nav .menu a.active:hover,
+.mobile-menu a.active:hover {
+    border-bottom: 2px solid #ff0000;
+    color: #ff0000;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -74,34 +99,6 @@ nav a.active {
     h2{font-size:1.2em;} 
     p{font-size:1em;} 
     a.button{padding:8px 16px;font-size:0.9em;} 
-}
-
-/* ===== MENU ===== */
-/* Stato normale dei link non attivi */
-nav .menu a {
-    color: rgba(255,255,255,0.85); /* bianco */
-    text-decoration: none;
-    border-bottom: 2px solid transparent; /* invisibile di base */
-    transition: all 0.3s;
-}
-
-/* Hover link non attivo: sottolinea rosso, colore testo bianco */
-nav .menu a:hover:not(.active) {
-    border-bottom: 2px solid #ff0000;
-    color: rgba(255,255,255,0.85); /* resta bianco */
-}
-
-/* Link attivo: testo rosso, nessuna sottolineatura */
-nav .menu a.active {
-    color: #ff0000;
-    font-weight: bold;
-    border-bottom: 2px solid transparent;
-}
-
-/* Hover su link attivo: sottolineatura rossa, colore testo rosso */
-nav .menu a.active:hover {
-    border-bottom: 2px solid #ff0000;
-    color: #ff0000;
 }
 </style>
 </head>
@@ -138,11 +135,11 @@ fetch('menu.html')
         window.addEventListener('resize', ()=> { if(window.innerWidth>768) mobileMenu.style.display='none'; });
     }
 
-// Evidenzia voce attiva solo tra i link del menu (esclude logo)
-const currentPage = location.pathname.split("/").pop() || 'homepage.html';
-document.querySelectorAll('nav .menu a').forEach(link => {
-    if(link.getAttribute('href') === currentPage) link.classList.add('active');
-});
+    // Evidenzia voce attiva (desktop + mobile)
+    const currentPage = location.pathname.split("/").pop() || 'homepage.html';
+    document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
+        if(link.getAttribute('href') === currentPage) link.classList.add('active');
+    });
 
     // Centra il contenuto verticalmente e lo mostra
     function updateCentralPosition(){
