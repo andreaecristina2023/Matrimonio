@@ -21,13 +21,11 @@
             box-sizing: border-box;
         }
 
-        html,
-        body {
+        html, body {
             width: 100%;
             height: 100%;
             font-family: 'Kaushan Script', cursive;
             overflow-x: hidden;
-            overflow-y: hidden;
         }
 
         /* ===== SFONDO ===== */
@@ -41,95 +39,23 @@
             z-index: -1;
         }
 
-        /* ===== MENU ===== */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            height: 70px;
-            background-color: rgba(0, 0, 0, 0.7);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        nav .logo img {
-            height: 50px;
-        }
-
-        nav .menu {
-            display: flex;
-        }
-
-        nav .menu a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 1.2em;
-            transition: color .3s;
-        }
-
-        nav .menu a:hover {
-            color: #ff0000;
-        }
-
-        .hamburger {
-            display: none;
-            font-size: 2em;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            background-color: rgba(0, 0, 0, 0.7);
-            position: absolute;
-            top: 70px;
-            right: 0;
-            width: 200px;
-            border-radius: 0 0 0px 18px;
-            z-index: 2000;
-        }
-
-        .mobile-menu a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        @media(max-width:768px) {
-            nav .menu {
-                display: none;
-            }
-
-            .hamburger {
-                display: block;
-            }
-        }
-
         /* ===== CONTENITORE CENTRALE ===== */
         .central-container {
             width: 100%;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 70px;
-            /* spazio per menu */
+            padding-top: 70px; /* spazio per menu */
             text-align: center;
             color: #fff;
         }
 
         /* ===== TITOLO PRINCIPALE ===== */
-        #playTitle {
+        #pageTitle {
             font-size: clamp(24px, 6vw, 30px);
             line-height: 1.1;
             color: white;
-            /* se lo vuoi rosso come countdown */
             margin-bottom: 20px;
         }
 
@@ -137,7 +63,6 @@
         .slider-wrapper {
             width: 100%;
             flex: 1;
-            /* occupa tutto lo spazio disponibile */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -153,26 +78,6 @@
             margin-bottom: 20px;
         }
 
-        .slide img {
-            width: 100%;
-            height: auto;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            display: block;
-        }
-
-        .caption {
-            background: transparent;
-            padding: 15px 20px;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            min-height: 120px;
-            /* uniforma tutte le caption */
-            color: #000;
-        }
-
         .slider {
             display: flex;
             transition: transform 0.5s ease;
@@ -181,53 +86,36 @@
 
         .slide {
             min-width: 100%;
-            text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            text-align: center;
         }
 
         .slide img {
             width: 100%;
             height: auto;
-            max-height: 100%;
-            object-fit: contain;
-            /* mantiene proporzioni e "zoomma" se serve */
+            border-radius: 15px;
             display: block;
+            object-fit: contain;
         }
 
         .caption {
             padding: 5px 10px;
-            overflow: hidden;
-        }
-
-        .caption h2 {
-            margin: 0;
-            font-size: 1.5em;
-            color: red;
-        }
-
-        .caption h3 {
-            margin: 5px 0 0;
-            font-size: 1.2em;
-            color: #ff0000;
-        }
-
-        .caption p {
-            margin: 4px 0 0;
-            font-size: 0.9em;
-            line-height: 1.2;
+            min-height: 120px;
             color: #fff;
         }
 
-        /* Pulsanti prev/next centrati verticalmente */
+        .caption h2 { color: red; margin: 0; font-size: 1.5em; }
+        .caption h3 { color: #ff0000; margin: 5px 0 0; font-size: 1.2em; }
+        .caption p { color: #fff; margin: 4px 0 0; font-size: 0.9em; line-height: 1.2; }
+
         .nav-btn {
             position: absolute;
-            top: 75%;
+            top: 50%;
             transform: translateY(-50%);
             background: rgba(0, 0, 0, 0.6);
             color: #fff;
-            opacity: 100%;
             border: none;
             padding: 10px 14px;
             cursor: pointer;
@@ -242,61 +130,30 @@
             transform: translateY(-50%) scale(1.1);
         }
 
-        .prev {
-            left: 5px;
-        }
+        .prev { left: 5px; }
+        .next { right: 5px; }
 
-        .next {
-            right: 5px;
-        }
-
-        /* Pallini indicatori */
-        .dots {
-            text-align: center;
-            padding: 5px 0;
-        }
-
+        .dots { text-align: center; padding: 5px 0; }
         .dot {
             display: inline-block;
-            width: 10px;
-            height: 10px;
+            width: 10px; height: 10px;
             margin: 0 4px;
             background: #bbb;
             border-radius: 50%;
             cursor: pointer;
             transition: 0.3s;
         }
-
-        .dot.active {
-            background: red;
-        }
+        .dot.active { background: red; }
     </style>
 </head>
 
 <body>
-    <!-- Menu incluso via fetch -->
+    <!-- MENU placeholder -->
     <div id="menu-placeholder"></div>
-    <nav>
-        <div class="logo"><a href="homepage.html"><img
-                    src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png"
-                    alt="Logo"></a></div>
-        <div class="menu">
-            <a href="homepage.html">Homepage</a>
-            <a href="location.html" style="color:#ff0000;"><strong>I luoghi principali</strong></a>
-            <a href="map.html">La Mappa dei nostri consigli</a>
-            <a href="countdown.html">Siete pronti?!</a>
-        </div>
-        <div class="hamburger" id="hamburger">☰</div>
-        <div class="mobile-menu" id="mobileMenu">
-            <a href="homepage.html">Homepage</a>
-            <a href="location.html" style="color:#ff0000;"><strong>I luoghi principali</strong></a>
-            <a href="map.html">La Mappa dei nostri consigli</a>
-            <a href="countdown.html">Siete pronti?!</a>
-        </div>
-    </nav>
 
+    <!-- CONTENUTO PRINCIPALE -->
     <div class="central-container">
-        <h1 id="playTitle">I luoghi principali</h1>
+        <h1 id="pageTitle">I luoghi principali</h1>
 
         <div class="slider-wrapper">
             <div class="slider-container">
@@ -351,30 +208,45 @@
     </div>
 
     <script>
-        // Evidenzia la pagina corrente nel menu
-        const currentPage = window.location.pathname.split("/").pop(); // es. "location.html"
-        const menuLinks = document.querySelectorAll('#menu-placeholder a');
+        // Carica menu.html
+        fetch('menu.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('menu-placeholder').innerHTML = html;
 
-        menuLinks.forEach(link => {
-            const linkPage = link.getAttribute('href');
-            if (linkPage === currentPage) {
-                link.style.color = "#ff0000";       // rosso
-                link.style.fontWeight = "bold";     // opzionale: grassetto
-            }
-        });
+                // Hamburger mobile
+                const hamburger = document.getElementById('hamburger');
+                const mobileMenu = document.getElementById('mobileMenu');
+                hamburger.addEventListener('click', () => {
+                    mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+                });
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => mobileMenu.style.display = 'none');
+                });
+                window.addEventListener('resize', () => {
+                    if(window.innerWidth > 768) mobileMenu.style.display = 'none';
+                });
 
-        // MENU MOBILE
-        const mobileMenu = document.getElementById('mobileMenu');
-        const hamburger = document.getElementById('hamburger');
-        hamburger.addEventListener('click', () => {
-            mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-        });
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => { mobileMenu.style.display = 'none'; });
-        });
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) mobileMenu.style.display = 'none';
-        });
+                // Evidenzia link corrente
+                const currentPage = window.location.pathname.split("/").pop();
+                document.querySelectorAll('nav a').forEach(link => {
+                    if(link.getAttribute('href') === currentPage){
+                        link.style.color = "#ff0000";
+                        link.style.fontWeight = "bold";
+                    }
+                });
+
+                // Imposta titolo dinamico
+                const titles = {
+                    "homepage.html": "Benvenuti al nostro matrimonio",
+                    "location.html": "I Luoghi Principali",
+                    "map.html": "Mappa dei Consigli",
+                    "countdown.html": "Siete Pronti?!"
+                };
+                const pageTitle = document.getElementById("pageTitle");
+                if(pageTitle) pageTitle.textContent = titles[currentPage] || "Benvenuti";
+            })
+            .catch(err => console.error('Errore caricando menu:', err));
 
         // SLIDER
         let currentIndex = 0;
@@ -391,19 +263,7 @@
         function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
         function goToSlide(index) { currentIndex = index; updateSlider(); }
 
-        // auto slide ogni 5s
         setInterval(nextSlide, 5000);
-
-    const titles = {
-        "homepage.html": "Benvenuti al nostro matrimonio",
-        "location.html": "I Luoghi Principali",
-        "map.html": "Mappa dei Consigli",
-        "countdown.html": "Siete Pronti?!"
-    };
-
-    const currentPage = window.location.pathname.split("/").pop();
-    document.getElementById("pageTitle").textContent =
-        titles[currentPage] || "Benvenuti";
     </script>
 </body>
 
