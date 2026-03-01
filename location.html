@@ -56,7 +56,6 @@ a.button {
 a.button:hover { background-color:#cc0000; }
 
 /* ===== MENU ===== */
-/* Stato normale link desktop e mobile */
 nav .menu a,
 .mobile-menu a {
     color: rgba(255,255,255,0.85);
@@ -64,28 +63,100 @@ nav .menu a,
     border-bottom: 2px solid transparent;
     transition: all 0.3s;
 }
-
-/* Hover link non attivo */
 nav .menu a:hover:not(.active),
 .mobile-menu a:hover:not(.active) {
     border-bottom: 2px solid #ff0000;
     color: rgba(255,255,255,0.85);
 }
-
-/* Link attivo */
 nav .menu a.active,
 .mobile-menu a.active {
     color: #ff0000;
     font-weight: bold;
     border-bottom: 2px solid transparent;
 }
-
-/* Hover su link attivo */
 nav .menu a.active:hover,
 .mobile-menu a.active:hover {
     border-bottom: 2px solid #ff0000;
     color: #ff0000;
 }
+
+/* ===== SLIDER ===== */
+.slider-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.slider-container {
+    width: 90%;
+    max-width: 900px;
+    height: 50vh;
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+    display: flex;
+}
+.slider {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+}
+.slide {
+    min-width: 100%;
+    position: relative;
+}
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+.caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+    color: #fff;
+    padding: 15px 20px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.caption h3 { font-size: 1.2em; color: #ff0000; margin: 2px 0; }
+.caption p { font-size: 0.9em; margin: 4px 0 0; }
+
+/* NAV BUTTONS */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 50px;
+    font-size: 18px;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+.nav-btn:hover { background: #ff0000; transform: translateY(-50%) scale(1.1); }
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* Dots */
+.dots { text-align: center; padding: 5px 0; }
+.dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    margin: 0 4px;
+    background: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.dot.active { background: red; }
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px) { 
@@ -93,12 +164,18 @@ nav .menu a.active:hover,
     h2{font-size:1.5em;} 
     p{font-size:1.2em;} 
     a.button{padding:10px 20px;font-size:1em;} 
+    .slider-container { height: 40vh; }
+    .caption h3 { font-size: 1em; }
+    .caption p { font-size: 0.85em; }
 }
 @media(max-width:480px) { 
     h1{font-size:1.5em;} 
     h2{font-size:1.2em;} 
     p{font-size:1em;} 
     a.button{padding:8px 16px;font-size:0.9em;} 
+    .slider-container { height: 30vh; }
+    .caption h3 { font-size: 0.9em; }
+    .caption p { font-size: 0.8em; }
 }
 </style>
 </head>
@@ -115,16 +192,16 @@ nav .menu a.active:hover,
 </div>
 
 <script>
+// ===== CARICA MENU =====
 fetch('menu.html')
 .then(resp => resp.text())
 .then(html => {
-    // inserisco menu
     document.getElementById('menu-placeholder').innerHTML = html;
 
     const menuTitle = document.getElementById('menuPageTitle');
-    if(menuTitle) menuTitle.textContent = "I nostri luoghi"; // titolo vuoto
+    if(menuTitle) menuTitle.textContent = "I nostri luoghi";
 
-    // Configura menu mobile
+    // Menu mobile
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     if(hamburger && mobileMenu){
@@ -133,59 +210,58 @@ fetch('menu.html')
         window.addEventListener('resize', ()=> { if(window.innerWidth>768) mobileMenu.style.display='none'; });
     }
 
-    // Evidenzia voce attiva (desktop + mobile)
+    // Evidenzia voce attiva
     const currentPage = location.pathname.split("/").pop() || 'homepage.html';
-    document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
-        if(link.getAttribute('href') === currentPage) link.classList.add('active');
-    });
+    document.querySelectorAll('nav .menu a, nav .mobile-menu a')
+        .forEach(link => { if(link.getAttribute('href') === currentPage) link.classList.add('active'); });
 
-    // Centra il contenuto verticalmente e lo mostra
+    // Centra central-wrapper
     function updateCentralPosition(){
         const nav = document.querySelector('nav');
         if(nav){
             const totalHeight = nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
             const wrapper = document.getElementById('centralWrapper');
             const availableHeight = window.innerHeight - totalHeight;
-
-            // sposta centro visivo leggermente verso il basso (45%)
             wrapper.style.height = `${availableHeight}px`;
             wrapper.style.paddingTop = `${availableHeight * 0.45}px`;
             wrapper.style.visibility = 'visible';
         }
     }
-
     updateCentralPosition();
     window.addEventListener('resize', updateCentralPosition);
 })
 .catch(err => console.warn('Errore caricamento menu:', err));
 
-/* ===== CARICA SLIDER ===== */
+// ===== CARICA SLIDER =====
 fetch('sliderlocation.html')
 .then(resp => resp.text())
 .then(html => {
-    document.getElementById('slider-container-placeholder').innerHTML = html;
+    const placeholder = document.getElementById('slider-container-placeholder');
+    placeholder.innerHTML = html;
 
-    // Inizializza slider
+    // Slider JS
+    const slider = placeholder.querySelector('#slider');
+    const slides = placeholder.querySelectorAll('.slide');
+    const dots = placeholder.querySelectorAll('.dot');
+    const prevBtn = placeholder.querySelector('.prev');
+    const nextBtn = placeholder.querySelector('.next');
     let currentIndex = 0;
-    const slides = document.querySelectorAll(".slide");
-    const dots = document.querySelectorAll(".dot");
 
     function updateSlider() {
-        const slider = document.getElementById("slider");
         slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-        dots.forEach(dot => dot.classList.remove("active"));
-        dots[currentIndex].classList.add("active");
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[currentIndex].classList.add('active');
     }
+    function nextSlide() { currentIndex = (currentIndex + 1) % slides.length; updateSlider(); }
+    function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
+    function goToSlide(index) { currentIndex = index; updateSlider(); }
 
-    window.nextSlide = function() { currentIndex = (currentIndex + 1) % slides.length; updateSlider(); }
-    window.prevSlide = function() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
-    window.goToSlide = function(index) { currentIndex = index; updateSlider(); }
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+    dots.forEach((dot,i) => dot.addEventListener('click',()=>goToSlide(i)));
 
     setInterval(nextSlide, 5000);
-
-    // Mostra central-wrapper
-    const wrapper = document.getElementById('centralWrapper');
-    wrapper.style.visibility = 'visible';
+    updateSlider();
 })
 .catch(err => console.warn('Errore caricamento slider:', err));
 </script>
