@@ -60,6 +60,7 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
     visibility: hidden;
     width: 100%;
     padding-top: 5vh;
+    min-height: 100vh;        /* fallback per JS */
 }
 
 /* ===== SLIDER ===== */
@@ -203,13 +204,12 @@ fetch('menu.html')
 function updateCentralPosition(){
     const nav = document.querySelector('nav');
     const menuTitle = document.getElementById('menuPageTitle');
+    const wrapper = document.getElementById('centralWrapper');
 
     if(nav){
         const totalHeight = nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
-        const wrapper = document.getElementById('centralWrapper');
         const availableHeight = window.innerHeight - totalHeight;
-
-        wrapper.style.minHeight = `${availableHeight}px`;
+        wrapper.style.height = `${availableHeight}px`; // usa height, non min-height
         wrapper.style.visibility = 'visible';
     }
 }
