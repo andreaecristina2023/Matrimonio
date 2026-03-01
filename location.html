@@ -162,12 +162,6 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
     .caption { font-size: 0.8em; }
 }
 
-.central-container {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
 </style>
 </head>
 <body>
@@ -207,17 +201,20 @@ fetch('menu.html')
     // Centra wrapper verticale
 function updateCentralPosition(){
     const nav = document.querySelector('nav');
+    const menuTitle = document.getElementById('menuPageTitle');
+
     if(nav){
         const totalHeight = nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
         const wrapper = document.getElementById('centralWrapper');
         const availableHeight = window.innerHeight - totalHeight;
 
-        wrapper.style.minHeight = `${availableHeight}px`;
+        wrapper.style.height = `${availableHeight}px`;
         wrapper.style.visibility = 'visible';
     }
 }
-    updateCentralPosition();
-    window.addEventListener('resize', updateCentralPosition);
+
+updateCentralPosition();
+window.addEventListener('resize', updateCentralPosition);
 })
 .catch(err => console.warn('Errore caricamento menu:', err));
 
