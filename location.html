@@ -22,16 +22,6 @@ body::before {
     z-index:-1;
 }
 
-/* ===== WRAPPER CENTRALE ===== */
-.central-wrapper {
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
-    visibility: hidden;
-    width: 100%;
-}
 .central-container {
     display:flex;
     flex-direction: column;
@@ -60,54 +50,62 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
     color: #ff0000;
 }
 
+/* ===== WRAPPER CENTRALE ===== */
+.central-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;   /* CENTRATURA VERTICALE */
+    text-align: center;
+    visibility: hidden;
+    width: 100%;
+}
+
 /* ===== SLIDER ===== */
 .slider-wrapper {
     width: 100%;
     display: flex;
-    justify-content: center;
-    margin: 20px 0 30px 0;
+    flex-direction: column;
+    align-items: center;
 }
+
 .slider-container {
     width: 90%;
-    max-width: 900px;
-    height: 55vh;
+    max-width: 1000px;
+    aspect-ratio: 16/9;          /* proporzione perfetta */
     overflow: hidden;
     border-radius: 15px;
     position: relative;
 }
+
 .slider {
     display: flex;
-    width: 100%;
     height: 100%;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.6s ease-in-out;
 }
+
 .slide {
     min-width: 100%;
-    height: 100%;
-    position: relative;
     display: flex;
     flex-direction: column;
 }
+
 .slide img {
     width: 100%;
-    height: 80%;
-    object-fit: cover; /* zoom e taglio automatico */
-    border-radius: 15px 15px 0 0;
+    height: 85%;
+    object-fit: cover;
     display: block;
 }
-.slide-title {
-    font-size: 1.5em;
-    color: #ff0000;
-    margin: 5px 0;
-    text-align: center;
-}
+
 .caption {
+    height: 15%;
     background: rgba(0,0,0,0.7);
     color: #fff;
-    padding: 10px 15px;
-    text-align: center;
-    font-size: 1em;
-    border-radius: 0 0 15px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
 }
 
 /* NAV BUTTONS */
@@ -125,34 +123,41 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
     z-index: 10;
     transition: all 0.3s ease;
 }
-.nav-btn:hover { background: #ff0000; transform: translateY(-50%) scale(1.1); }
+.nav-btn:hover { 
+    background: #ff0000; 
+    transform: translateY(-50%) scale(1.1); 
+}
 .prev { left: 10px; }
 .next { right: 10px; }
 
-/* DOTS CENTRATI SOTTO LO SLIDER */
+/* ===== DOTS ===== */
 .dots-container {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 12px;   /* subito sotto slider */
+    width: 100%;
 }
+
 .dot {
     display: inline-block;
-    width: 10px; height: 10px;
+    width: 10px;
+    height: 10px;
     margin: 0 4px;
     background: #bbb;
     border-radius: 50%;
     cursor: pointer;
     transition: 0.3s;
 }
-.dot.active { background: red; }
+
+.dot.active {
+    background: red;
+}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px) {
-    .slider-container { height: 45vh; }
     .slide-title { font-size: 1.2em; }
     .caption { font-size: 0.9em; }
 }
 @media(max-width:480px) {
-    .slider-container { height: 35vh; }
     .slide-title { font-size: 1em; }
     .caption { font-size: 0.8em; }
 }
@@ -163,11 +168,6 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
     align-items:center;
 }
 
-.dots-container {
-    text-align:center;
-    margin-top:15px;
-    width:100%;
-}
 </style>
 </head>
 <body>
@@ -205,17 +205,17 @@ fetch('menu.html')
         .forEach(link => { if(link.getAttribute('href') === currentPage) link.classList.add('active'); });
 
     // Centra wrapper verticale
-    function updateCentralPosition(){
-        const nav = document.querySelector('nav');
-        if(nav){
-            const totalHeight = nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
-            const wrapper = document.getElementById('centralWrapper');
-            const availableHeight = window.innerHeight - totalHeight;
-            wrapper.style.height = `${availableHeight}px`;
-            wrapper.style.paddingTop = `${availableHeight * 0.1}px`;
-            wrapper.style.visibility = 'visible';
-        }
+function updateCentralPosition(){
+    const nav = document.querySelector('nav');
+    if(nav){
+        const totalHeight = nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
+        const wrapper = document.getElementById('centralWrapper');
+        const availableHeight = window.innerHeight - totalHeight;
+
+        wrapper.style.minHeight = `${availableHeight}px`;
+        wrapper.style.visibility = 'visible';
     }
+}
     updateCentralPosition();
     window.addEventListener('resize', updateCentralPosition);
 })
