@@ -53,7 +53,6 @@
     }
 
     /* Menu mobile */
-    /* Menu mobile */
     .mobile-menu {
         display: none;
         flex-direction: column;
@@ -121,6 +120,38 @@
             padding: 6px 12px;
         }
     }
+
+    /* Spazio per compensare il menu fisso */
+.page-header {
+    margin-top: 70px; /* altezza nav */
+    padding: 5% 20px 3% 20px; /* distanza in % dall'alto */
+    text-align: center;
+    background: transparent;
+}
+
+.page-header h1 {
+    font-family: 'Kaushan Script', cursive;
+    font-size: 3em;
+    color: #333;
+    margin: 0;
+}
+
+/* Responsive titolo */
+@media (max-width: 768px) {
+    .page-header {
+        padding-top: 8%;
+    }
+
+    .page-header h1 {
+        font-size: 2.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h1 {
+        font-size: 1.8em;
+    }
+}
 </style>
 
 <nav>
@@ -146,3 +177,7 @@
         <a href="countdown.html">Siete pronti?!</a>
     </div>
 </nav>
+
+<div class="page-header">
+    <h1 id="pageTitle"></h1>
+</div>
