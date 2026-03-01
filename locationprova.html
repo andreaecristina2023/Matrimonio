@@ -26,16 +26,15 @@
             font-family: 'Kaushan Script', cursive;
             overflow-x: hidden;
             scroll-behavior: smooth;
-            background: #000;
         }
 
-        /* ===== SFONDO ===== */
+        /* ===== SFONDO FISSO ===== */
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-                url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
             background-size: cover;
             z-index: -1;
         }
@@ -47,14 +46,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 5%; /* spazio per menu fisso */
+            padding-top: 120px; /* spazio per menu fisso */
             text-align: center;
             color: #fff;
         }
 
         #pageTitle {
-            font-size: clamp(24px, 6vw, 36px);
-            margin-bottom: 20px;
+            font-size: clamp(28px, 6vw, 36px);
+            margin-bottom: 30px;
             color: white;
         }
 
@@ -72,7 +71,7 @@
             overflow: hidden;
             border-radius: 15px;
             position: relative;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .slider {
@@ -98,7 +97,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(0,0,0,0.6);
             padding: 15px 20px;
             color: #fff;
             border-bottom-left-radius: 15px;
@@ -168,7 +167,7 @@
 </head>
 
 <body>
-    <!-- MENU via fetch -->
+    <!-- MENU incluso via fetch -->
     <div id="menu-placeholder"></div>
 
     <!-- CONTENUTO PRINCIPALE -->
@@ -178,15 +177,17 @@
         <div class="slider-wrapper">
             <div class="slider-container">
                 <div class="slider" id="slider">
+                    <!-- Slide 1 -->
                     <div class="slide">
                         <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/bertinoro.jpg" alt="Bertinoro">
                         <div class="caption">
                             <h2>Bertinoro</h2>
                             <h3>"Il Balcone di Romagna"</h3>
                             <p>Bertinoro è il Balcone di Romagna: la sua piazza è una vera terrazza panoramica sul mare e sulla pianura romagnola.</p>
-            <p>Qui è situata anche la <strong>Colonna dell'Ospitalità</strong>, simbolo di Bertinoro e centro di un'importante tradizione, il <strong>rito dell'ospitalità</strong>.</p>
+                            <p>Qui è situata anche la <strong>Colonna dell'Ospitalità</strong>, simbolo di Bertinoro e centro di un'importante tradizione, il <strong>rito dell'ospitalità</strong>.</p>
                         </div>
                     </div>
+                    <!-- Slide 2 -->
                     <div class="slide">
                         <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/frattaterme.jpg" alt="Fratta Terme">
                         <div class="caption">
@@ -195,6 +196,7 @@
                             <p>Località termale nota per le sue sorgenti dalle proprietà benefiche.</p>
                         </div>
                     </div>
+                    <!-- Slide 3 -->
                     <div class="slide">
                         <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/palazzo.jpg" alt="Palazzo Comunale">
                         <div class="caption">
@@ -203,6 +205,7 @@
                             <p>Costruito nel 1306 da Pino I Ordelaffi quando conquistò Bertinoro.</p>
                         </div>
                     </div>
+                    <!-- Slide 4 -->
                     <div class="slide">
                         <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/alcolle.jpg" alt="Agriturismo Al Colle">
                         <div class="caption">
@@ -212,6 +215,7 @@
                         </div>
                     </div>
                 </div>
+
                 <button class="nav-btn prev" onclick="prevSlide()">&#10094;</button>
                 <button class="nav-btn next" onclick="nextSlide()">&#10095;</button>
                 <div class="dots" id="dots">
@@ -225,7 +229,6 @@
     </div>
 
     <script>
-        // Titolo dinamico
         const titles = {
             "homepage.html": "Benvenuti al nostro matrimonio",
             "location.html": "I Luoghi Principali",
@@ -240,7 +243,6 @@
             .then(res => res.text())
             .then(html => {
                 document.getElementById('menu-placeholder').innerHTML = html;
-
                 const hamburger = document.getElementById('hamburger');
                 const mobileMenu = document.getElementById('mobileMenu');
 
