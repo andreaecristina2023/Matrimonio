@@ -156,6 +156,18 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
     .slide-title { font-size: 1em; }
     .caption { font-size: 0.8em; }
 }
+
+.central-container {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.dots-container {
+    text-align:center;
+    margin-top:15px;
+    width:100%;
+}
 </style>
 </head>
 <body>
@@ -165,8 +177,8 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
 
 <!-- CENTRAL WRAPPER -->
 <div class="central-wrapper" id="centralWrapper">
-    <div class="central-container" id="slider-container-placeholder">
-        <!-- Slider caricato via fetch -->
+    <div class="central-container">
+        <div id="slider-container-placeholder"></div>
         <div class="dots-container" id="dots-container"></div>
     </div>
 </div>
@@ -231,14 +243,15 @@ fetch('sliderlocation.html')
     let currentIndex = 0;
 
     // Crea dots dinamicamente
-    dotsContainer.innerHTML = '';
-    slides.forEach((_,i)=>{
-        const dot = document.createElement('span');
-        dot.classList.add('dot');
-        if(i===0) dot.classList.add('active');
-        dot.addEventListener('click', ()=> goToSlide(i));
-        dotsContainer.appendChild(dot);
-    });
+
+dotsContainer.innerHTML = '';
+slides.forEach((_,i)=>{
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    if(i===0) dot.classList.add('active');
+    dot.addEventListener('click', ()=> goToSlide(i));
+    dotsContainer.appendChild(dot);
+});
     const dots = dotsContainer.querySelectorAll('.dot');
 
     function updateSlider(){
