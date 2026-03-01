@@ -97,17 +97,20 @@ nav .menu a.active:hover,
     height: 100%;
     object-fit: cover;
     border-radius: 15px;
+    display: block;
 }
+
+/* DIDASCALIA A SINISTRA, SFONDO SFUMATO TOP-RIGHT */
 .caption {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+    width: 50%;
+    max-width: 400px;
+    background: linear-gradient(to top right, rgba(0,0,0,0.8), rgba(0,0,0,0));
     color: #fff;
     padding: 15px 20px;
     border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
 }
 .caption h3 { font-size: 1.2em; color: #ff0000; margin: 2px 0; }
 .caption p { font-size: 0.9em; margin: 4px 0 0; }
@@ -147,11 +150,13 @@ nav .menu a.active:hover,
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px) { 
     .slider-container { height: 40vh; }
+    .caption { width: 60%; max-width: none; }
     .caption h3 { font-size: 1em; }
     .caption p { font-size: 0.85em; }
 }
 @media(max-width:480px) { 
     .slider-container { height: 30vh; }
+    .caption { width: 80%; }
     .caption h3 { font-size: 0.9em; }
     .caption p { font-size: 0.8em; }
 }
@@ -217,6 +222,12 @@ fetch('sliderlocation.html')
     const placeholder = document.getElementById('slider-container-placeholder');
     placeholder.innerHTML = html;
 
+    // Preload immagini
+    placeholder.querySelectorAll('.slide img').forEach(img=>{
+        const tmp = new Image();
+        tmp.src = img.src;
+    });
+
     // Slider JS
     const slider = placeholder.querySelector('#slider');
     const slides = placeholder.querySelectorAll('.slide');
@@ -239,10 +250,7 @@ fetch('sliderlocation.html')
     prevBtn.addEventListener('click', prevSlide);
     dots.forEach((dot,i) => dot.addEventListener('click',()=>goToSlide(i)));
 
-    // Inizializza
     updateSlider();
-
-    // Auto slide ogni 5s
     setInterval(nextSlide, 5000);
 })
 .catch(err => console.warn('Errore caricamento slider:', err));
