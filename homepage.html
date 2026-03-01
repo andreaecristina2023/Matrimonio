@@ -85,20 +85,20 @@ nav .menu a {
     transition: all 0.3s;
 }
 
-/* Hover link non attivo: sottolinea rosso, colore bianco */
+/* Hover link non attivo: sottolinea rosso, colore testo bianco */
 nav .menu a:hover:not(.active) {
     border-bottom: 2px solid #ff0000;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.85); /* resta bianco */
 }
 
-/* Link attivo: testo bianco, nessuna sottolineatura */
+/* Link attivo: testo rosso, nessuna sottolineatura */
 nav .menu a.active {
-    color: rgba(255,255,255,0.85);
+    color: #ff0000;
     font-weight: bold;
     border-bottom: 2px solid transparent;
 }
 
-/* Hover su link attivo: sottolineatura rossa e testo rosso */
+/* Hover su link attivo: sottolineatura rossa, colore testo rosso */
 nav .menu a.active:hover {
     border-bottom: 2px solid #ff0000;
     color: #ff0000;
