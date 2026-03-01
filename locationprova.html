@@ -40,16 +40,17 @@
         }
 
         /* ===== CONTENITORE PRINCIPALE ===== */
-        .central-container {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 120px; /* spazio per menu fisso */
-            text-align: center;
-            color: #fff;
-        }
+.central-container {
+    width: 100%;
+    height: 100vh; /* altezza completa finestra */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* contenuto dall’alto */
+    padding-top: 120px; /* distanza dal menu fisso */
+    text-align: center;
+    color: #fff;
+}
 
         #pageTitle {
             font-size: clamp(28px, 6vw, 36px);
@@ -65,14 +66,15 @@
             align-items: center;
         }
 
-        .slider-container {
-            width: 90%;
-            max-width: 900px;
-            overflow: hidden;
-            border-radius: 15px;
-            position: relative;
-            margin-bottom: 40px;
-        }
+.slider-container {
+    width: 90%;
+    max-width: 900px;
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+    margin-top: 30px; /* distanza titolo / slider */
+    margin-bottom: 20px; /* distanza dal fondo */
+}
 
         .slider {
             display: flex;
