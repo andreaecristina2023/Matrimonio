@@ -75,6 +75,13 @@ nav a.active {
     p{font-size:1em;} 
     a.button{padding:8px 16px;font-size:0.9em;} 
 }
+
+/* ===== MENU: VOCE ATTIVA solo link menu, non logo ===== */
+nav .menu a.active {
+    color:#ff0000;
+    font-weight:bold;
+    border-bottom:2px solid #ff0000;
+}
 </style>
 </head>
 <body>
@@ -110,11 +117,11 @@ fetch('menu.html')
         window.addEventListener('resize', ()=> { if(window.innerWidth>768) mobileMenu.style.display='none'; });
     }
 
-    // Evidenzia voce attiva
-    const currentPage = location.pathname.split("/").pop() || 'homepage.html';
-    document.querySelectorAll('nav a').forEach(link => {
-        if(link.getAttribute('href') === currentPage) link.classList.add('active');
-    });
+// Evidenzia voce attiva solo tra i link del menu (esclude logo)
+const currentPage = location.pathname.split("/").pop() || 'homepage.html';
+document.querySelectorAll('nav .menu a').forEach(link => {
+    if(link.getAttribute('href') === currentPage) link.classList.add('active');
+});
 
     // Centra il contenuto verticalmente e lo mostra
     function updateCentralPosition(){
