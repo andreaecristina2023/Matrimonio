@@ -128,16 +128,19 @@
         }
     }
         /* Titolo pagina sotto il nav */
-    #menuPageTitle {
-        width: 100%;
-        text-align: center; /* centrato orizzontalmente */
-        font-family: 'Kaushan Script', cursive;
-        font-size: 2em;
-        color: #fff;
-        padding: 10px 0;
-        margin-top: 80px; /* spazio sotto il nav fisso (70px + 10px extra) */
-        background-color: rgba(0, 0, 0, 0.35);
-    }
+#menuPageTitle {
+    position: fixed;
+    top: 70px; /* altezza nav */
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Kaushan Script', cursive;
+    font-size: 2em;
+    color: #fff;
+    padding: 10px 0;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: 999;
+}
 
     /* Opzionale: adattamento mobile */
     @media (max-width: 768px) {
