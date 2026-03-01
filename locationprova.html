@@ -46,8 +46,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* contenuto dall’alto */
-    padding-top: 120px; /* distanza dal menu fisso */
+    justify-content: flex-start; /* contenuto dall’alto o center per centrare verticalmente */
+    padding-top: 80px; /* distanza dal menu fisso */
     text-align: center;
     color: #fff;
 }
@@ -72,13 +72,16 @@
     overflow: hidden;
     border-radius: 15px;
     position: relative;
-    margin-top: 30px; /* distanza titolo / slider */
-    margin-bottom: 20px; /* distanza dal fondo */
+    margin-top: 30px;
+    margin-bottom: 20px;
+    height: 50vh; /* altezza fissa, puoi regolare */
 }
 
         .slider {
             display: flex;
             transition: transform 0.5s ease;
+    height: 100%;       /* importante */
+    align-items: center; /* centra verticalmente le immagini */
         }
 
         .slide {
@@ -86,12 +89,12 @@
             min-width: 100%;
         }
 
-        .slide img {
-            width: 100%;
-            display: block;
-            object-fit: cover;
-            border-radius: 15px;
-        }
+.slide img {
+    width: 100%;
+    height: 100%;       /* forza l’altezza */
+    object-fit: cover;  /* mantiene proporzioni e ritaglia se serve */
+    border-radius: 15px;
+}
 
         /* ===== FASCIA DIDASCALIA ===== */
         .caption {
