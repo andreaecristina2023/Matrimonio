@@ -70,12 +70,13 @@
     <!-- Contenitore centrale vuoto: qui inserirai di volta in volta i contenuti -->
     <div class="central-container" id="page-content">
         <!-- Nessun contenuto statico qui, solo titolo se vuoi -->
-        <h1 id="pageTitle"></h1>
+
+        <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
     </div>
 
     <script>
         // Imposta il titolo della pagina dinamicamente
-        document.getElementById('pageTitle').textContent = "I luoghi principali";
+document.getElementById('menuPageTitle').textContent = "I luoghi principali";
 
         // Carica menu.html dentro il div #menu-placeholder
         fetch('menu.html')
