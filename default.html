@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea e Cristina 04.06.2026</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== RESET ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { font-family: 'Kaushan Script', cursive; width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* ===== SFONDO FISSO ===== */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        /* ===== CONTENITORE CENTRALE ===== */
+        .central-container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 80px; /* spazio per menu fisso */
+            text-align: center;
+            color: #fff;
+        }
+
+        /* Titolo pagina (opzionale, dentro menu o sopra contenuto) */
+        #pageTitle {
+            font-size: clamp(28px, 6vw, 36px);
+            margin-bottom: 30px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu incluso via fetch -->
+    <div id="menu-placeholder"></div>
+
+    <!-- Contenitore centrale vuoto: qui inserirai di volta in volta i contenuti -->
+    <div class="central-container" id="page-content">
+        <!-- Nessun contenuto statico qui, solo titolo se vuoi -->
+        <h1 id="pageTitle"></h1>
+    </div>
+
+    <script>
+        // Imposta il titolo della pagina dinamicamente
+        document.getElementById('pageTitle').textContent = "I luoghi principali";
+
+        // Qui puoi inserire via JS tutto il contenuto specifico di questa pagina
+        // Esempio:
+        // document.getElementById('page-content').innerHTML += "<p>Testo della pagina</p>";
+    </script>
+</body>
+</html>
