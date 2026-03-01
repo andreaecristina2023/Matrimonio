@@ -30,30 +30,14 @@ body::before {
     align-items: center;
     text-align: center;
     visibility: hidden;
+    width: 100%;
 }
-
 .central-container {
     display:flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
-
-h1 { font-size:2.5em; margin-bottom:10px; color:white;}
-h2 { font-size:3em; margin-bottom:20px;  color:white;}
-p { font-size:2.0em;  color:white;}
-
-a.button {
-    display:inline-block;
-    padding:12px 25px;
-    margin-top:20px;
-    background-color:#ff0000;
-    color:#fff;
-    text-decoration:none;
-    font-weight:bold;
-    border-radius:8px;
-    transition:0.3s;
-}
-a.button:hover { background-color:#cc0000; }
 
 /* ===== MENU ===== */
 nav .menu a,
@@ -99,11 +83,13 @@ nav .menu a.active:hover,
 }
 .slider {
     display: flex;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
     height: 100%;
 }
 .slide {
     min-width: 100%;
+    height: 100%;
     position: relative;
 }
 .slide img {
@@ -145,7 +131,7 @@ nav .menu a.active:hover,
 .prev { left: 10px; }
 .next { right: 10px; }
 
-/* Dots */
+/* DOTS */
 .dots { text-align: center; padding: 5px 0; }
 .dot {
     display: inline-block;
@@ -160,19 +146,11 @@ nav .menu a.active:hover,
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px) { 
-    h1{font-size:2em;} 
-    h2{font-size:1.5em;} 
-    p{font-size:1.2em;} 
-    a.button{padding:10px 20px;font-size:1em;} 
     .slider-container { height: 40vh; }
     .caption h3 { font-size: 1em; }
     .caption p { font-size: 0.85em; }
 }
 @media(max-width:480px) { 
-    h1{font-size:1.5em;} 
-    h2{font-size:1.2em;} 
-    p{font-size:1em;} 
-    a.button{padding:8px 16px;font-size:0.9em;} 
     .slider-container { height: 30vh; }
     .caption h3 { font-size: 0.9em; }
     .caption p { font-size: 0.8em; }
@@ -181,10 +159,10 @@ nav .menu a.active:hover,
 </head>
 <body>
 
-<!-- menu incluso -->
+<!-- MENU -->
 <div id="menu-placeholder"></div>
 
-<!-- contenitore centrale -->
+<!-- CENTRAL WRAPPER -->
 <div class="central-wrapper" id="centralWrapper">
     <div class="central-container" id="slider-container-placeholder">
         <!-- Lo slider sarà caricato qui -->
@@ -249,6 +227,7 @@ fetch('sliderlocation.html')
 
     function updateSlider() {
         slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slides.forEach((s,i)=> s.style.display = i === currentIndex ? 'block' : 'none');
         dots.forEach(dot => dot.classList.remove('active'));
         dots[currentIndex].classList.add('active');
     }
@@ -260,8 +239,11 @@ fetch('sliderlocation.html')
     prevBtn.addEventListener('click', prevSlide);
     dots.forEach((dot,i) => dot.addEventListener('click',()=>goToSlide(i)));
 
-    setInterval(nextSlide, 5000);
+    // Inizializza
     updateSlider();
+
+    // Auto slide ogni 5s
+    setInterval(nextSlide, 5000);
 })
 .catch(err => console.warn('Errore caricamento slider:', err));
 </script>
