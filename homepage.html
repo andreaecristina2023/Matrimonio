@@ -77,23 +77,24 @@ nav a.active {
 }
 
 /* ===== MENU: stato normale con hover ===== */
+/* Stato normale dei link */
 nav .menu a {
     color: rgba(255,255,255,0.85);
     text-decoration: none;
+    border-bottom: 2px solid transparent; /* bordo invisibile */
     transition: all 0.3s;
-    border-bottom: 2px solid transparent; /* bordo invisibile di base */
 }
 
-nav .menu a:hover {
-    color:#ffffff;
-    border-bottom: 2px solid #ff0000;   /* sottolinea al passaggio */
+/* Sottolineatura al passaggio del mouse solo per link NON attivi */
+nav .menu a:not(.active):hover {
+    border-bottom: 2px solid #ff0000;
 }
 
-/* ===== MENU: voce attiva ===== */
+/* Voce attiva: sempre rossa e sottolineata */
 nav .menu a.active {
-    color:#ff0000;
-    font-weight:bold;
-    /*border-bottom:2px solid #ff0000;     /* sottolinea sempre */
+    color: #ff0000;
+    font-weight: bold;
+    /*border-bottom: 2px solid #ff0000;*/
 }
 </style>
 </head>
