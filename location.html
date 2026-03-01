@@ -59,6 +59,7 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
     text-align: center;
     visibility: hidden;
     width: 100%;
+    padding-top: 5vh;
 }
 
 /* ===== SLIDER ===== */
@@ -208,7 +209,7 @@ function updateCentralPosition(){
         const wrapper = document.getElementById('centralWrapper');
         const availableHeight = window.innerHeight - totalHeight;
 
-        wrapper.style.height = `${availableHeight}px`;
+        wrapper.style.minHeight = `${availableHeight}px`;
         wrapper.style.visibility = 'visible';
     }
 }
