@@ -101,11 +101,31 @@
             })
             .catch(err => console.warn('Errore caricamento menu:', err));
 
-        fetch('sliderlocation.html')
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('page-content').innerHTML += html;
+fetch('menu.html')
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('menu-placeholder').innerHTML = html;
+
+        // Imposta titolo dopo che il menu è caricato
+        const menuTitle = document.getElementById('pageTitle');
+        if (menuTitle) menuTitle.textContent = "I luoghi principali";
+
+        // Menu mobile
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', () => {
+                mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
             });
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.style.display = 'none');
+            });
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) mobileMenu.style.display = 'none';
+            });
+        }
+    })
+    .catch(err => console.warn('Errore caricamento menu:', err));
     </script>
 </body>
 
