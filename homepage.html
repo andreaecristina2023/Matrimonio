@@ -21,6 +21,7 @@
             height: 100%;
             width: 100%;
             font-family: 'Kaushan Script', cursive;
+    overflow: hidden; /* blocca lo scroll */
         }
 
         body {
@@ -32,12 +33,12 @@
         }
 
         /* Overlay centrale */
-        .container {
+        .central-container {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100vh; /* altezza esatta dello schermo */
             width: 100%;
             background-color: rgba(0, 0, 0, 0.35);
             box-sizing: border-box;
