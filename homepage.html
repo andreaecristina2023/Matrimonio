@@ -76,11 +76,23 @@ nav a.active {
     a.button{padding:8px 16px;font-size:0.9em;} 
 }
 
-/* ===== MENU: VOCE ATTIVA solo link menu, non logo ===== */
+/* ===== MENU: stato normale con hover ===== */
+nav .menu a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent; /* bordo invisibile di base */
+}
+
+nav .menu a:hover {
+    border-bottom: 2px solid #ff0000;   /* sottolinea al passaggio */
+}
+
+/* ===== MENU: voce attiva ===== */
 nav .menu a.active {
     color:#ff0000;
     font-weight:bold;
-    border-bottom:2px solid #ff0000;
+    border-bottom:2px solid #ff0000;     /* sottolinea sempre */
 }
 </style>
 </head>
