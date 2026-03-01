@@ -1,187 +1,351 @@
-<!-- menu.html -->
-<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="it">
 
-<style>
-    /* Menu fisso in cima */
-    nav {
-        font-family: 'Kaushan Script', cursive;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        height: 70px;
-        background-color: rgba(0, 0, 0, 0.7);
-        /* solo nero trasparente */
-        box-sizing: border-box;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea e Cristina 04.06.2026</title>
 
-    /* Logo proporzionato */
-    nav .logo img {
-        display: block;
-        height: 50px;
-        /* desktop */
-    }
+    <!-- Favicon -->
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
 
-    /* Menu desktop */
-    nav .menu {
-        display: flex;
-    }
+    <!-- Google Font Kaushan Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
-    nav .menu a {
-        color: rgba(255, 255, 255, 0.85);
-        text-decoration: none;
-        margin-left: 20px;
-        font-size: 1.2em;
-        transition: color 0.3s;
-    }
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    nav .menu a:hover {
-        color: #ff0000;
-    }
+        html, body {
+            width: 100%;
+            font-family: 'Kaushan Script', cursive;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-    /* Hamburger mobile */
-    .hamburger {
-        display: none;
-        font-size: 2em;
-        color: #fff;
-        cursor: pointer;
-    }
+        /* ===== SFONDO FISSO ===== */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                        url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+        }
 
-    /* Menu mobile */
-    .mobile-menu {
-        display: none;
-        flex-direction: column;
-        background-color: rgba(0, 0, 0, 0.7);
-        /* stesso colore del nav */
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 200px;
-        overflow: hidden;
-        border-radius: 0 0 12px 12px;
-        /* arrotonda solo in basso */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        /* optional, per effetto flottante */
-    }
+        /* ===== MENU FISSO ===== */
+        nav {
+            font-family: 'Kaushan Script', cursive;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 70px;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
 
-    .mobile-menu a {
-        color: rgba(255, 255, 255, 0.85);
-        text-decoration: none;
-        padding: 10px 20px;
-        font-size: 1.2em;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        transition: color 0.3s;
-    }
+        nav .logo img {
+            display: block;
+            height: 50px;
+        }
 
-    .mobile-menu a:hover {
-        color: #ff0000;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
         nav .menu {
-            display: none;
+            display: flex;
+        }
+
+        nav .menu a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+
+        nav .menu a:hover {
+            color: #ff0000;
         }
 
         .hamburger {
-            display: block;
-        }
-
-        nav .logo img {
-            height: 40px;
-        }
-
-        .mobile-menu {
-            width: 160px;
-        }
-
-        .mobile-menu a {
-            font-size: 1em;
-            padding: 8px 16px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        nav .logo img {
-            height: 35px;
+            display: none;
+            font-size: 2em;
+            color: #fff;
+            cursor: pointer;
         }
 
         .mobile-menu {
-            width: 140px;
+            display: none;
+            flex-direction: column;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .mobile-menu a {
-            font-size: 0.9em;
-            padding: 6px 12px;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: color 0.3s;
         }
-    }
 
-    /* Spazio per compensare il menu fisso */
-.page-header {
-    margin-top: 200px; /* altezza nav  70px*/
-    padding: 5% 20px 3% 20px; /* distanza in % dall'alto */
-    text-align: center;
-    background: transparent;
-}
+        .mobile-menu a:hover {
+            color: #ff0000;
+        }
 
-.page-header h1 {
-    font-family: 'Kaushan Script', cursive;
-    font-size: 3em;
-    color: #333;
-    margin: 0;
-}
+        /* Responsive menu */
+        @media (max-width: 768px) {
+            nav .menu { display: none; }
+            .hamburger { display: block; }
+            nav .logo img { height: 40px; }
+            .mobile-menu { width: 160px; }
+            .mobile-menu a { font-size: 1em; padding: 8px 16px; }
+        }
 
-/* Responsive titolo */
-@media (max-width: 768px) {
-    .page-header {
-        margin-top: 160px; /* più piccolo su tablet */
-        padding-top: 8%;
-    }
+        @media (max-width: 480px) {
+            nav .logo img { height: 35px; }
+            .mobile-menu { width: 140px; }
+            .mobile-menu a { font-size: 0.9em; padding: 6px 12px; }
+        }
 
-    .page-header h1 {
-        font-size: 2.2em;
-    }
-}
+        /* ===== CONTENITORE PRINCIPALE ===== */
+        .central-container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 80px; /* spazio per il menu fisso */
+            text-align: center;
+            color: #fff;
+        }
 
-@media (max-width: 480px) {
-    .page-header {
-        margin-top: 130px; /* più piccolo su smartphone */
-    }
-}
-    .page-header h1 {
-        font-size: 1.8em;
-    }
-</style>
+        #pageTitle {
+            font-size: clamp(28px, 6vw, 36px);
+            margin-bottom: 30px;
+            color: white;
+        }
 
-<nav>
-    <div class="logo">
-        <a href="homepage.html">
-            <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo">
-        </a>
+        /* ===== SLIDER ===== */
+        .slider-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .slider-container {
+            width: 90%;
+            max-width: 900px;
+            overflow: hidden;
+            border-radius: 15px;
+            position: relative;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            height: 50vh;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .slide {
+            position: relative;
+            min-width: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.6);
+            padding: 15px 20px;
+            color: #fff;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            text-align: left;
+        }
+
+        .caption h2 { font-size: 1.5em; color: #ffdddd; margin: 0; }
+        .caption h3 { font-size: 1.2em; color: #ffaaaa; margin: 2px 0; }
+        .caption p { font-size: 0.9em; margin: 4px 0 0; }
+
+        /* NAV BUTTONS */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            padding: 10px 14px;
+            cursor: pointer;
+            border-radius: 50px;
+            font-size: 18px;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover { background: #ff0000; transform: translateY(-50%) scale(1.1); }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        .dots { text-align: center; padding: 5px 0; }
+        .dot {
+            display: inline-block;
+            width: 10px; height: 10px;
+            margin: 0 4px;
+            background: #bbb;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .dot.active { background: red; }
+
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <a href="homepage.html">
+                <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png" alt="Logo">
+            </a>
+        </div>
+
+        <div class="menu">
+            <a href="homepage.html">Homepage</a>
+            <a href="location.html">I luoghi principali</a>
+            <a href="map.html">Mappa dei consigli</a>
+            <a href="countdown.html">Siete pronti?!</a>
+        </div>
+
+        <div class="hamburger" id="hamburger">☰</div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="homepage.html">Homepage</a>
+            <a href="location.html">I luoghi principali</a>
+            <a href="map.html">Mappa dei consigli</a>
+            <a href="countdown.html">Siete pronti?!</a>
+        </div>
+    </nav>
+
+    <div class="central-container">
+        <h1 id="pageTitle">I Luoghi Principali</h1>
+
+        <div class="slider-wrapper">
+            <div class="slider-container">
+                <div class="slider" id="slider">
+                    <!-- Slide 1 -->
+                    <div class="slide">
+                        <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/bertinoro.jpg" alt="Bertinoro">
+                        <div class="caption">
+                            <h2>Bertinoro</h2>
+                            <h3>"Il Balcone di Romagna"</h3>
+                            <p>Bertinoro è il Balcone di Romagna: la sua piazza è una vera terrazza panoramica sul mare e sulla pianura romagnola.</p>
+                            <p>Qui è situata anche la <strong>Colonna dell'Ospitalità</strong>, simbolo di Bertinoro e centro di un'importante tradizione, il <strong>rito dell'ospitalità</strong>.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="slide">
+                        <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/frattaterme.jpg" alt="Fratta Terme">
+                        <div class="caption">
+                            <h2>Fratta Terme</h2>
+                            <h3>"La Casa degli Sposi"</h3>
+                            <p>Località termale nota per le sue sorgenti dalle proprietà benefiche.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="slide">
+                        <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/palazzo.jpg" alt="Palazzo Comunale">
+                        <div class="caption">
+                            <h2>Palazzo Comunale</h2>
+                            <h3>"Palazzo Ordelaffi"</h3>
+                            <p>Costruito nel 1306 da Pino I Ordelaffi quando conquistò Bertinoro.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="slide">
+                        <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/alcolle.jpg" alt="Agriturismo Al Colle">
+                        <div class="caption">
+                            <h2>Agriturismo</h2>
+                            <h3>"Al Colle"</h3>
+                            <p>Tra le dolci colline di Bertinoro, un luogo perfetto tra natura, gusto e convivialità.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="nav-btn prev" onclick="prevSlide()">&#10094;</button>
+                <button class="nav-btn next" onclick="nextSlide()">&#10095;</button>
+                <div class="dots" id="dots">
+                    <span class="dot active" onclick="goToSlide(0)"></span>
+                    <span class="dot" onclick="goToSlide(1)"></span>
+                    <span class="dot" onclick="goToSlide(2)"></span>
+                    <span class="dot" onclick="goToSlide(3)"></span>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="menu">
-        <a href="homepage.html">Homepage</a>
-        <a href="location.html">I luoghi principali</a>
-        <a href="map.html">Mappa dei consigli</a>
-        <a href="countdown.html">Siete pronti?!</a>
-    </div>
+    <script>
+        // MENU MOBILE
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.style.display = 'none');
+        });
+        window.addEventListener('resize', () => {
+            if(window.innerWidth > 768) mobileMenu.style.display = 'none';
+        });
 
-    <div class="hamburger" id="hamburger">☰</div>
+        // SLIDER
+        let currentIndex = 0;
+        const slides = document.querySelectorAll(".slide");
+        const dots = document.querySelectorAll(".dot");
 
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="homepage.html">Homepage</a>
-        <a href="location.html">I luoghi principali</a>
-        <a href="map.html">Mappa dei consigli</a>
-        <a href="countdown.html">Siete pronti?!</a>
-    </div>
-</nav>
+        function updateSlider() {
+            const slider = document.getElementById("slider");
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach(dot => dot.classList.remove("active"));
+            dots[currentIndex].classList.add("active");
+        }
 
-<div class="page-header">
-    <h1 id="pageTitle"></h1>
-</div>
+        function nextSlide() { currentIndex = (currentIndex + 1) % slides.length; updateSlider(); }
+        function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
+        function goToSlide(index) { currentIndex = index; updateSlider(); }
+
+        setInterval(nextSlide, 5000);
+    </script>
+</body>
+
+</html>
