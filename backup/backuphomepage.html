@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrea e Cristina 04.06.2026</title>
+<link rel="icon" type="image/png"
+      href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { font-family:'Kaushan Script', cursive; width:100%; height:100%; overflow-x:hidden; }
+
+/* ===== SFONDO ===== */
+body::before {
+    content:"";
+    position:fixed;
+    inset:0;
+    background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+                url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg') center/cover no-repeat;
+    z-index:-1;
+}
+
+/* ===== WRAPPER CENTRALE ===== */
+.central-wrapper {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    visibility: hidden;
+}
+
+.central-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 { font-size:2.5em; margin-bottom:10px; color:white;}
+h2 { font-size:3em; margin-bottom:20px;  color:white;}
+p { font-size:2.0em;  color:white;}
+
+a.button {
+    display:inline-block;
+    padding:12px 25px;
+    margin-top:20px;
+    background-color:#ff0000;
+    color:#fff;
+    text-decoration:none;
+    font-weight:bold;
+    border-radius:8px;
+    transition:0.3s;
+}
+a.button:hover { background-color:#cc0000; }
+
+/* ===== MENU ===== */
+/* Stato normale link desktop e mobile */
+nav .menu a,
+.mobile-menu a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+/* Hover link non attivo */
+nav .menu a:hover:not(.active),
+.mobile-menu a:hover:not(.active) {
+    border-bottom: 2px solid #ff0000;
+    color: rgba(255,255,255,0.85);
+}
+
+/* Link attivo */
+nav .menu a.active,
+.mobile-menu a.active {
+    color: #ff0000;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+}
+
+/* Hover su link attivo */
+nav .menu a.active:hover,
+.mobile-menu a.active:hover {
+    border-bottom: 2px solid #ff0000;
+    color: #ff0000;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px) { 
+    h1{font-size:2em;} 
+    h2{font-size:1.5em;} 
+    p{font-size:1.2em;} 
+    a.button{padding:10px 20px;font-size:1em;} 
+}
+@media(max-width:480px) { 
+    h1{font-size:1.5em;} 
+    h2{font-size:1.2em;} 
+    p{font-size:1em;} 
+    a.button{padding:8px 16px;font-size:0.9em;} 
+}
+</style>
+</head>
+<body>
+
+<!-- menu incluso -->
+<div id="menu-placeholder"></div>
+
+<!-- contenitore centrale -->
+<div class="central-wrapper" id="centralWrapper">
+    <div class="central-container">
+        <h1>Andrea e Cristina</h1>
+        <h2>04.06.2026</h2>
+        <p>...una giornata speciale da condividere con Voi!</p>
+    </div>
+</div>
+
+<script>
+fetch('menu.html')
+.then(resp => resp.text())
+.then(html => {
+    // inserisco menu
+    document.getElementById('menu-placeholder').innerHTML = html;
+
+    const menuTitle = document.getElementById('menuPageTitle');
+    if(menuTitle) menuTitle.textContent = ""; // titolo vuoto
+
+    // Configura menu mobile
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(hamburger && mobileMenu){
+        hamburger.addEventListener('click', ()=> mobileMenu.style.display = mobileMenu.style.display==='flex'?'none':'flex');
+        mobileMenu.querySelectorAll('a').forEach(link=> link.addEventListener('click', ()=> mobileMenu.style.display='none'));
+        window.addEventListener('resize', ()=> { if(window.innerWidth>768) mobileMenu.style.display='none'; });
+    }
+
+    // Evidenzia voce attiva (desktop + mobile)
+    const currentPage = location.pathname.split("/").pop() || 'homepage.html';
+    document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
+        if(link.getAttribute('href') === currentPage) link.classList.add('active');
+    });
+
+    // Centra il contenuto verticalmente e lo mostra
+    function updateCentralPosition(){
+        const nav = document.querySelector('nav');
+        if(nav){
+            const totalHeight = nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
+            const wrapper = document.getElementById('centralWrapper');
+            const availableHeight = window.innerHeight - totalHeight;
+
+            // sposta centro visivo leggermente verso il basso (45%)
+            wrapper.style.height = `${availableHeight}px`;
+            wrapper.style.paddingTop = `${availableHeight * 0.45}px`;
+            wrapper.style.visibility = 'visible';
+        }
+    }
+
+    updateCentralPosition();
+    window.addEventListener('resize', updateCentralPosition);
+})
+.catch(err => console.warn('Errore caricamento menu:', err));
+</script>
+
+</body>
+</html>
