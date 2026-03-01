@@ -239,6 +239,15 @@ fetch('sliderlocation.html')
     const dots = placeholder.querySelectorAll('.dot');
     const prevBtn = placeholder.querySelector('.prev');
     const nextBtn = placeholder.querySelector('.next');
+    const dotsContainer = document.getElementById('dots-container');
+dotsContainer.innerHTML = ''; // pulisci eventuali contenuti
+dots.forEach((dot, i) => {
+    const newDot = document.createElement('span');
+    newDot.classList.add('dot');
+    if(i === 0) newDot.classList.add('active');
+    newDot.addEventListener('click', ()=> goToSlide(i));
+    dotsContainer.appendChild(newDot);
+});
     let currentIndex = 0;
 
     function updateSlider() {
