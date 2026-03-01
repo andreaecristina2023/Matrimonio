@@ -21,12 +21,15 @@
             box-sizing: border-box;
         }
 
-        html, body {
-            width: 100%;
-            height: 100%;
-            font-family: 'Kaushan Script', cursive;
-            overflow-x: hidden;
-        }
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Kaushan Script', cursive;
+    overflow-x: hidden;
+    /* togli overflow-y:hidden */
+}
+
+
 
         /* ===== SFONDO ===== */
         body::before {
@@ -40,16 +43,16 @@
         }
 
         /* ===== CONTENITORE CENTRALE ===== */
-        .central-container {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 70px; /* spazio per menu */
-            text-align: center;
-            color: #fff;
-        }
+.central-container {
+    width: 100%;
+    min-height: 100vh; /* garantisce altezza minima */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 70px; /* spazio per menu fisso */
+    text-align: center;
+    color: #fff;
+}
 
         /* ===== TITOLO PRINCIPALE ===== */
         #pageTitle {
