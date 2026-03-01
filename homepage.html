@@ -38,7 +38,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* altezza esatta dello schermo */
+    height: calc(100vh - var(--menu-total-height));
+    margin-top: var(--menu-total-height);
             width: 100%;
             background-color: rgba(0, 0, 0, 0.35);
             box-sizing: border-box;
@@ -130,31 +131,46 @@
 
     <script>
         // Carica menu.html e imposta titolo
-        fetch('menu.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('menu-placeholder').innerHTML = html;
+fetch('menu.html')
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('menu-placeholder').innerHTML = html;
 
-                // Imposta titolo pagina dentro il menu
-                const menuTitle = document.getElementById('menuPageTitle');
-                if(menuTitle) menuTitle.textContent = "Matrimonio";
+        const menuTitle = document.getElementById('menuPageTitle');
+        if (menuTitle) menuTitle.textContent = "Matrimonio";
 
-                // Configura menu mobile
-                const hamburger = document.getElementById('hamburger');
-                const mobileMenu = document.getElementById('mobileMenu');
-                if (hamburger && mobileMenu) {
-                    hamburger.addEventListener('click', () => {
-                        mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-                    });
-                    mobileMenu.querySelectorAll('a').forEach(link => {
-                        link.addEventListener('click', () => mobileMenu.style.display = 'none');
-                    });
-                    window.addEventListener('resize', () => {
-                        if (window.innerWidth > 768) mobileMenu.style.display = 'none';
-                    });
-                }
-            })
-            .catch(err => console.warn('Errore caricamento menu:', err));
+        // Configura menu mobile
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener('click', () => {
+                mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+            });
+
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.style.display = 'none');
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) mobileMenu.style.display = 'none';
+            });
+        }
+
+        // 🔹 Calcolo altezza menu DOPO averlo caricato
+        function updateMenuHeight() {
+            const nav = document.querySelector('nav');
+            const title = document.getElementById('menuPageTitle');
+
+            if (nav && title) {
+                const totalHeight = nav.offsetHeight + title.offsetHeight;
+                document.documentElement.style.setProperty('--menu-total-height', totalHeight + 'px');
+            }
+        }
+
+        updateMenuHeight();
+        window.addEventListener('resize', updateMenuHeight);
+    })
+    .catch(err => console.warn('Errore caricamento menu:', err));
     </script>
 </body>
 
