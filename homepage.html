@@ -75,7 +75,7 @@ fetch('menu.html')
     function updateCentralHeight(){
         const nav = document.querySelector('nav');
         if(nav && menuTitle){
-            const totalHeight = nav.offsetHeight + menuTitle.offsetHeight;
+            const totalHeight = nav.offsetHeight;
             const wrapper = document.getElementById('centralWrapper');
             wrapper.style.height = `calc(100vh - ${totalHeight}px)`; // altezza rimanente
             wrapper.style.visibility = 'visible'; // mostra solo quando tutto pronto
