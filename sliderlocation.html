@@ -1,16 +1,15 @@
+<!-- sliderlocation.html -->
 <div class="slider-wrapper">
     <div class="slider-container">
         <div class="slider" id="slider">
-            <!-- Slide 1 -->
             <div class="slide">
                 <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/bertinoro.jpg" alt="Bertinoro">
                 <div class="caption">
                     <h3>Bertinoro "Il Balcone di Romagna"</h3>
                     <p>La sua piazza è una vera terrazza panoramica sul mare e sulla pianura romagnola.</p>
-                    <p>Qui è situata anche la Colonna dell'Ospitalità, simbolo di Bertinoro e centro di un'importante tradizione, il rito dell'ospitalità.</p>
+                    <p>Qui è situata anche la Colonna dell'Ospitalità, simbolo di Bertinoro e centro di un'importante tradizione.</p>
                 </div>
             </div>
-            <!-- Slide 2 -->
             <div class="slide">
                 <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/frattaterme.jpg" alt="Fratta Terme">
                 <div class="caption">
@@ -18,7 +17,6 @@
                     <p>Località termale nota per le sue sorgenti dalle proprietà benefiche.</p>
                 </div>
             </div>
-            <!-- Slide 3 -->
             <div class="slide">
                 <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/palazzo.jpg" alt="Palazzo Comunale">
                 <div class="caption">
@@ -26,7 +24,6 @@
                     <p>Costruito nel 1306 da Pino I Ordelaffi quando conquistò Bertinoro.</p>
                 </div>
             </div>
-            <!-- Slide 4 -->
             <div class="slide">
                 <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/alcolle.jpg" alt="Agriturismo Al Colle">
                 <div class="caption">
@@ -36,11 +33,9 @@
             </div>
         </div>
 
-        <!-- Pulsanti prev/next -->
         <button class="nav-btn prev" onclick="prevSlide()">&#10094;</button>
         <button class="nav-btn next" onclick="nextSlide()">&#10095;</button>
 
-        <!-- Dots -->
         <div class="dots" id="dots">
             <span class="dot active" onclick="goToSlide(0)"></span>
             <span class="dot" onclick="goToSlide(1)"></span>
@@ -49,115 +44,3 @@
         </div>
     </div>
 </div>
-
-<!-- SLIDER CSS -->
-<style>
-.slider-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-x: hidden;
-}
-.slider-container {
-    width: 90%;
-    max-width: 900px;
-    overflow: hidden;
-    border-radius: 15px;
-    position: relative;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    height: 50vh;
-}
-.slider {
-    display: flex;
-    transition: transform 0.5s ease;
-    height: 100%;
-}
-.slide {
-    position: relative;
-    min-width: 100%;
-}
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 15px;
-}
-.caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(to top right, rgba(0,0,0,1.0), rgba(0,0,0,0.2));
-    padding: 15px 20px;
-    color: #fff;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    text-align: left;
-}
-.caption h3 { font-size: 1.2em; color: #ff0000; margin: 2px 0; }
-.caption p { font-size: 0.9em; margin: 4px 0 0; }
-
-/* NAV BUTTONS */
-.nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    border: none;
-    padding: 10px 14px;
-    cursor: pointer;
-    border-radius: 50px;
-    font-size: 18px;
-    z-index: 10;
-    transition: all 0.3s ease;
-}
-.nav-btn:hover { background: #ff0000; transform: translateY(-50%) scale(1.1); }
-.prev { left: 10px; }
-.next { right: 10px; }
-
-.dots { text-align: center; padding: 5px 0; }
-.dot {
-    display: inline-block;
-    width: 10px; height: 10px;
-    margin: 0 4px;
-    background: #bbb;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.dot.active { background: red; }
-
-/* Responsive */
-@media (max-width: 768px) {
-    .slider-container { height: 40vh; }
-    .caption h3 { font-size: 1em; }
-    .caption p { font-size: 0.85em; }
-}
-@media (max-width: 480px) {
-    .slider-container { height: 30vh; }
-    .caption h3 { font-size: 0.9em; }
-    .caption p { font-size: 0.8em; }
-}
-</style>
-
-<!-- SLIDER JS -->
-<script>
-let currentIndex = 0;
-const slides = document.querySelectorAll(".slide");
-const dots = document.querySelectorAll(".dot");
-
-function updateSlider() {
-    const slider = document.getElementById("slider");
-    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-    dots.forEach(dot => dot.classList.remove("active"));
-    dots[currentIndex].classList.add("active");
-}
-function nextSlide() { currentIndex = (currentIndex + 1) % slides.length; updateSlider(); }
-function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
-function goToSlide(index) { currentIndex = index; updateSlider(); }
-
-setInterval(nextSlide, 5000);
-</script>
