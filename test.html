@@ -1,524 +1,135 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Andrea e Cristina 04.06.2026</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea e Cristina 04.06.2026</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png"
-    href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
 
-  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <style>
+        /* ===== RESET ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { font-family: 'Kaushan Script', cursive; width: 100%; height: 100%; }
 
-html,
-body {
-  width: 100%;
-  min-height: 100vh;
-  font-family: 'Kaushan Script', cursive;
-}
+        /* ===== SFONDO ===== */
+        body {
+            background: url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg') center/cover no-repeat;
+            color: #fff;
+        }
 
-    /* ===== SFONDO ===== */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-        url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
-      background-size: cover;
-      z-index: -1;
-    }
+        /* ===== CENTRAL CONTAINER CENTRATO ===== */
+        body {
+            display: flex;
+            flex-direction: column;
+        }
 
-    /* ===== MENU ===== */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-      height: 70px;
-      background-color: rgba(0, 0, 0, 0.7);
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-    }
+        .central-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            text-align: center;
+            padding: 20px;
+        }
 
-    nav .logo img {
-      height: 50px;
-    }
+        .central-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-    nav .menu {
-      display: flex;
-    }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
 
-    nav .menu a {
-      color: rgba(255, 255, 255, 0.85);
-      text-decoration: none;
-      margin-left: 20px;
-      font-size: 1.2em;
-      transition: color .3s;
-    }
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
 
-    nav .menu a:hover {
-      color: #ff0000;
-    }
+        p {
+            font-size: 1.5em;
+        }
 
-    .hamburger {
-      display: none;
-      font-size: 2em;
-      color: #fff;
-      cursor: pointer;
-    }
+        a.button {
+            display: inline-block;
+            padding: 12px 25px;
+            margin-top: 20px;
+            background-color: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
 
-    .mobile-menu {
-      display: none;
-      flex-direction: column;
-      background-color: rgba(0, 0, 0, 0.7);
-      position: absolute;
-      top: 100%;
-      right: 0;
-      width: 200px;
-      border-radius: 0 0 0px 18px;
-      /* 👈 arrotonda */
-      overflow: hidden;
-      /* 👈 IMPORTANTISSIMO */
-    }
+        a.button:hover {
+            background-color: #cc0000;
+        }
 
-    .mobile-menu a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.5em; }
+            p { font-size: 1.2em; }
+            a.button { padding: 10px 20px; font-size: 1em; }
+        }
 
-    @media(max-width:768px) {
-      nav .menu {
-        display: none;
-      }
-
-      .hamburger {
-        display: block;
-      }
-    }
-
-    /* ===== CONTENITORE ===== */
-    .central-container {
-      width: 100%;
-      height: 100vh;
-      margin-top: 70px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding-top: 40px;
-      text-align: center;
-    }
-
-    /* ===== TITOLO PRINCIPALE ===== */
-    #playTitle {
-      font-size: clamp(24px, 4vw, 30px);
-      color: white;
-            margin-bottom: 40px;
-    }
-
-    /* ===== PULSANTE ===== */
-    #playPauseBtn {
-      font-family: 'Kaushan Script', cursive;
-      font-size: 26px;
-      padding: 10px 25px;
-      border-radius: 30px;
-      background: #a32f2f;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-bottom: 40px;
-      transition: .3s;
-      animation: glowBtn 1.5s infinite alternate;
-    }
-
-    @keyframes glowBtn {
-      from {
-        box-shadow: 0 0 0px #a32f2f;
-      }
-
-      to {
-        box-shadow: 0 0 0px #ff4c4c;
-      }
-    }
-
-    /* ===== TESTI SEQUENZA ===== */
-    .sequence {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      align-items: center;
-      opacity: 0;
-      z-index: 10;
-      transition: opacity 0.6s ease;
-      pointer-events: none;
-      /* 🔥 AGGIUNGI QUESTO */
-    }
-
-    .sequence p {
-      opacity: 0;
-      font-size: clamp(18px, 4vw, 24px);
-      transition: opacity 0.6s ease;
-    }
-
-    .light {
-      color: white;
-    }
-
-    .highlight {
-      color: #ff0000;
-    }
-
-    /* ===== TITLE WRAPPER ===== */
-    .title-wrapper {
-      position: relative;
-      height: 40px;
-      margin-bottom: 15px;
-    }
-
-    .title-wrapper .main-title {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%);
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      /* più veloce = più secco */
-      white-space: nowrap;
-    }
-
-    #titleStart,
-    #finalText {
-      font-size: clamp(24px, 6vw, 30px);
-      /* da 28px a max 60px */
-      line-height: 1.1;
-      opacity: 0;
-      /* invisibile all’inizio */
-      color: #ff0000;
-      /* rosso subito */
-      position: absolute;
-      left: 50%;
-      top: 5%;
-      transform: translateX(-50%);
-      white-space: nowrap;
-      transition: opacity 0.6s ease;
-    }
-
-    /* ===== COUNTDOWN ===== */
-    #countdown {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) scale(0.6);
-      /* parte più piccolo */
-      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(.68, -0.55, .27, 1.55);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      opacity: 0;
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      pointer-events: none;
-      /* 🔥 AGGIUNGI QUESTO */
-    }
-
-    .box {
-      aspect-ratio: 1/1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.9);
-      width: 110px;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      animation: blinkShadow 1.5s infinite alternate;
-    }
-
-    @keyframes blinkShadow {
-      from {
-        box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
-      }
-
-      to {
-        box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
-      }
-    }
-
-    .number {
-      font-size: 36px;
-      color: #ff0000;
-    }
-
-    .label {
-      font-size: 16px;
-      color: #ff0000;
-    }
-
-    @media(max-width:768px) {
-      #countdown {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .box {
-        width: 90px;
-      }
-    }
-  </style>
+        @media (max-width: 480px) {
+            h1 { font-size: 1.5em; }
+            h2 { font-size: 1.2em; }
+            p { font-size: 1em; }
+            a.button { padding: 8px 16px; font-size: 0.9em; }
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Menu incluso via fetch -->
+    <div id="menu-placeholder"></div>
 
-  <!-- Menu incluso via fetch -->
-  <div id="menu-placeholder"></div>
-
-  <div class="central-container">
-
-    <div id="playTitle">Siete pront*?</div>
-    <button id="playPauseBtn">SI!!!</button>
-
-    <div class="title-wrapper">
-      <div id="titleStart" class="main-title light">Ricordatevi di portare:</div>
-      <div id="finalText" class="main-title highlight">...perché mancano solo...</div>
+    <!-- Wrapper centrale per centratura verticale -->
+    <div class="central-wrapper">
+        <div class="central-container">
+            <h1>Andrea e Cristina</h1>
+            <h2>04.06.2026</h2>
+            <p>...una giornata speciale da condividere con voi!</p>
+        </div>
     </div>
 
-    <div class="sequence" id="sequence">
-      <p class="light">1. Il vostro sorriso migliore!</p>
-      <p class="light">2. Un costume!</p>
-      <p class="light">3. Tanta voglia di divertirvi!</p>
-      <p class="highlight">4. Scarpe rosse e comode!</p>
-    </div>
+    <script>
+        // Carica menu.html
+        fetch('menu.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('menu-placeholder').innerHTML = html;
 
-    <div id="countdown">
-      <div class="box">
-        <div class="number" id="days">0</div>
-        <div class="label">gg</div>
-      </div>
-      <div class="box">
-        <div class="number" id="hours">0</div>
-        <div class="label">hh</div>
-      </div>
-      <div class="box">
-        <div class="number" id="minutes">0</div>
-        <div class="label">mm</div>
-      </div>
-      <div class="box">
-        <div class="number" id="seconds">0</div>
-        <div class="label">ss</div>
-      </div>
-    </div>
+                const menuTitle = document.getElementById('menuPageTitle');
+                if (menuTitle) menuTitle.textContent = "Matrimonio";
 
-  </div>
-
-  <audio id="bgMusic"
-    src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/music/Are_You_Ready_For_This.mp3"></audio>
-
-  <script>
-    const playBtn = document.getElementById("playPauseBtn");
-    const bgMusic = document.getElementById("bgMusic");
-    const lines = document.querySelectorAll("#sequence p");
-    const titleStart = document.getElementById("titleStart");
-    const finalText = document.getElementById("finalText");
-    const sequence = document.getElementById("sequence");
-    const countdown = document.getElementById("countdown");
-
-    let index = 0;
-    let animationStarted = false;
-    let timeouts = [];
-    let isPaused = false;
-
-    // Evidenzia la pagina corrente nel menu
-    const currentPage = window.location.pathname.split("/").pop(); // es. "location.html"
-    const menuLinks = document.querySelectorAll('#menu-placeholder a');
-
-    menuLinks.forEach(link => {
-      const linkPage = link.getAttribute('href');
-      if (linkPage === currentPage) {
-        link.style.color = "#ff0000";       // rosso
-        link.style.fontWeight = "bold";     // opzionale: grassetto
-      }
-    });
-
-    playBtn.addEventListener("click", () => {
-
-      if (!animationStarted) {
-
-        animationStarted = true;
-        playBtn.innerText = "⏸️ Pause";
-        bgMusic.play();
-
-        timeouts.push(setTimeout(() => {
-          titleStart.style.opacity = 1;
-        }, 600));
-
-        timeouts.push(setTimeout(() => {
-          startSequence();
-        }, 1500));
-
-      } else {
-
-        if (isPaused) {
-          // RIPRENDI
-          isPaused = false;
-          playBtn.innerText = "⏸️ Pause";
-          bgMusic.play();
-          showNextLine();
-        } else {
-          // PAUSA
-          isPaused = true;
-          playBtn.innerText = "▶️ Play";
-          bgMusic.pause();
-
-          timeouts.forEach(t => clearTimeout(t));
-          timeouts = [];
-        }
-      }
-    });
-
-    function startSequence() {
-      sequence.style.opacity = 1;
-      showNextLine();
-    }
-
-    function showNextLine() {
-
-      if (isPaused) return;
-
-      if (index < lines.length) {
-
-        let current = lines[index];
-        current.style.opacity = 1;
-        index++;
-
-        let t = setTimeout(() => {
-          showNextLine();
-        }, 1800);
-
-        timeouts.push(t);
-
-      } else {
-
-        let t = setTimeout(() => {
-
-          if (isPaused) return;
-
-
-          // 2️⃣ Sparisce primo titolo
-          let t2 = setTimeout(() => {
-
-            if (isPaused) return;
-
-            titleStart.style.opacity = 0;
-            // 1️⃣ Sparisce lista
-            sequence.style.opacity = 0;
-
-            // 3️⃣ Micro pausa teatrale
-            let t3 = setTimeout(() => {
-
-              if (isPaused) return;
-
-              // 4️⃣ Entra nuovo testo
-              finalText.style.opacity = 1;
-
-              // 5️⃣ Countdown con effetto pop
-              countdown.style.opacity = 1;
-              countdown.style.transform = "translateX(-50%) scale(1)";
-
-              const boxes = document.querySelectorAll(".box");
-              boxes.forEach(box => box.style.opacity = 1);
-
-            }, 1800);
-
-            timeouts.push(t3);
-
-          }, 1000);
-
-          timeouts.push(t2);
-
-        }, 2500);
-
-        timeouts.push(t);
-      }
-    }
-
-
-    // COUNTDOWN
-    const target = new Date("2026-06-04T18:00:00").getTime();
-
-    setInterval(() => {
-
-      const diff = target - Date.now();
-      if (diff <= 0) return;
-
-      document.getElementById('days').innerText = Math.floor(diff / 86400000);
-      document.getElementById('hours').innerText = Math.floor(diff / 3600000) % 24;
-      document.getElementById('minutes').innerText = Math.floor(diff / 60000) % 60;
-      document.getElementById('seconds').innerText = Math.floor(diff / 1000) % 60;
-
-    }, 1000);
-
-
- // Carica il menu esterno
-  fetch("menu.html")
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById("menu-placeholder").innerHTML = data;
-
-      // Evidenzia pagina corrente
-      const currentPage = window.location.pathname.split("/").pop();
-      const links = document.querySelectorAll("#menu-placeholder a");
-
-      links.forEach(link => {
-        const linkPage = link.getAttribute("href");
-        if (linkPage === currentPage) {
-          link.style.color = "#ff0000";
-          link.style.fontWeight = "bold";
-        }
-      });
-
-      // Attiva hamburger DOPO che il menu è stato caricato
-      const mobileMenu = document.getElementById('mobileMenu');
-      const hamburger = document.getElementById('hamburger');
-
-      if (hamburger) {
-        hamburger.addEventListener('click', () => {
-          mobileMenu.style.display =
-            mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-        });
-
-        mobileMenu.querySelectorAll('a').forEach(link => {
-          link.addEventListener('click', () => {
-            mobileMenu.style.display = 'none';
-          });
-        });
-
-        window.addEventListener('resize', () => {
-          if (window.innerWidth > 768) {
-            mobileMenu.style.display = 'none';
-          }
-        });
-      }
-
-    })
-    .catch(error => console.error("Errore caricamento menu:", error));
-  </script>
+                // Configura menu mobile
+                const hamburger = document.getElementById('hamburger');
+                const mobileMenu = document.getElementById('mobileMenu');
+                if (hamburger && mobileMenu) {
+                    hamburger.addEventListener('click', () => {
+                        mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+                    });
+                    mobileMenu.querySelectorAll('a').forEach(link => {
+                        link.addEventListener('click', () => mobileMenu.style.display = 'none');
+                    });
+                    window.addEventListener('resize', () => {
+                        if (window.innerWidth > 768) mobileMenu.style.display = 'none';
+                    });
+                }
+            })
+            .catch(err => console.warn('Errore caricamento menu:', err));
+    </script>
 </body>
-
 </html>
