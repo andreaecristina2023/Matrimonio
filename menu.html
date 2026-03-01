@@ -163,5 +163,35 @@
         <a href="countdown.html">Siete pronti?!</a>
     </div>
 </nav>
+
 <!-- Titolo pagina fuori dal nav -->
 <div class="page-title" id="menuPageTitle"></div>
+
+<style>
+    /* Titolo pagina sotto il nav */
+    #menuPageTitle {
+        width: 100%;
+        text-align: center; /* centrato orizzontalmente */
+        font-family: 'Kaushan Script', cursive;
+        font-size: 2em;
+        color: #fff;
+        padding: 10px 0;
+        margin-top: 80px; /* spazio sotto il nav fisso (70px + 10px extra) */
+        background-color: rgba(0,0,0,0.7); /* fascia grigia scura */
+    }
+
+    /* Opzionale: adattamento mobile */
+    @media (max-width: 768px) {
+        #menuPageTitle {
+            font-size: 1.8em;
+            margin-top: 75px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #menuPageTitle {
+            font-size: 1.5em;
+            margin-top: 70px;
+        }
+    }
+</style>
