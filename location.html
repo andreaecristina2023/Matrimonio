@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Andrea e Cristina 04.06.2026</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/png"
         href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
 
-    <!-- Google Font Kaushan Script -->
+    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
     <style>
@@ -23,14 +23,13 @@
 
         html,
         body {
-            width: 100%;
-            height: 100%;
             font-family: 'Kaushan Script', cursive;
+            width: 100%;
             overflow-x: hidden;
-            overflow-y: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* ===== SFONDO ===== */
+        /* ===== SFONDO FISSO ===== */
         body::before {
             content: "";
             position: fixed;
@@ -41,232 +40,25 @@
             z-index: -1;
         }
 
-        /* ===== MENU ===== */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            height: 70px;
-            background-color: rgba(0, 0, 0, 0.7);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        nav .logo img {
-            height: 50px;
-        }
-
-        nav .menu {
-            display: flex;
-        }
-
-        nav .menu a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 1.2em;
-            transition: color .3s;
-        }
-
-        nav .menu a:hover {
-            color: #ff0000;
-        }
-
-        .hamburger {
-            display: none;
-            font-size: 2em;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            background-color: rgba(0, 0, 0, 0.7);
-            position: absolute;
-            top: 70px;
-            right: 0;
-            width: 200px;
-            border-radius: 0 0 0px 18px;
-            z-index: 2000;
-        }
-
-        .mobile-menu a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        @media(max-width:768px) {
-            nav .menu {
-                display: none;
-            }
-
-            .hamburger {
-                display: block;
-            }
-        }
-
         /* ===== CONTENITORE CENTRALE ===== */
         .central-container {
             width: 100%;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 70px;
-            /* spazio per menu */
+            justify-content: flex-start;
+            padding-top: 80px;
+            /* spazio per menu fisso */
             text-align: center;
             color: #fff;
         }
 
-        /* ===== TITOLO PRINCIPALE ===== */
+        /* Titolo pagina (opzionale, dentro menu o sopra contenuto) */
         #pageTitle {
             font-size: clamp(28px, 6vw, 36px);
             margin-bottom: 30px;
             color: white;
-        }
-
-        /* ===== SLIDER ===== */
-        .slider-wrapper {
-            width: 100%;
-            flex: 1;
-            /* occupa tutto lo spazio disponibile */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .slider-container {
-            width: 90%;
-            max-width: 900px;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .slide img {
-            width: 100%;
-            height: auto;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            display: block;
-        }
-
-        .caption {
-            background: transparent;
-            padding: 15px 20px;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            min-height: 120px;
-            /* uniforma tutte le caption */
-            color: #000;
-        }
-
-        .slider {
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 100%;
-        }
-
-        .slide {
-            min-width: 100%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .slide img {
-            width: 100%;
-            height: auto;
-            max-height: 100%;
-            object-fit: contain;
-            /* mantiene proporzioni e "zoomma" se serve */
-            display: block;
-        }
-
-        .caption {
-            padding: 5px 10px;
-            overflow: hidden;
-        }
-
-        .caption h2 {
-            margin: 0;
-            font-size: 1.5em;
-            color: red;
-        }
-
-        .caption h3 {
-            margin: 5px 0 0;
-            font-size: 1.2em;
-            color: #ff0000;
-        }
-
-        .caption p {
-            margin: 4px 0 0;
-            font-size: 0.9em;
-            line-height: 1.2;
-            color: #fff;
-        }
-
-        /* Pulsanti prev/next centrati verticalmente */
-        .nav-btn {
-            position: absolute;
-            top: 75%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            opacity: 100%;
-            border: none;
-            padding: 10px 14px;
-            cursor: pointer;
-            border-radius: 50px;
-            font-size: 18px;
-            z-index: 10;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover {
-            background: #ff0000;
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .prev {
-            left: 5px;
-        }
-
-        .next {
-            right: 5px;
-        }
-
-        /* Pallini indicatori */
-        .dots {
-            text-align: center;
-            padding: 5px 0;
-        }
-
-        .dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            margin: 0 4px;
-            background: #bbb;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .dot.active {
-            background: red;
         }
     </style>
 </head>
@@ -275,104 +67,45 @@
     <!-- Menu incluso via fetch -->
     <div id="menu-placeholder"></div>
 
-    <div class="central-container">
-        <h1 id="pageTitle">I luoghi principali</h1>
+    <!-- Contenitore centrale vuoto: qui inserirai di volta in volta i contenuti -->
+    <div class="central-container" id="page-content">
+        <!-- Nessun contenuto statico qui, solo titolo se vuoi -->
 
-        <div class="slider-wrapper">
-            <div class="slider-container">
-                <div class="slider" id="slider">
-                    <div class="slide">
-                        <img src="https://i.imgur.com/smSAiQw.jpg" alt="Bertinoro">
-                        <div class="caption">
-                            <h2>Bertinoro</h2>
-                            <h3>"Il Balcone di Romagna"</h3>
-                            <p>Bertinoro è il Balcone di Romagna: la sua piazza è una vera terrazza panoramica sul mare
-                                e sulla pianura romagnola.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <img src="https://i.imgur.com/x8equD3.jpg" alt="Fratta Terme">
-                        <div class="caption">
-                            <h2>Fratta Terme</h2>
-                            <h3>"La Casa degli Sposi"</h3>
-                            <p>Località termale nota per le sue sorgenti dalle proprietà benefiche.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <img src="https://i.imgur.com/ZDNbTdt.jpg" alt="Palazzo Comunale">
-                        <div class="caption">
-                            <h2>Il Palazzo Comunale</h2>
-                            <h3>"Palazzo Ordelaffi"</h3>
-                            <p>Costruito nel 1306 da Pino I Ordelaffi quando conquistò Bertinoro.</p>
-                        </div>
-                    </div>
-                    <div class="slide">
-                        <img src="https://i.imgur.com/g2AX3Pn.jpg" alt="Agriturismo Al Colle">
-                        <div class="caption">
-                            <h2>Agriturismo</h2>
-                            <h3>"Al Colle"</h3>
-                            <p>Tra le dolci colline di Bertinoro, un luogo perfetto tra natura, gusto e convivialità.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="nav-btn prev" onclick="prevSlide()">&#10094;</button>
-                <button class="nav-btn next" onclick="nextSlide()">&#10095;</button>
-
-                <div class="dots" id="dots">
-                    <span class="dot active" onclick="goToSlide(0)"></span>
-                    <span class="dot" onclick="goToSlide(1)"></span>
-                    <span class="dot" onclick="goToSlide(2)"></span>
-                    <span class="dot" onclick="goToSlide(3)"></span>
-                </div>
-            </div>
-        </div>
+        <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
     </div>
 
     <script>
-        // Evidenzia la pagina corrente nel menu
-        const currentPage = window.location.pathname.split("/").pop(); // es. "location.html"
-        const menuLinks = document.querySelectorAll('#menu-placeholder a');
+        // Imposta il titolo della pagina dinamicamente
+        document.getElementById('menuPageTitle').textContent = "I luoghi principali";
 
-        menuLinks.forEach(link => {
-            const linkPage = link.getAttribute('href');
-            if (linkPage === currentPage) {
-                link.style.color = "#ff0000";       // rosso
-                link.style.fontWeight = "bold";     // opzionale: grassetto
-            }
-        });
+        // Carica menu.html dentro il div #menu-placeholder
+        fetch('menu.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('menu-placeholder').innerHTML = html;
 
-        // MENU MOBILE
-        const mobileMenu = document.getElementById('mobileMenu');
-        const hamburger = document.getElementById('hamburger');
-        hamburger.addEventListener('click', () => {
-            mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-        });
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => { mobileMenu.style.display = 'none'; });
-        });
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) mobileMenu.style.display = 'none';
-        });
+                // Dopo aver caricato il menu, puoi aggiungere qui eventuali eventi JS
+                const hamburger = document.getElementById('hamburger');
+                const mobileMenu = document.getElementById('mobileMenu');
+                if (hamburger && mobileMenu) {
+                    hamburger.addEventListener('click', () => {
+                        mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+                    });
+                    mobileMenu.querySelectorAll('a').forEach(link => {
+                        link.addEventListener('click', () => mobileMenu.style.display = 'none');
+                    });
+                    window.addEventListener('resize', () => {
+                        if (window.innerWidth > 768) mobileMenu.style.display = 'none';
+                    });
+                }
+            })
+            .catch(err => console.warn('Errore caricamento menu:', err));
 
-        // SLIDER
-        let currentIndex = 0;
-        const slides = document.querySelectorAll(".slide");
-        const dots = document.querySelectorAll(".dot");
-
-        function updateSlider() {
-            const slider = document.getElementById("slider");
-            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach(dot => dot.classList.remove("active"));
-            dots[currentIndex].classList.add("active");
-        }
-        function nextSlide() { currentIndex = (currentIndex + 1) % slides.length; updateSlider(); }
-        function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
-        function goToSlide(index) { currentIndex = index; updateSlider(); }
-
-        // auto slide ogni 5s
-        setInterval(nextSlide, 5000);
+        fetch('sliderlocation.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('page-content').innerHTML += html;
+            });
     </script>
 </body>
 
