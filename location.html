@@ -134,8 +134,11 @@ nav .menu a.active:hover,
 .prev { left: 10px; }
 .next { right: 10px; }
 
-/* DOTS */
-.dots { text-align: center; padding: 5px 0; }
+/* DOTS CENTRATI SOTTO LO SLIDER */
+.dots-container {
+    text-align: center;
+    margin-top: 10px;
+}
 .dot {
     display: inline-block;
     width: 10px; height: 10px;
@@ -160,22 +163,6 @@ nav .menu a.active:hover,
     .caption h3 { font-size: 0.9em; }
     .caption p { font-size: 0.8em; }
 }
-
-/* DOTS CENTRATI SOTTO LO SLIDER */
-.dots-container {
-    text-align: center;
-    margin-top: 10px;
-}
-.dot {
-    display: inline-block;
-    width: 10px; height: 10px;
-    margin: 0 4px;
-    background: #bbb;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.dot.active { background: red; }
 </style>
 </head>
 <body>
