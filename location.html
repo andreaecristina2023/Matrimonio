@@ -207,7 +207,7 @@ function updateCentralPosition(){
     const wrapper = document.getElementById('centralWrapper');
 
     if(nav){
-        const totalHeight = nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
+        const totalHeight = 2 * nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
         const availableHeight = window.innerHeight - totalHeight;
         wrapper.style.height = `${availableHeight}px`; // usa height, non min-height
         wrapper.style.paddingTop = `${availableHeight * 0.20}px`;
