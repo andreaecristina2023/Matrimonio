@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrea e Cristina 04.06.2026</title>
+<link rel="icon" type="image/png"
+      href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { font-family:'Kaushan Script', cursive; width:100%; height:100%; overflow-x:hidden; }
+
+/* ===== SFONDO ===== */
+body::before {
+    content:"";
+    position:fixed;
+    inset:0;
+    background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+                url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg') center/cover no-repeat;
+    z-index:-1;
+}
+
+.central-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* ===== MENU ===== */
+nav .menu a, .mobile-menu a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+}
+nav .menu a:hover:not(.active), .mobile-menu a:hover:not(.active) {
+    border-bottom: 2px solid #ff0000;
+    color: rgba(255,255,255,0.85);
+}
+nav .menu a.active, .mobile-menu a.active {
+    color: #ff0000;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+}
+nav .menu a.active:hover, .mobile-menu a.active:hover {
+    border-bottom: 2px solid #ff0000;
+    color: #ff0000;
+}
+
+/* ===== WRAPPER CENTRALE ===== */
+.central-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;   /* CENTRATURA VERTICALE */
+    text-align: center;
+    visibility: hidden;
+    width: 100%;
+    padding-top: 5vh;
+    min-height: 100vh;        /* fallback per JS */
+}
+
+/* ===== SLIDER ===== */
+.slider-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slider-container {
+    width: 90%;
+    max-width: 1000px;
+    aspect-ratio: 16/9;          /* proporzione perfetta */
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+}
+
+.slider {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.slide img {
+    width: 100%;
+    flex: 1;              /* prende tutto lo spazio disponibile */
+    object-fit: cover;
+    display: block;
+}
+
+.caption {
+    height: 18%;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;   /* 👈 testo a sinistra */
+    text-align: left;          /* 👈 allinea il testo */
+    /*padding-left: 30px;*/
+    padding: 10px;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to top right, rgba(0,0,0,1.0), rgba(0,0,0,0.2));
+    padding: 20px;
+}
+
+/* NAV BUTTONS */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 50px;
+    font-size: 18px;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+.nav-btn:hover { 
+    background: #ff0000; 
+    transform: translateY(-50%) scale(1.1); 
+}
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* ===== DOTS ===== */
+.dots-container {
+    text-align: center;
+    margin-top: 12px;   /* subito sotto slider */
+    width: 100%;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    background: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background: red;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px) {
+    .slide-title { font-size: 1.2em; }
+    .caption { font-size: 0.9em; }
+}
+@media(max-width:480px) {
+    .slide-title { font-size: 1em; }
+    .caption { font-size: 0.8em; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- MENU -->
+<div id="menu-placeholder"></div>
+
+<!-- CENTRAL WRAPPER -->
+<div class="central-wrapper" id="centralWrapper">
+    <div class="central-container">
+        <div id="slider-container-placeholder"></div>
+        <div class="dots-container" id="dots-container"></div>
+    </div>
+</div>
+
+<script>
+// ===== CARICA MENU =====
+fetch('menu.html')
+.then(resp => resp.text())
+.then(html => {
+    document.getElementById('menu-placeholder').innerHTML = html;
+    const menuTitle = document.getElementById('menuPageTitle');
+    if(menuTitle) menuTitle.textContent = "I nostri luoghi";
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(hamburger && mobileMenu){
+        hamburger.addEventListener('click', ()=> mobileMenu.style.display = mobileMenu.style.display==='flex'?'none':'flex');
+        mobileMenu.querySelectorAll('a').forEach(link=> link.addEventListener('click', ()=> mobileMenu.style.display='none'));
+        window.addEventListener('resize', ()=> { if(window.innerWidth>768) mobileMenu.style.display='none'; });
+    }
+
+    const currentPage = location.pathname.split("/").pop() || 'homepage.html';
+    document.querySelectorAll('nav .menu a, nav .mobile-menu a')
+        .forEach(link => { if(link.getAttribute('href') === currentPage) link.classList.add('active'); });
+
+    // Centra wrapper verticale
+function updateCentralPosition(){
+    const nav = document.querySelector('nav');
+    const menuTitle = 0//document.getElementById('menuPageTitle');
+    const wrapper = document.getElementById('centralWrapper');
+
+    if(nav){
+        const totalHeight = 2 * nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
+        const availableHeight = window.innerHeight - totalHeight;
+        wrapper.style.height = `${availableHeight}px`; // usa height, non min-height
+        wrapper.style.paddingTop = `${availableHeight * 0.20}px`;
+        wrapper.style.visibility = 'visible';
+    }
+}
+
+updateCentralPosition();
+window.addEventListener('resize', updateCentralPosition);
+})
+.catch(err => console.warn('Errore caricamento menu:', err));
+
+// ===== CARICA MAPPA =====
+fetch('mapcontent.html')
+.then(resp => resp.text())
+.then(html => {
+    document.getElementById('slider-container-placeholder').innerHTML = html;
+})
+.catch(err => console.warn('Errore caricamento mappa:', err));
+</script>
+
+</body>
+</html>

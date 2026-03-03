@@ -3,45 +3,37 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Andrea e Cristina 04.06.2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mappa - Andrea e Cristina 04.06.2026</title>
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png"
     href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
 
-  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
 
   <style>
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
-      font-family: 'Kaushan Script', cursive;
-      background: #f5f5f5;
     }
 
     #map {
-      height: 100vh;
+      height: 100%;
       width: 100%;
     }
 
-    /* Popup leggibili su smartphone */
     .leaflet-popup-content {
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.4;
     }
 
     .leaflet-popup-content a {
       display: inline-block;
       margin-top: 6px;
-      font-size: 16px;
       font-weight: bold;
     }
 
-    /* Marker parcheggi */
     .marker-number div {
       display: flex;
       align-items: center;
@@ -55,7 +47,6 @@
       font-size: 13px;
     }
 
-    /* Marker speciali */
     .marker-special div {
       display: flex;
       align-items: center;
@@ -69,7 +60,6 @@
       font-size: 18px;
     }
 
-    /* Marker municipio */
     .marker-municipio div {
       display: flex;
       align-items: center;
@@ -83,7 +73,6 @@
       font-size: 18px;
     }
 
-    /* Pulsante posizione */
     .locate-btn {
       position: absolute;
       bottom: 20px;
@@ -98,6 +87,7 @@
       justify-content: center;
       font-size: 22px;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
     }
   </style>
 </head>
@@ -111,31 +101,45 @@
     const CENTRO = { lat: 44.14919, lon: 12.13341 };
     const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?output=csv";
 
-    const map = L.map('map', {
-      zoomControl: false
-    }).setView([CENTRO.lat, CENTRO.lon], 14);
+    const map = L.map('map', { zoomControl: false })
+      .setView([CENTRO.lat, CENTRO.lon], 14);
 
-    // zoom in basso a destra (più comodo su mobile)
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+      .addTo(map);
 
     function createNumberIcon(text) {
-      return L.divIcon({ className: 'marker-number', html: `<div>${text}</div>`, iconSize: [34, 34], iconAnchor: [17, 34] });
+      return L.divIcon({
+        className: 'marker-number',
+        html: `<div>${text}</div>`,
+        iconSize: [34, 34],
+        iconAnchor: [17, 34]
+      });
     }
 
     function createSpecialIcon(symbol) {
-      return L.divIcon({ className: 'marker-special', html: `<div>${symbol}</div>`, iconSize: [34, 34], iconAnchor: [17, 34] });
+      return L.divIcon({
+        className: 'marker-special',
+        html: `<div>${symbol}</div>`,
+        iconSize: [34, 34],
+        iconAnchor: [17, 34]
+      });
     }
 
     function createMunicipioIcon() {
-      return L.divIcon({ className: 'marker-municipio', html: `<div>🏛️</div>`, iconSize: [34, 34], iconAnchor: [17, 34] });
+      return L.divIcon({
+        className: 'marker-municipio',
+        html: `<div>🏛️</div>`,
+        iconSize: [34, 34],
+        iconAnchor: [17, 34]
+      });
     }
 
     // Municipio
     L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
 
-    // punti speciali
+    // Punti speciali
     const specialPoints = [
       { lat: 44.14268, lon: 12.09886, label: "Casa degli Sposi", symbol: "❤️" },
       { lat: 44.14925, lon: 12.13385, label: "Enoteca Colonna Panorama", symbol: "🥂" },
@@ -145,46 +149,47 @@
     specialPoints.forEach(p => {
       L.marker([p.lat, p.lon], { icon: createSpecialIcon(p.symbol) })
         .addTo(map)
-        .bindPopup(`<b>${p.label}</b><br>
-  <a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank">🚗 Naviga</a>`);
+        .bindPopup(`
+          <b>${p.label}</b><br>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank">🚗 Naviga</a>
+        `);
     });
 
-    // parcheggi
-    Papa.parse(csvURL, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        results.data.forEach((p, i) => {
-          const lat = parseFloat(p.Latitudine);
-          const lon = parseFloat(p.Longitudine);
-          if (isNaN(lat) || isNaN(lon)) return;
+    // FETCH CSV Parcheggi
+    fetch(csvURL)
+      .then(response => response.text())
+      .then(text => {
+        const rows = text.split("\n").slice(1);
 
-          L.marker([lat, lon], { icon: createNumberIcon(`P${String(i + 1).padStart(2, '0')}`) })
-            .addTo(map)
-            .bindPopup(`
-       <b>${p.Descrizione}</b><br>
-       ${p.Indirizzo}<br>
-       🚗 Posti: ${p.Posti}<br>
-       ♿ Accessibilità: ${p.Accessibilità}<br>
-       📏 Distanza: ${p["Distanza in linea d'aria"]} m<br>
-       🥾 Percorso: ${p["Lunghezza del percorso"]} m<br>
-       ⛰ Dislivello: ${p.Dislivello} m<br>
-       <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>
-     `);
+        rows.forEach((row, i) => {
+          const cols = row.split(",");
+          const lat = parseFloat(cols[0]);
+          const lon = parseFloat(cols[1]);
+          const descrizione = cols[2];
+
+          if (!isNaN(lat) && !isNaN(lon)) {
+            L.marker([lat, lon], {
+              icon: createNumberIcon(`P${String(i + 1).padStart(2, '0')}`)
+            })
+              .addTo(map)
+              .bindPopup(`
+                <b>${descrizione}</b><br>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>
+              `);
+          }
         });
-      }
-    });
+      });
 
-    // posizione utente
     function locateUser() {
       map.locate({ setView: true, maxZoom: 16 });
     }
 
     map.on('locationfound', e => {
-      L.marker(e.latlng).addTo(map).bindPopup("Sei qui").openPopup();
+      L.marker(e.latlng).addTo(map)
+        .bindPopup("Sei qui")
+        .openPopup();
     });
   </script>
-</body>
 
+</body>
 </html>
