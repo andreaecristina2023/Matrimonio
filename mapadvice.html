@@ -2,211 +2,237 @@
 <html lang="it">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Andrea e Cristina 04.06.2026</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea e Cristina 04.06.2026</title>
 
-<link rel="icon" type="image/png"
-href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+    <link rel="icon" type="image/png"
+        href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
 
-<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{font-family:'Kaushan Script',cursive;width:100%;height:100%;overflow-x:hidden;}
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)),
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            font-family: 'Kaushan Script', cursive;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
                 url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg') center/cover no-repeat;
-    z-index:-1;
-}
-.central-wrapper{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    width:100%;
-    min-height:100vh;
-    padding-top:5vh;
-}
-.central-container{
-    width:100%;
-    display:flex;
-    justify-content:center;
-}
-#map{
-    width:90%;
-    max-width:1000px;
-    height:70vh;
-    border-radius:15px;
-    margin-top:20px;
-}
-nav .menu a,.mobile-menu a{
-    color:rgba(255,255,255,0.85);
-    text-decoration:none;
-    border-bottom:2px solid transparent;
-    transition:all 0.3s;
-}
-nav .menu a:hover:not(.active),.mobile-menu a:hover:not(.active){
-    border-bottom:2px solid #ff0000;
-}
-nav .menu a.active,.mobile-menu a.active{
-    color:#ff0000;
-    font-weight:bold;
-}
-</style>
+            z-index: -1;
+        }
+
+        .central-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 5vh;
+        }
+
+        .central-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        #map {
+            width: 90%;
+            max-width: 1000px;
+            height: 70vh;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        nav .menu a,
+        .mobile-menu a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        nav .menu a:hover:not(.active),
+        .mobile-menu a:hover:not(.active) {
+            border-bottom: 2px solid #ff0000;
+        }
+
+        nav .menu a.active,
+        .mobile-menu a.active {
+            color: #ff0000;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
 
-<div id="menu-placeholder"></div>
+    <div id="menu-placeholder"></div>
 
-<div class="central-wrapper" id="centralWrapper">
-    <div class="central-container">
-        <div id="map"></div>
+    <div class="central-wrapper" id="centralWrapper">
+        <div class="central-container">
+            <div id="map"></div>
+        </div>
     </div>
-</div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
 
-/* ===== CARICA MENU ===== */
-fetch('menu.html')
-.then(resp=>resp.text())
-.then(html=>{
-    document.getElementById('menu-placeholder').innerHTML = html;
+        /* ===== CARICA MENU ===== */
+        fetch('menu.html')
+            .then(resp => resp.text())
+            .then(html => {
+                document.getElementById('menu-placeholder').innerHTML = html;
 
-    const menuTitle = document.getElementById('menuPageTitle');
-    if(menuTitle) menuTitle.textContent = "Mappa dei consigli";
+                const menuTitle = document.getElementById('menuPageTitle');
+                if (menuTitle) menuTitle.textContent = "Mappa dei consigli";
 
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
+                const hamburger = document.getElementById('hamburger');
+                const mobileMenu = document.getElementById('mobileMenu');
 
-    if(hamburger && mobileMenu){
-        hamburger.addEventListener('click', ()=> mobileMenu.style.display = mobileMenu.style.display==='flex'?'none':'flex');
-        mobileMenu.querySelectorAll('a').forEach(link=> link.addEventListener('click', ()=> mobileMenu.style.display='none'));
-        window.addEventListener('resize', ()=> { if(window.innerWidth>768) mobileMenu.style.display='none'; });
-    }
+                if (hamburger && mobileMenu) {
+                    hamburger.addEventListener('click', () => mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex');
+                    mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.style.display = 'none'));
+                    window.addEventListener('resize', () => { if (window.innerWidth > 768) mobileMenu.style.display = 'none'; });
+                }
 
-    const currentPage = location.pathname.split("/").pop() || 'homepage.html';
-    document.querySelectorAll('nav .menu a, nav .mobile-menu a')
-        .forEach(link=> { if(link.getAttribute('href') === currentPage) link.classList.add('active'); });
+                const currentPage = location.pathname.split("/").pop() || 'homepage.html';
+                document.querySelectorAll('nav .menu a, nav .mobile-menu a')
+                    .forEach(link => { if (link.getAttribute('href') === currentPage) link.classList.add('active'); });
 
-    updateCentralPosition();
-    window.addEventListener('resize', updateCentralPosition);
-})
-.catch(err=>console.warn('Errore caricamento menu:', err));
+                updateCentralPosition();
+                window.addEventListener('resize', updateCentralPosition);
+            })
+            .catch(err => console.warn('Errore caricamento menu:', err));
 
-function updateCentralPosition(){
-    const nav = document.querySelector('nav');
-    const wrapper = document.getElementById('centralWrapper');
-    const menuTitle = document.getElementById('menuPageTitle');
-    if(nav){
-        const totalHeight = 2 * nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
-        const availableHeight = window.innerHeight - totalHeight;
-        wrapper.style.height = `${availableHeight}px`;
-        wrapper.style.paddingTop = `${availableHeight * 0.15}px`;
-        wrapper.style.visibility = 'visible';
-    }
-}
+        function updateCentralPosition() {
+            const nav = document.querySelector('nav');
+            const wrapper = document.getElementById('centralWrapper');
+            const menuTitle = document.getElementById('menuPageTitle');
+            if (nav) {
+                const totalHeight = 2 * nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
+                const availableHeight = window.innerHeight - totalHeight;
+                wrapper.style.height = `${availableHeight}px`;
+                wrapper.style.paddingTop = `${availableHeight * 0.15}px`;
+                wrapper.style.visibility = 'visible';
+            }
+        }
 
-/* ===== INIZIALIZZA MAPPA ===== */
-    const CENTRO = { lat: 44.14919, lon: 12.13341 };
-    const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?output=csv";
+        /* ===== INIZIALIZZA MAPPA ===== */
+        const CENTRO = { lat: 44.14919, lon: 12.13341 };
+        const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?output=csv";
 
-    const map = L.map('map', { zoomControl: false })
-      .setView([CENTRO.lat, CENTRO.lon], 14);
+        const map = L.map('map', { zoomControl: false })
+            .setView([CENTRO.lat, CENTRO.lon], 14);
 
-    L.control.zoom({ position: 'bottomleft' }).addTo(map);
+        L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
-      .addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+            .addTo(map);
 
-    function createNumberIcon(text) {
-      return L.divIcon({
-        className: 'marker-number',
-        html: `<div>${text}</div>`,
-        iconSize: [2%, 2%],
-        iconAnchor: [17, 34]
-      });
-    }
+        function createNumberIcon(text) {
+            return L.divIcon({
+                className: 'marker-number',
+                html: `<div>${text}</div>`,
+                iconSize: [2 %, 2 %],
+                iconAnchor: [17, 34]
+            });
+        }
 
-    function createSpecialIcon(symbol) {
-      return L.divIcon({
-        className: 'marker-special',
-        html: `<div>${symbol}</div>`,
-        iconSize: [2%, 2%],
-        iconAnchor: [17, 34]
-      });
-    }
+        function createSpecialIcon(symbol) {
+            return L.divIcon({
+                className: 'marker-special',
+                html: `<div>${symbol}</div>`,
+                iconSize: [2 %, 2 %],
+                iconAnchor: [17, 34]
+            });
+        }
 
-    function createMunicipioIcon() {
-      return L.divIcon({
-        className: 'marker-municipio',
-        html: `<div>🏛️</div>`,
-        iconSize: [2%, 2%],
-        iconAnchor: [17, 34]
-      });
-    }
+        function createMunicipioIcon() {
+            return L.divIcon({
+                className: 'marker-municipio',
+                html: `<div>🏛️</div>`,
+                iconSize: [2 %, 2 %],
+                iconAnchor: [17, 34]
+            });
+        }
 
-    // Municipio
-    L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
+        // Municipio
+        L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
 
-    // Punti speciali
-    const specialPoints = [
-      { lat: 44.14268, lon: 12.09886, label: "Casa degli Sposi", symbol: "❤️" },
-      { lat: 44.14925, lon: 12.13385, label: "Enoteca Colonna Panorama", symbol: "🥂" },
-      { lat: 44.15848, lon: 12.18447, label: "Agriturismo Al Colle", symbol: "🍴" }
-    ];
+        // Punti speciali
+        const specialPoints = [
+            { lat: 44.14268, lon: 12.09886, label: "Casa degli Sposi", symbol: "❤️" },
+            { lat: 44.14925, lon: 12.13385, label: "Enoteca Colonna Panorama", symbol: "🥂" },
+            { lat: 44.15848, lon: 12.18447, label: "Agriturismo Al Colle", symbol: "🍴" }
+        ];
 
-    specialPoints.forEach(p => {
-      L.marker([p.lat, p.lon], { icon: createSpecialIcon(p.symbol) })
-        .addTo(map)
-        .bindPopup(`
+        specialPoints.forEach(p => {
+            L.marker([p.lat, p.lon], { icon: createSpecialIcon(p.symbol) })
+                .addTo(map)
+                .bindPopup(`
           <b>${p.label}</b><br>
           <a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank">🚗 Naviga</a>
         `);
-    });
-
-    // FETCH CSV Parcheggi
-    fetch(csvURL)
-      .then(response => response.text())
-      .then(text => {
-        const rows = text.split("\n").slice(1);
-
-        rows.forEach((row, i) => {
-          const cols = row.split(",");
-          const lat = parseFloat(cols[0]);
-          const lon = parseFloat(cols[1]);
-          const descrizione = cols[2];
-
-          if (!isNaN(lat) && !isNaN(lon)) {
-            L.marker([lat, lon], {
-              icon: createNumberIcon(`P${String(i + 1).padStart(2, '0')}`)
-            })
-              .addTo(map)
-              .bindPopup(`
-                <b>${descrizione}</b><br>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>
-              `);
-          }
         });
-      });
 
-    function locateUser() {
-      map.locate({ setView: true, maxZoom: 16 });
-    }
+        // FETCH CSV Parcheggi
+        // FETCH CSV Parcheggi
+        fetch(csvURL)
+            .then(response => response.text())
+            .then(text => {
+                const rows = text.split("\n").slice(1).filter(r => r.trim() !== ""); // ignora righe vuote
 
-    map.on('locationfound', e => {
-      L.marker(e.latlng).addTo(map)
-        .bindPopup("Sei qui")
-        .openPopup();
-    });
+                rows.forEach((row, i) => {
+                    // Usa regex per split su virgola solo fuori virgolette
+                    const cols = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(c => c.replace(/^"|"$/g, ''));
 
-</script>
+                    const lat = parseFloat(cols[0]);
+                    const lon = parseFloat(cols[1]);
+                    const descrizione = cols[2] || `Parcheggio ${i + 1}`;
+
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        L.marker([lat, lon], {
+                            icon: createNumberIcon(`P${String(i + 1).padStart(2, '0')}`)
+                        })
+                            .addTo(map)
+                            .bindPopup(`
+          <b>${descrizione}</b><br>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>
+        `);
+                    }
+                });
+            })
+            .catch(err => console.warn('Errore caricamento marker CSV:', err));
+
+        function locateUser() {
+            map.locate({ setView: true, maxZoom: 16 });
+        }
+
+        map.on('locationfound', e => {
+            L.marker(e.latlng).addTo(map)
+                .bindPopup("Sei qui")
+                .openPopup();
+        });
+
+    </script>
 </body>
+
 </html>
