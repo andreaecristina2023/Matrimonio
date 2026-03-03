@@ -135,6 +135,10 @@ const map = L.map('map', {zoomControl:false}).setView([CENTRO.lat,CENTRO.lon],14
 L.control.zoom({position:'bottomleft'}).addTo(map);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
+function parseCSV(text) {
+    const lines = text.split("\n").filter(l => l.trim()!=="");
+    return lines.map(line => line.split(',').map(c => c.replace(/^"|"$/g,'')));
+}
 // icona proporzionale
 function getIconSize(){ return Math.round(Math.min(window.innerWidth, window.innerHeight)*0.05); }
 
@@ -173,24 +177,23 @@ console.log("✨ Punti speciali aggiunti");
 // CSV parcheggi
 const parkingMarkers = [];
 fetch(csvURL)
-.then(resp=>resp.text())
-.then(text=>{
-    const rows=text.split("\n").slice(1).filter(r=>r.trim()!=="");
-    rows.forEach((row,i)=>{
-        const cols = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(c=>c.replace(/^"|"$/g,''));
-        const lat=parseFloat(cols[0]);
-        const lon=parseFloat(cols[1]);
-        const descrizione=cols[2]||`Parcheggio ${i+1}`;
-        if(!isNaN(lat)&&!isNaN(lon)){
-            const m = L.marker([lat,lon],{icon:createNumberIcon(`P${String(i+1).padStart(2,'0')}`)})
-             .addTo(map)
-             .bindPopup(`<b>${descrizione}</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>`);
+.then(r => r.text())
+.then(text => {
+    const rows = parseCSV(text).slice(1); // salta intestazioni
+    rows.forEach((cols,i)=>{
+        const lat = parseFloat(cols[0]);
+        const lon = parseFloat(cols[1]);
+        const descrizione = cols[2] || `Parcheggio ${i+1}`;
+        if(!isNaN(lat) && !isNaN(lon)){
+            const m = L.marker([lat,lon], {icon:createNumberIcon(`P${String(i+1).padStart(2,'0')}`)})
+            .addTo(map)
+            .bindPopup(`<b>${descrizione}</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>`);
             parkingMarkers.push(m);
             console.log(`🅿️ Parcheggio caricato: ${descrizione} (${lat},${lon})`);
         }
     });
 })
-.catch(err=>console.warn('❌ Errore caricamento CSV:',err));
+.catch(err => console.warn('❌ Errore caricamento CSV:', err));
 
 // Ridimensionamento dinamico icone
 function resizeMarkers(){
