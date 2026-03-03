@@ -143,7 +143,9 @@ function parseCSV(text) {
     });
 }
 // icona proporzionale
-function getIconSize(){Math.round(Math.min(window.innerWidth, window.innerHeight)*0.1);}
+function getIconSize(){
+    return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.08);
+}
 
 function createNumberIcon(text){
     const size=getIconSize();
