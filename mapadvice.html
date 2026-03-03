@@ -156,58 +156,46 @@ function updateCentralPosition(){
 }
 
 
-/* ===== CARICA CONTENUTO MAPPA ===== */
 fetch('mapcontent.html')
-.then(resp=>resp.text())
-.then(html=>{
-    const container=document.getElementById('map-container');
-    container.innerHTML=html;
+.then(resp => resp.text())
+.then(html => {
+    document.getElementById('map-container').innerHTML = html;
 
-    initMap();
-})
-.catch(err=>console.warn('Errore caricamento mappa:',err));
+    // Inizializza mappa qui dopo che il div esiste
+    const CENTRO = { lat: 44.14919, lon: 12.13341 };
+    const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?output=csv";
 
+    const map = L.map('map').setView([CENTRO.lat, CENTRO.lon], 14);
 
-/* ===== INIZIALIZZAZIONE MAPPA ===== */
-function initMap(){
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-    const CENTRO={lat:44.14919,lon:12.13341};
+    function createMunicipioIcon() {
+      return L.divIcon({
+        className: '',
+        html: `<div style="background:#8e24aa;color:white;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;">🏛️</div>`,
+        iconSize: [34, 34],
+        iconAnchor: [17, 34]
+      });
+    }
 
-    const csvURL=
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?output=csv";
-
-    const map=L.map('map')
-    .setView([CENTRO.lat,CENTRO.lon],14);
-
-    L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {maxZoom:19}
-    ).addTo(map);
-
-    L.marker([CENTRO.lat,CENTRO.lon])
-    .addTo(map)
-    .bindPopup("Palazzo Comunale");
+    L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
 
     fetch(csvURL)
-    .then(response=>response.text())
-    .then(text=>{
-        const rows=text.split("\n").slice(1);
-
-        rows.forEach(row=>{
-            const cols=row.split(",");
-            const lat=parseFloat(cols[0]);
-            const lon=parseFloat(cols[1]);
-            const descrizione=cols[2];
-
-            if(!isNaN(lat)&&!isNaN(lon)){
-                L.marker([lat,lon])
-                .addTo(map)
-                .bindPopup(`<b>${descrizione}</b>`);
-            }
-        });
+    .then(response => response.text())
+    .then(text => {
+      const rows = text.split("\n").slice(1);
+      rows.forEach((row,i)=>{
+        const cols = row.split(",");
+        const lat = parseFloat(cols[0]);
+        const lon = parseFloat(cols[1]);
+        const descrizione = cols[2];
+        if(!isNaN(lat) && !isNaN(lon)){
+          L.marker([lat, lon]).addTo(map)
+          .bindPopup(`<b>${descrizione}</b>`);
+        }
+      });
     });
-
-}
+});
 
 </script>
 
