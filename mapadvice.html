@@ -199,7 +199,7 @@
         }
 
         // ===== MAPPA =====
-        const CENTRO = { lat: 44.14919, lon: 12.13341 };
+        const CENTRO = { lat: 44.0079, lon: 12.042805 };
         const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?gid=436600834&single=true&output=csv";
 
         const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lon], 13);
@@ -248,25 +248,10 @@ popupAnchor: [0, -size / 2]
     });
 }
 
-function createMunicipioIcon() {
-    const size = getIconSize();
-    const fontSize = getFontSize(size);
-    return L.divIcon({
-        className: 'marker-municipio',
-        html: `<div style="font-size:${fontSize}px;">🏛️</div>`,
-        iconSize: [size, size],
-iconAnchor: [size / 2, size / 2],
-popupAnchor: [0, -size / 2]
-    });
-}
-
-        // Municipio
-        const municipioMarker = L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
-        console.log("🏛️ Municipio aggiunto");
-
         // Punti speciali
         const specialPoints = [
-            { lat: 44.14268, lon: 12.09886, label: "Casa degli Sposi", symbol: "🤍" },
+            { lat: 44.14268, lon: 12.09886, label: "La Casa degli Sposi", symbol: "🤍" },
+            { lat: 44.14919, lon: 12.13341, label: "Palazzo Ordelaffi", symbol: "🏛️" },
             { lat: 44.14925, lon: 12.13385, label: "Enoteca Colonna Panorama", symbol: "🥂" },
             { lat: 44.15848, lon: 12.18447, label: "Agriturismo Al Colle", symbol: "🍴" }
         ];
