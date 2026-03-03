@@ -59,6 +59,7 @@
             height: 65vh;
             border-radius: 15px;
             margin-top: 20px;
+    overflow: hidden;
         }
 
         nav .menu a,
@@ -171,13 +172,14 @@
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        function parseCSV(text) {
-            const lines = text.split("\n").filter(l => l.trim() !== "");
-            return lines.map(line => {
-                const separator = line.includes(";") ? ";" : ",";
-                return line.split(separator).map(c => c.replace(/^"|"$/g, '').trim());
-            });
-        }
+function parseCSV(text) {
+    const lines = text.split("\n").filter(l => l.trim() !== "");
+    return lines.map(line => {
+        const separator = line.includes(";") ? ";" : ",";
+        return line.split(separator).map(c => c.replace(/^"|"$/g,'').trim());
+    });
+}
+
         // icona proporzionale
         function getIconSize() {
             return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.08);
