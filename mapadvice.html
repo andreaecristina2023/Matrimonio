@@ -181,23 +181,48 @@ function parseCSV(text) {
     });
 }
 
-        // icona proporzionale
-        function getIconSize() {
-            return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.06);
-        }
+// icona proporzionale
+function getIconSize() {
+    return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.06);
+}
 
-        function createNumberIcon(text) {
-            const size = getIconSize();
-            return L.divIcon({ className: 'marker-number', html: `<div>${text}</div>`, iconSize: [size, size], iconAnchor: [size / 2, size] });
-        }
-        function createSpecialIcon(symbol) {
-            const size = getIconSize();
-            return L.divIcon({ className: 'marker-special', html: `<div>${symbol}</div>`, iconSize: [size, size], iconAnchor: [size / 2, size] });
-        }
-        function createMunicipioIcon() {
-            const size = getIconSize();
-            return L.divIcon({ className: 'marker-municipio', html: `<div>🏛️</div>`, iconSize: [size, size], iconAnchor: [size / 2, size] });
-        }
+function getFontSize(size) {
+    return Math.round(size * 0.45); 
+    // 45% della dimensione icona → proporzione equilibrata
+}
+
+function createNumberIcon(text) {
+    const size = getIconSize();
+    const fontSize = getFontSize(size);
+    return L.divIcon({
+        className: 'marker-number',
+        html: `<div style="font-size:${fontSize}px;">${text}</div>`,
+        iconSize: [size, size],
+        iconAnchor: [size / 2, size]
+    });
+}
+
+function createSpecialIcon(symbol) {
+    const size = getIconSize();
+    const fontSize = getFontSize(size);
+    return L.divIcon({
+        className: 'marker-special',
+        html: `<div style="font-size:${fontSize}px;">${symbol}</div>`,
+        iconSize: [size, size],
+        iconAnchor: [size / 2, size]
+    });
+}
+
+function createMunicipioIcon() {
+    const size = getIconSize();
+    const fontSize = getFontSize(size);
+    return L.divIcon({
+        className: 'marker-municipio',
+        html: `<div style="font-size:${fontSize}px;">🏛️</div>`,
+        iconSize: [size, size],
+        iconAnchor: [size / 2, size]
+    });
+}
 
         // Municipio
         const municipioMarker = L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
