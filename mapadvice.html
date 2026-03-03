@@ -140,7 +140,7 @@ function parseCSV(text) {
     return lines.map(line => line.split(',').map(c => c.replace(/^"|"$/g,'')));
 }
 // icona proporzionale
-function getIconSize(){Math.min(window.innerWidth, window.innerHeight)*0.05}
+function getIconSize(){Math.round(Math.min(window.innerWidth, window.innerHeight)*0.05);}
 
 function createNumberIcon(text){
     const size=getIconSize();
