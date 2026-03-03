@@ -176,59 +176,42 @@ function getIconSize() {
     const size = getIconSize();
             return L.divIcon({
                 className: 'marker-municipio',
-                html: `<div>🏛️</div>`,
+                html: `<div "colour:white">🏛️</div>`,
                 iconSize: [size, size],
                 iconAnchor: [size/2, size]
             });
         }
 
         // Municipio
-        L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
+// Municipio
+L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
 
-        // Punti speciali
-        const specialPoints = [
-            { lat: 44.14268, lon: 12.09886, label: "Casa degli Sposi", symbol: "❤️" },
-            { lat: 44.14925, lon: 12.13385, label: "Enoteca Colonna Panorama", symbol: "🥂" },
-            { lat: 44.15848, lon: 12.18447, label: "Agriturismo Al Colle", symbol: "🍴" }
-        ];
+// Punti speciali
+specialPoints.forEach(p => {
+    L.marker([p.lat, p.lon], { icon: createSpecialIcon(p.symbol) })
+        .addTo(map)
+        .bindPopup(`<b>${p.label}</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank">🚗 Naviga</a>`);
+});
 
-        specialPoints.forEach(p => {
-            L.marker([p.lat, p.lon], { icon: createSpecialIcon(p.symbol) })
-                .addTo(map)
-                .bindPopup(`
-          <b>${p.label}</b><br>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank">🚗 Naviga</a>
-        `);
+// CSV parcheggi
+fetch(csvURL)
+    .then(resp => resp.text())
+    .then(text => {
+        const rows = text.split("\n").slice(1).filter(r => r.trim() !== "");
+        rows.forEach((row, i) => {
+            const cols = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(c => c.replace(/^"|"$/g, ''));
+            const lat = parseFloat(cols[0]);
+            const lon = parseFloat(cols[1]);
+            const descrizione = cols[2] || `Parcheggio ${i + 1}`;
+
+            if(!isNaN(lat) && !isNaN(lon)){
+                L.marker([lat, lon], { icon: createNumberIcon(`P${String(i+1).padStart(2,'0')}`) })
+                 .addTo(map)
+                 .bindPopup(`<b>${descrizione}</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>`);
+            }
         });
-
-        // FETCH CSV Parcheggi
-        // FETCH CSV Parcheggi
-        fetch(csvURL)
-            .then(response => response.text())
-            .then(text => {
-                const rows = text.split("\n").slice(1).filter(r => r.trim() !== ""); // ignora righe vuote
-
-                rows.forEach((row, i) => {
-                    // Usa regex per split su virgola solo fuori virgolette
-                    const cols = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(c => c.replace(/^"|"$/g, ''));
-
-                    const lat = parseFloat(cols[0]);
-                    const lon = parseFloat(cols[1]);
-                    const descrizione = cols[2] || `Parcheggio ${i + 1}`;
-
-                    if (!isNaN(lat) && !isNaN(lon)) {
-                        L.marker([lat, lon], {
-                            icon: createNumberIcon(`P${String(i + 1).padStart(2, '0')}`)
-                        })
-                            .addTo(map)
-                            .bindPopup(`
-          <b>${descrizione}</b><br>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>
-        `);
-                    }
-                });
-            })
-            .catch(err => console.warn('Errore caricamento marker CSV:', err));
+    })
+    .catch(err => console.warn('Errore caricamento CSV:', err));
 
         function locateUser() {
             map.locate({ setView: true, maxZoom: 16 });
