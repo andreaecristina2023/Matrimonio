@@ -153,7 +153,7 @@
         function updateCentralPosition() {
             const nav = document.querySelector('nav');
             const wrapper = document.getElementById('centralWrapper');
-            const menuTitle = 0//document.getElementById('menuPageTitle');    
+            const menuTitle = document.getElementById('menuPageTitle').height;    
 
             if (nav) {
                 const totalHeight = 2 * nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
