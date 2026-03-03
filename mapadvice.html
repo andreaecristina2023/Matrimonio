@@ -147,12 +147,14 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
             .addTo(map);
 
+        // Calcola dimensione in pixel basata su viewport
+        const size = Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.05); // 5% della larghezza dello schermo
         function createNumberIcon(text) {
             return L.divIcon({
                 className: 'marker-number',
                 html: `<div>${text}</div>`,
-                iconSize: [2 %, 2 %],
-                iconAnchor: [17, 34]
+                iconSize: [size, size],
+                iconAnchor: [size/2, size]
             });
         }
 
@@ -160,8 +162,8 @@
             return L.divIcon({
                 className: 'marker-special',
                 html: `<div>${symbol}</div>`,
-                iconSize: [2 %, 2 %],
-                iconAnchor: [17, 34]
+                iconSize: [size, size],
+                iconAnchor: [size/2, size]
             });
         }
 
@@ -169,8 +171,8 @@
             return L.divIcon({
                 className: 'marker-municipio',
                 html: `<div>🏛️</div>`,
-                iconSize: [2 %, 2 %],
-                iconAnchor: [17, 34]
+                iconSize: [size, size],
+                iconAnchor: [size/2, size]
             });
         }
 
@@ -231,7 +233,6 @@
                 .bindPopup("Sei qui")
                 .openPopup();
         });
-
     </script>
 </body>
 
