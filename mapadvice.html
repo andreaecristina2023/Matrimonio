@@ -259,7 +259,7 @@ popupAnchor: [0, -size / 2]
         specialPoints.forEach(p => {
             const m = L.marker([p.lat, p.lon], { icon: createSpecialIcon(p.symbol) })
                 .addTo(map)
-                .bindPopup(`<b>${p.label}</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank">🚗 Naviga</a>`);
+                .bindPopup(`<b>${p.label}</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank">🚗 Naviga!</a>`);
             specialMarkers.push(m);
         });
         console.log("✨ Punti speciali aggiunti");
