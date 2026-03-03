@@ -169,7 +169,7 @@
         const CENTRO = { lat: 44.14919, lon: 12.13341 };
         const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?gid=436600834&single=true&output=csv";
 
-        const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lon], 14);
+        const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lon], 13);
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
