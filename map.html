@@ -2,194 +2,182 @@
 <html lang="it">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mappa - Andrea e Cristina 04.06.2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrea e Cristina 04.06.2026</title>
 
-  <link rel="icon" type="image/png"
-    href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+<link rel="icon" type="image/png"
+href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
+<style>
+/* ===== RESET ===== */
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+    font-family:'Kaushan Script',cursive;
+    width:100%;
+    height:100%;
+    overflow-x:hidden;
+}
 
-    #map {
-      height: 100%;
-      width: 100%;
-    }
+/* ===== SFONDO ===== */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)),
+    url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg')
+    center/cover no-repeat;
+    z-index:-1;
+}
 
-    .leaflet-popup-content {
-      font-size: 15px;
-      line-height: 1.4;
-    }
+.central-wrapper{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    width:100%;
+    min-height:100vh;
+    padding-top:5vh;
+}
 
-    .leaflet-popup-content a {
-      display: inline-block;
-      margin-top: 6px;
-      font-weight: bold;
-    }
+.central-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+}
 
-    .marker-number div {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #1976d2;
-      color: white;
-      border-radius: 50%;
-      width: 34px;
-      height: 34px;
-      border: 2px solid white;
-      font-size: 13px;
-    }
+/* ===== MAP ===== */
+#map{
+    width:90%;
+    max-width:1000px;
+    height:70vh;
+    border-radius:15px;
+}
 
-    .marker-special div {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #d81b60;
-      color: white;
-      border-radius: 50%;
-      width: 34px;
-      height: 34px;
-      border: 2px solid white;
-      font-size: 18px;
-    }
+/* ===== MENU LINK STYLE ===== */
+nav .menu a,
+.mobile-menu a{
+    color:rgba(255,255,255,0.85);
+    text-decoration:none;
+    border-bottom:2px solid transparent;
+    transition:all 0.3s;
+}
 
-    .marker-municipio div {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #8e24aa;
-      color: white;
-      border-radius: 50%;
-      width: 34px;
-      height: 34px;
-      border: 2px solid white;
-      font-size: 18px;
-    }
+nav .menu a:hover:not(.active),
+.mobile-menu a:hover:not(.active){
+    border-bottom:2px solid #ff0000;
+}
 
-    .locate-btn {
-      position: absolute;
-      bottom: 20px;
-      right: 15px;
-      z-index: 1000;
-      background: white;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-    }
-  </style>
+nav .menu a.active,
+.mobile-menu a.active{
+    color:#ff0000;
+    font-weight:bold;
+}
+</style>
 </head>
 
 <body>
 
-  <div id="map"></div>
-  <div class="locate-btn" onclick="locateUser()">📍</div>
+<!-- MENU -->
+<div id="menu-placeholder"></div>
 
-  <script>
-    const CENTRO = { lat: 44.14919, lon: 12.13341 };
-    const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?output=csv";
+<!-- CENTRAL WRAPPER -->
+<div class="central-wrapper" id="centralWrapper">
+    <div class="central-container">
+        <div id="map"></div>
+    </div>
+</div>
 
-    const map = L.map('map', { zoomControl: false })
-      .setView([CENTRO.lat, CENTRO.lon], 14);
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
 
-    L.control.zoom({ position: 'bottomleft' }).addTo(map);
+/* ===== CARICA MENU ===== */
+fetch('menu.html')
+.then(resp=>resp.text())
+.then(html=>{
+    document.getElementById('menu-placeholder').innerHTML=html;
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
-      .addTo(map);
+    const menuTitle=document.getElementById('menuPageTitle');
+    if(menuTitle) menuTitle.textContent="Mappa dei consigli";
 
-    function createNumberIcon(text) {
-      return L.divIcon({
-        className: 'marker-number',
-        html: `<div>${text}</div>`,
-        iconSize: [34, 34],
-        iconAnchor: [17, 34]
-      });
-    }
+    const hamburger=document.getElementById('hamburger');
+    const mobileMenu=document.getElementById('mobileMenu');
 
-    function createSpecialIcon(symbol) {
-      return L.divIcon({
-        className: 'marker-special',
-        html: `<div>${symbol}</div>`,
-        iconSize: [34, 34],
-        iconAnchor: [17, 34]
-      });
-    }
-
-    function createMunicipioIcon() {
-      return L.divIcon({
-        className: 'marker-municipio',
-        html: `<div>🏛️</div>`,
-        iconSize: [34, 34],
-        iconAnchor: [17, 34]
-      });
-    }
-
-    // Municipio
-    L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
-
-    // Punti speciali
-    const specialPoints = [
-      { lat: 44.14268, lon: 12.09886, label: "Casa degli Sposi", symbol: "❤️" },
-      { lat: 44.14925, lon: 12.13385, label: "Enoteca Colonna Panorama", symbol: "🥂" },
-      { lat: 44.15848, lon: 12.18447, label: "Agriturismo Al Colle", symbol: "🍴" }
-    ];
-
-    specialPoints.forEach(p => {
-      L.marker([p.lat, p.lon], { icon: createSpecialIcon(p.symbol) })
-        .addTo(map)
-        .bindPopup(`
-          <b>${p.label}</b><br>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank">🚗 Naviga</a>
-        `);
-    });
-
-    // FETCH CSV Parcheggi
-    fetch(csvURL)
-      .then(response => response.text())
-      .then(text => {
-        const rows = text.split("\n").slice(1);
-
-        rows.forEach((row, i) => {
-          const cols = row.split(",");
-          const lat = parseFloat(cols[0]);
-          const lon = parseFloat(cols[1]);
-          const descrizione = cols[2];
-
-          if (!isNaN(lat) && !isNaN(lon)) {
-            L.marker([lat, lon], {
-              icon: createNumberIcon(`P${String(i + 1).padStart(2, '0')}`)
-            })
-              .addTo(map)
-              .bindPopup(`
-                <b>${descrizione}</b><br>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>
-              `);
-          }
+    if(hamburger && mobileMenu){
+        hamburger.addEventListener('click',()=>{
+            mobileMenu.style.display= mobileMenu.style.display==='flex'?'none':'flex';
         });
-      });
 
-    function locateUser() {
-      map.locate({ setView: true, maxZoom: 16 });
+        mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{ mobileMenu.style.display='none'; }));
+
+        window.addEventListener('resize',()=>{ if(window.innerWidth>768) mobileMenu.style.display='none'; });
     }
 
-    map.on('locationfound', e => {
-      L.marker(e.latlng).addTo(map)
-        .bindPopup("Sei qui")
-        .openPopup();
+    const currentPage= location.pathname.split("/").pop() || 'homepage.html';
+    document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link=>{
+        if(link.getAttribute('href')===currentPage) link.classList.add('active');
     });
-  </script>
 
+    updateCentralPosition();
+    window.addEventListener('resize',updateCentralPosition);
+})
+.catch(err=>console.warn('Errore caricamento menu:',err));
+
+function updateCentralPosition(){
+    const nav = document.querySelector('nav');
+    const wrapper = document.getElementById('centralWrapper');
+    const menuTitle = document.getElementById('menuPageTitle'); // aggiunto
+    if(nav){
+        const totalHeight = 2 * nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
+        const availableHeight = window.innerHeight - totalHeight;
+        wrapper.style.height = `${availableHeight}px`;
+        wrapper.style.paddingTop = `${availableHeight*0.15}px`;
+        wrapper.style.visibility = 'visible';
+    }
+}
+
+/* ===== INIZIALIZZA MAPPA ===== */
+const CENTRO = { lat: 44.14919, lon: 12.13341 };
+const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?output=csv";
+
+const map = L.map('map').setView([CENTRO.lat, CENTRO.lon], 14);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+function createMunicipioIcon() {
+  return L.divIcon({
+    className: '',
+    html: `<div style="background:#8e24aa;color:white;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;">🏛️</div>`,
+    iconSize: [34, 34],
+    iconAnchor: [17, 34]
+  });
+}
+
+L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
+
+// Carica marker CSV
+fetch(csvURL)
+.then(response=>response.text())
+.then(text=>{
+    const rows=text.split("\n").slice(1);
+    rows.forEach(row=>{
+        const cols=row.split(",");
+        const lat=parseFloat(cols[0]);
+        const lon=parseFloat(cols[1]);
+        const descrizione=cols[2];
+        if(!isNaN(lat)&&!isNaN(lon)){
+            L.marker([lat, lon]).addTo(map)
+            .bindPopup(`<b>${descrizione}</b>`);
+        }
+    });
+})
+.catch(err=>console.warn('Errore caricamento marker CSV:', err));
+
+</script>
 </body>
 </html>
