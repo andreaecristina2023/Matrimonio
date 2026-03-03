@@ -153,27 +153,37 @@ function createNumberIcon(text){
 const allMarkers = [];
 
 // Punti CSV
+// Punti CSV
 fetch(csvURL)
-.then(r=>r.text())
-.then(text=>{
+.then(r => r.text())
+.then(text => {
     const points = parseCSVtoObjects(text);
-    points.forEach(p=>{
-        const lat=parseFloat(p.Latitudine);
-        const lon=parseFloat(p.Longitudine);
-        if(!isNaN(lat)&&!isNaN(lon)){
+    points.forEach(p => {
+        const lat = parseFloat(p.Latitudine);
+        const lon = parseFloat(p.Longitudine);
+        if (!isNaN(lat) && !isNaN(lon)) {
             const popupHTML = `
                 <b>${p.Descrizione}</b><br>
-                ${p.Indirizzo?`<b>📍 Indirizzo:</b> ${p.Indirizzo}<br>`:""}
-                ${p.Telefono?`<b>📞 Telefono:</b> <a href="tel:${p.Telefono}">${p.Telefono}</a><br>`:""}
-                ${p["Posti auto"]?`<b>🅿️ Posti auto:</b> ${p["Posti auto"]}<br>`:""}
-                ${p.Accessibilità?`<b>♿ Accessibilità:</b> ${p.Accessibilità}<br>`:""}
-                ${p.Distanza?`<b>📏 Distanza dal Comune:</b> ${p.Distanza}<br>`:""}
-                ${p["Lunghezza percorso dal Comune"]?`<b>📐 Lunghezza percorso:</b> ${p["Lunghezza percorso dal Comune"]}<br>`:""}
-                ${p.Dislivello?`<b>⛰️ Dislivello:</b> ${p.Dislivello}<br>`:""}
-                ${p.Note?`<b>📝 Note:</b> ${p.Note}<br>`:""}
+                ${p.Indirizzo ? `<b>📍 Indirizzo:</b> ${p.Indirizzo}<br>` : ""}
+                ${p.Telefono ? `<b>📞 Telefono:</b> <a href="tel:${p.Telefono}">${p.Telefono}</a><br>` : ""}
+                ${p["Posti auto"] ? `<b>🅿️ Posti auto:</b> ${p["Posti auto"]}<br>` : ""}
+                ${p.Accessibilità ? `<b>♿ Accessibilità:</b> ${p.Accessibilità}<br>` : ""}
+                ${p.Distanza ? `<b>📏 Distanza dal Comune:</b> ${p.Distanza}<br>` : ""}
+                ${p["Lunghezza percorso dal Comune"] ? `<b>📐 Lunghezza percorso:</b> ${p["Lunghezza percorso dal Comune"]}<br>` : ""}
+                ${p.Dislivello ? `<b>⛰️ Dislivello:</b> ${p.Dislivello}<br>` : ""}
+                ${p.Note ? `<b>📝 Note:</b> ${p.Note}<br>` : ""}
                 <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>
             `;
-            const marker=L.marker([lat,lon],{icon:createCustomIcon(p.Simbolo,p.Colore)}).addTo(map).bindPopup(popupHTML);
+
+            // Se il simbolo inizia con "P" o è un numero → NumberIcon
+            let markerIcon;
+            if (/^P\d+/i.test(p.Simbolo) || /^\d+$/.test(p.Simbolo)) {
+                markerIcon = createNumberIcon(p.Simbolo);
+            } else {
+                markerIcon = createCustomIcon(p.Simbolo, p.Colore);
+            }
+
+            const marker = L.marker([lat, lon], { icon: markerIcon }).addTo(map).bindPopup(popupHTML);
             allMarkers.push(marker);
         }
     });
