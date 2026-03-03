@@ -147,9 +147,13 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
             .addTo(map);
 
-        // Calcola dimensione in pixel basata su viewport
-        const size = Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.05); // 5% della larghezza dello schermo
+function getIconSize() {
+    // 5% del lato più piccolo del viewport
+    return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.05);
+}           
+
         function createNumberIcon(text) {
+    const size = getIconSize();
             return L.divIcon({
                 className: 'marker-number',
                 html: `<div>${text}</div>`,
@@ -159,6 +163,7 @@
         }
 
         function createSpecialIcon(symbol) {
+    const size = getIconSize();
             return L.divIcon({
                 className: 'marker-special',
                 html: `<div>${symbol}</div>`,
@@ -168,6 +173,7 @@
         }
 
         function createMunicipioIcon() {
+    const size = getIconSize();
             return L.divIcon({
                 className: 'marker-municipio',
                 html: `<div>🏛️</div>`,
