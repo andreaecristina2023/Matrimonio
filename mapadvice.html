@@ -129,7 +129,8 @@ function updateCentralPosition(){
 
 // ===== MAPPA =====
 const CENTRO = {lat:44.14919, lon:12.13341};
-const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?output=csv";
+//const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?output=csv";
+const csvURL = 'parcheggi.csv';
 
 const map = L.map('map', {zoomControl:false}).setView([CENTRO.lat,CENTRO.lon],14);
 L.control.zoom({position:'bottomleft'}).addTo(map);
