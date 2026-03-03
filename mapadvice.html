@@ -13,27 +13,16 @@ href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/imag
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <style>
-/* ===== RESET ===== */
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{
-    font-family:'Kaushan Script',cursive;
-    width:100%;
-    height:100%;
-    overflow-x:hidden;
-}
-
-/* ===== SFONDO ===== */
+html,body{font-family:'Kaushan Script',cursive;width:100%;height:100%;overflow-x:hidden;}
 body::before{
     content:"";
     position:fixed;
     inset:0;
-    background:
-    linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)),
-    url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg')
-    center/cover no-repeat;
+    background: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)),
+                url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg') center/cover no-repeat;
     z-index:-1;
 }
-
 .central-wrapper{
     display:flex;
     flex-direction:column;
@@ -44,37 +33,28 @@ body::before{
     min-height:100vh;
     padding-top:5vh;
 }
-
 .central-container{
     width:100%;
     display:flex;
     justify-content:center;
 }
-
-/* ===== MAP ===== */
 #map{
     width:90%;
     max-width:1000px;
     height:70vh;
     border-radius:15px;
+    margin-top:20px;
 }
-
-/* ===== MENU LINK STYLE ===== */
-nav .menu a,
-.mobile-menu a{
+nav .menu a,.mobile-menu a{
     color:rgba(255,255,255,0.85);
     text-decoration:none;
     border-bottom:2px solid transparent;
     transition:all 0.3s;
 }
-
-nav .menu a:hover:not(.active),
-.mobile-menu a:hover:not(.active){
+nav .menu a:hover:not(.active),.mobile-menu a:hover:not(.active){
     border-bottom:2px solid #ff0000;
 }
-
-nav .menu a.active,
-.mobile-menu a.active{
+nav .menu a.active,.mobile-menu a.active{
     color:#ff0000;
     font-weight:bold;
 }
@@ -83,10 +63,8 @@ nav .menu a.active,
 
 <body>
 
-<!-- MENU -->
 <div id="menu-placeholder"></div>
 
-<!-- CENTRAL WRAPPER -->
 <div class="central-wrapper" id="centralWrapper">
     <div class="central-container">
         <div id="map"></div>
@@ -100,43 +78,38 @@ nav .menu a.active,
 fetch('menu.html')
 .then(resp=>resp.text())
 .then(html=>{
-    document.getElementById('menu-placeholder').innerHTML=html;
+    document.getElementById('menu-placeholder').innerHTML = html;
 
-    const menuTitle=document.getElementById('menuPageTitle');
-    if(menuTitle) menuTitle.textContent="Mappa dei consigli";
+    const menuTitle = document.getElementById('menuPageTitle');
+    if(menuTitle) menuTitle.textContent = "Mappa dei consigli";
 
-    const hamburger=document.getElementById('hamburger');
-    const mobileMenu=document.getElementById('mobileMenu');
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
 
     if(hamburger && mobileMenu){
-        hamburger.addEventListener('click',()=>{
-            mobileMenu.style.display= mobileMenu.style.display==='flex'?'none':'flex';
-        });
-
-        mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{ mobileMenu.style.display='none'; }));
-
-        window.addEventListener('resize',()=>{ if(window.innerWidth>768) mobileMenu.style.display='none'; });
+        hamburger.addEventListener('click', ()=> mobileMenu.style.display = mobileMenu.style.display==='flex'?'none':'flex');
+        mobileMenu.querySelectorAll('a').forEach(link=> link.addEventListener('click', ()=> mobileMenu.style.display='none'));
+        window.addEventListener('resize', ()=> { if(window.innerWidth>768) mobileMenu.style.display='none'; });
     }
 
-    const currentPage= location.pathname.split("/").pop() || 'homepage.html';
-    document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link=>{
-        if(link.getAttribute('href')===currentPage) link.classList.add('active');
-    });
+    const currentPage = location.pathname.split("/").pop() || 'homepage.html';
+    document.querySelectorAll('nav .menu a, nav .mobile-menu a')
+        .forEach(link=> { if(link.getAttribute('href') === currentPage) link.classList.add('active'); });
 
     updateCentralPosition();
-    window.addEventListener('resize',updateCentralPosition);
+    window.addEventListener('resize', updateCentralPosition);
 })
-.catch(err=>console.warn('Errore caricamento menu:',err));
+.catch(err=>console.warn('Errore caricamento menu:', err));
 
 function updateCentralPosition(){
     const nav = document.querySelector('nav');
     const wrapper = document.getElementById('centralWrapper');
-    const menuTitle = document.getElementById('menuPageTitle'); // aggiunto
+    const menuTitle = document.getElementById('menuPageTitle');
     if(nav){
         const totalHeight = 2 * nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
         const availableHeight = window.innerHeight - totalHeight;
         wrapper.style.height = `${availableHeight}px`;
-        wrapper.style.paddingTop = `${availableHeight*0.15}px`;
+        wrapper.style.paddingTop = `${availableHeight * 0.15}px`;
         wrapper.style.visibility = 'visible';
     }
 }
@@ -149,29 +122,36 @@ const map = L.map('map').setView([CENTRO.lat, CENTRO.lon], 14);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-function createMunicipioIcon() {
-  return L.divIcon({
-    className: '',
-    html: `<div style="background:#8e24aa;color:white;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;">🏛️</div>`,
-    iconSize: [34, 34],
-    iconAnchor: [17, 34]
-  });
+function createIcon(tipo){
+    let color = '#2196f3', emoji='📍';
+    if(tipo==='municipio'){ color='#8e24aa'; emoji='🏛️'; }
+    else if(tipo==='parcheggio'){ color='#ff9800'; emoji='🅿️'; }
+    else if(tipo==='ristorante'){ color='#4caf50'; emoji='🍽️'; }
+    else if(tipo==='punto'){ color='#f44336'; emoji='⭐'; }
+    return L.divIcon({
+        className:'',
+        html:`<div style="background:${color};color:white;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;">${emoji}</div>`,
+        iconSize:[34,34],
+        iconAnchor:[17,34]
+    });
 }
 
-L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
+/* Marker Municipio */
+L.marker([CENTRO.lat, CENTRO.lon], { icon: createIcon('municipio') }).addTo(map);
 
-// Carica marker CSV
+/* Carica marker CSV */
 fetch(csvURL)
-.then(response=>response.text())
+.then(resp=>resp.text())
 .then(text=>{
-    const rows=text.split("\n").slice(1);
+    const rows = text.split("\n").slice(1).filter(r=>r.trim()!=='');
     rows.forEach(row=>{
-        const cols=row.split(",");
-        const lat=parseFloat(cols[0]);
-        const lon=parseFloat(cols[1]);
-        const descrizione=cols[2];
-        if(!isNaN(lat)&&!isNaN(lon)){
-            L.marker([lat, lon]).addTo(map)
+        const cols = row.split(",");
+        const lat = parseFloat(cols[0]);
+        const lon = parseFloat(cols[1]);
+        const descrizione = cols[2];
+        const tipo = cols[3]?.trim().toLowerCase() || 'punto';
+        if(!isNaN(lat) && !isNaN(lon)){
+            L.marker([lat, lon], { icon: createIcon(tipo) }).addTo(map)
             .bindPopup(`<b>${descrizione}</b>`);
         }
     });
