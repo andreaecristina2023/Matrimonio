@@ -176,7 +176,7 @@ function getIconSize() {
     const size = getIconSize();
             return L.divIcon({
                 className: 'marker-municipio',
-                html: `<div "colour:white">🏛️</div>`,
+                html: `<div style="color:white">🏛️</div>`,
                 iconSize: [size, size],
                 iconAnchor: [size/2, size]
             });
@@ -186,6 +186,12 @@ function getIconSize() {
 // Municipio
 L.marker([CENTRO.lat, CENTRO.lon], { icon: createMunicipioIcon() }).addTo(map);
 
+
+const specialPoints = [
+    { lat: 44.14268, lon: 12.09886, label: "Casa degli Sposi", symbol: "❤️" },
+    { lat: 44.14925, lon: 12.13385, label: "Enoteca Colonna Panorama", symbol: "🥂" },
+    { lat: 44.15848, lon: 12.18447, label: "Agriturismo Al Colle", symbol: "🍴" }
+];
 // Punti speciali
 specialPoints.forEach(p => {
     L.marker([p.lat, p.lon], { icon: createSpecialIcon(p.symbol) })
