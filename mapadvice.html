@@ -111,16 +111,44 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBV9faZqgv88uu4_Z790474hIu-ik9XnOOQckWEWuPeMKSQ26VQrXwGCBeFn-WLRb7nbU0sd1pqkBg/pub?gid=279539594&single=true&output=csv";
 
 // ===== UTILITY =====
-function parseCSVtoObjects(text){
-    const lines = text.split("\n").filter(l=>l.trim()!=="");
-    const header = lines[0].split(",").map(h=>h.trim());
-    return lines.slice(1).map(line=>{
-        const cols = line.split(",");
+function parseCSVtoObjects(text) {
+    const lines = text.trim().split("\n");
+
+    // Funzione che splitta rispettando le virgolette
+    function splitCSV(line) {
+        const result = [];
+        let current = '';
+        let insideQuotes = false;
+
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+
+            if (char === '"') {
+                insideQuotes = !insideQuotes;
+            } else if (char === ',' && !insideQuotes) {
+                result.push(current.trim());
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        result.push(current.trim());
+        return result;
+    }
+
+    const header = splitCSV(lines[0]);
+
+    return lines.slice(1).map(line => {
+        const cols = splitCSV(line);
         let obj = {};
-        header.forEach((h,i)=>obj[h]=cols[i]?cols[i].trim():'');
+        header.forEach((h, i) => {
+            obj[h] = cols[i] ? cols[i].replace(/^"|"$/g, '') : '';
+        });
         return obj;
     });
 }
+const points = parseCSVtoObjects(text);
+console.log(points);
 
 function getIconSize(){ return Math.round(Math.min(window.innerWidth,window.innerHeight)*0.06); }
 function getFontSize(size){ return Math.round(size*0.45); } 
