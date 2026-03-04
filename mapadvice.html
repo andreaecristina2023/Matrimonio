@@ -39,7 +39,7 @@ nav .menu a.active, .mobile-menu a.active { color:#ff0000; font-weight:bold; }
 .marker-special div { background:#ff0000; }
 .marker-municipio div { background:#4caf50; }
 
-.leaflet-popup-content { font-family:'Kaushan Script', cursive !important; font-size:1.1rem; text-align:center; }
+.leaflet-popup-content { font-family:'Kaushan Script', cursive !important; font-size:1.1rem; text-align:left; }
 .leaflet-popup-content b { color:#ff0000; font-weight:bold; }
 .leaflet-popup-content a { color:#0000ff; text-decoration:none; font-weight:bold; }
 .leaflet-popup-content a:hover { text-decoration:underline; }
@@ -215,21 +215,6 @@ fetch(csvURL)
     });
     console.log("✅ Punti CSV caricati!");
 });
-
-// Punti speciali
-const specialPoints = [
-    {lat:44.14268, lon:12.09886, label:"La Casa degli Sposi", symbol:"🤍", color:"#ffffff"},
-    {lat:44.14919, lon:12.13341, label:"Palazzo Ordelaffi", symbol:"🏛️", color:"#4caf50"},
-    {lat:44.14925, lon:12.13385, label:"Enoteca Colonna Panorama", symbol:"🥂", color:"#ff9800"},
-    {lat:44.15848, lon:12.18447, label:"Agriturismo Al Colle", symbol:"🍴", color:"#ff5722"}
-];
-specialPoints.forEach(p=>{
-    const m=L.marker([p.lat,p.lon],{icon:createCustomIcon(p.symbol,p.color)})
-        .addTo(map)
-        .bindPopup(`<b>${p.label}</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank">🚗 Naviga!</a>`);
-    allMarkers.push(m);
-});
-console.log("✨ Punti speciali aggiunti");
 
 // ===== LEGENDA =====
 const legend=L.control({position:'topright'});
