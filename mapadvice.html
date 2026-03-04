@@ -207,25 +207,40 @@ fetch(csvURL)
         }
     });
 
-    // ===== LEGENDA + FILTRO DINAMICO =====
-    const categories = ["Luoghi principali","Parcheggi","Enoteche","Ristoranti","Monumenti","Altro"]; // ordine personalizzato
-    const legendDiv = L.DomUtil.create('div','info legend');
-    legendDiv.innerHTML="<b>Filtra categorie</b><br><br>";
+// ===== LEGENDA + FILTRO DINAMICO =====
+const categories = ["Luoghi principali","Parcheggi","Enoteche","Ristoranti","Monumenti","Altro"]; // ordine personalizzato
+
+const legendControl = L.control({position:'topright'});
+
+legendControl.onAdd = function(map){
+    const div = L.DomUtil.create('div','info legend');
+    div.innerHTML = "<b>Filtra categorie</b><br><br>";
+
     categories.forEach(cat=>{
         const id = "chk_"+cat.replace(/\s/g,'');
         const isChecked = (cat==="Luoghi principali"||cat==="Parcheggi");
+
         const row = document.createElement("div");
         row.innerHTML = `<input type="checkbox" id="${id}" ${isChecked?"checked":""}><label for="${id}"> ${cat}</label>`;
-        legendDiv.appendChild(row);
+        div.appendChild(row);
+
+        // Stato iniziale
         allMarkers.forEach(m=>{ if(m.category===cat && !isChecked) map.removeLayer(m); });
-        document.getElementById(id).addEventListener("change", e=>{
-            allMarkers.forEach(m=>{ if(m.category===cat){ e.target.checked?m.addTo(map):map.removeLayer(m); } });
+
+        // Evento cambio
+        row.querySelector('input').addEventListener("change", e=>{
+            allMarkers.forEach(m=>{ 
+                if(m.category===cat){
+                    e.target.checked ? m.addTo(map) : map.removeLayer(m); 
+                }
+            });
         });
     });
-    const legendControl = L.control({position:'topright'});
-    legendControl.onAdd = ()=>legendDiv;
-    legendControl.addTo(map);
-});
+
+    return div;
+};
+
+legendControl.addTo(map);
 
 // ===== RIDIMENSIONAMENTO DINAMICO =====
 function resizeMarkers(){
