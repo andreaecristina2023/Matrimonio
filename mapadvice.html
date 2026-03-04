@@ -76,7 +76,7 @@ nav .menu a.active, .mobile-menu a.active { color:#ff0000; font-weight:bold; }
 
 /* Collassabile su smartphone */
 @media(max-width:768px){
-    .legend-toggle { display:block; }
+    .legend-toggle { display:block; background:#ff0000;}
     .info.legend { display:none; position:absolute; top:50px; right:10px; z-index:1000; }
     .info.legend.show { display:block; }
 }
@@ -238,10 +238,10 @@ fetch(csvURL)
 
         // Pulsante toggle
         const toggle = L.DomUtil.create('button','legend-toggle', wrapper);
-        toggle.innerHTML = '☰ Filtra categorie';
+        toggle.innerHTML = '☰ Legenda';
 
         const legendDiv = L.DomUtil.create('div','info legend', wrapper);
-        legendDiv.innerHTML = "<b>Filtra categorie</b>";
+        legendDiv.innerHTML = "<b>Legenda</b>";
         legendDiv.querySelector('b').style.marginBottom = '6px';
 
         categories.forEach(cat=>{
