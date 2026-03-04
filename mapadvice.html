@@ -306,6 +306,46 @@
                     }
                 });
                 console.log("✅ Punti CSV caricati!");
+                // ===== FILTRO DINAMICO =====
+const categories = [...new Set(allMarkers.map(m => m.category))].sort();
+
+const legendDiv = document.querySelector('.legend');
+
+categories.forEach(cat => {
+
+    const id = "chk_" + cat.replace(/\s/g,'');
+
+    const isChecked = (cat === "Luoghi principali" || cat === "Parcheggi");
+
+    const row = document.createElement("div");
+    row.innerHTML = `
+        <input type="checkbox" id="${id}" ${isChecked ? "checked" : ""}>
+        <label for="${id}">${cat}</label>
+    `;
+
+    legendDiv.appendChild(row);
+
+    // Stato iniziale
+    allMarkers.forEach(marker=>{
+        if(marker.category === cat && !isChecked){
+            map.removeLayer(marker);
+        }
+    });
+
+    // Evento cambio
+    document.getElementById(id).addEventListener("change", function(e){
+        allMarkers.forEach(marker=>{
+            if(marker.category === cat){
+                if(e.target.checked){
+                    marker.addTo(map);
+                } else {
+                    map.removeLayer(marker);
+                }
+            }
+        });
+    });
+
+});
             });
 
         // ===== LEGENDA =====
