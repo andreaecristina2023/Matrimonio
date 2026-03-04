@@ -19,6 +19,7 @@ body::before {
     background:linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)), url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg') center/cover no-repeat;
     z-index:-1;
 }
+
 .central-wrapper {
     display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
     width:100%; min-height:90vh; padding-top:5vh;
@@ -58,6 +59,27 @@ nav .menu a.active, .mobile-menu a.active { color:#ff0000; font-weight:bold; }
 }
 .info.legend b { display:block; margin-bottom:6px; }
 .info.legend div { margin-bottom:4px; }
+
+/* Pulsante hamburger legenda */
+.legend-toggle {
+    display:none;
+    font-family:'Kaushan Script', cursive;
+    font-size:1rem;
+    background:#ff0000;
+    color:white;
+    border:none;
+    border-radius:5px;
+    padding:5px 10px;
+    cursor:pointer;
+    margin-bottom:5px;
+}
+
+/* Collassabile su smartphone */
+@media(max-width:768px){
+    .legend-toggle { display:block; }
+    .info.legend { display:none; position:absolute; top:50px; right:10px; z-index:1000; }
+    .info.legend.show { display:block; }
+}
 </style>
 </head>
 
@@ -175,7 +197,7 @@ function createNumberIcon(text){
     });
 }
 
-// ===== CARICAMENTO MARKER =====
+// ===== CARICAMENTO MARKER + LEGENDA =====
 const allMarkers = [];
 fetch(csvURL)
 .then(r=>r.text())
@@ -207,42 +229,47 @@ fetch(csvURL)
         }
     });
 
-// ===== LEGENDA + FILTRO DINAMICO =====
-const categories = ["Luoghi principali","Parcheggi","Enoteche","Ristoranti","Monumenti","Altro"]; // ordine personalizzato
+    // ===== LEGENDA =====
+    const categories = ["Luoghi principali","Parcheggi","Enoteche","Ristoranti","Monumenti","Altro"];
+    const legendControl = L.control({position:'topright'});
 
-const legendControl = L.control({position:'topright'});
+    legendControl.onAdd = function(map){
+        const wrapper = L.DomUtil.create('div');
 
-legendControl.onAdd = function(map){
-    const div = L.DomUtil.create('div','info legend');
-    L.DomEvent.disableClickPropagation(div);
-L.DomEvent.disableScrollPropagation(div);
-    div.innerHTML = "<b>Filtra categorie</b><br><br>";
+        // Pulsante toggle
+        const toggle = L.DomUtil.create('button','legend-toggle', wrapper);
+        toggle.innerHTML = '☰ Filtra categorie';
 
-    categories.forEach(cat=>{
-        const id = "chk_"+cat.replace(/\s/g,'');
-        const isChecked = (cat==="Luoghi principali"||cat==="Parcheggi");
+        const legendDiv = L.DomUtil.create('div','info legend', wrapper);
+        legendDiv.innerHTML = "<b>Filtra categorie</b>";
+        legendDiv.querySelector('b').style.marginBottom = '6px';
 
-        const row = document.createElement("div");
-        row.innerHTML = `<input type="checkbox" id="${id}" ${isChecked?"checked":""}><label for="${id}"> ${cat}</label>`;
-        div.appendChild(row);
+        categories.forEach(cat=>{
+            const id = "chk_"+cat.replace(/\s/g,'');
+            const isChecked = (cat==="Luoghi principali"||cat==="Parcheggi");
 
-        // Stato iniziale
-        allMarkers.forEach(m=>{ if(m.category===cat && !isChecked) map.removeLayer(m); });
+            const row = document.createElement('div');
+            row.style.marginTop = '4px';
+            row.innerHTML = `<input type="checkbox" id="${id}" ${isChecked?"checked":""}><label for="${id}"> ${cat}</label>`;
+            legendDiv.appendChild(row);
 
-        // Evento cambio
-        row.querySelector('input').addEventListener("change", e=>{
-            allMarkers.forEach(m=>{ 
-                if(m.category===cat){
-                    e.target.checked ? m.addTo(map) : map.removeLayer(m); 
-                }
+            allMarkers.forEach(m=>{ if(m.category===cat && !isChecked) map.removeLayer(m); });
+
+            row.querySelector('input').addEventListener('change', e=>{
+                allMarkers.forEach(m=>{
+                    if(m.category===cat){ e.target.checked ? m.addTo(map) : map.removeLayer(m); }
+                });
             });
         });
-    });
 
-    return div;
-};
+        // Toggle legenda smartphone
+        toggle.addEventListener('click', ()=>{ legendDiv.classList.toggle('show'); });
 
-legendControl.addTo(map);});
+        return wrapper;
+    };
+
+    legendControl.addTo(map);
+});
 
 // ===== RIDIMENSIONAMENTO DINAMICO =====
 function resizeMarkers(){
@@ -261,7 +288,7 @@ window.addEventListener('resize',resizeMarkers);
 // ===== LOCALIZZAZIONE UTENTE =====
 function locateUser(){ map.locate({setView:true,maxZoom:16}); }
 map.on('locationfound', e=>{ L.marker(e.latlng).addTo(map).bindPopup("Sei qui").openPopup(); });
-</script>
 
+</script>
 </body>
 </html>
