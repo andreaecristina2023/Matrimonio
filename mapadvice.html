@@ -189,7 +189,7 @@ fetch(csvURL)
         const lon = parseFloat(p.Longitudine);
         if (!isNaN(lat) && !isNaN(lon)) {
             const popupHTML = `
-                <b>${p.Descrizione}</b><br>
+                <b>${p.Categoria}:</b> ${p.Descrizione}<br>
                 ${p.Indirizzo ? `<b>📍 Indirizzo:</b> ${p.Indirizzo}<br>` : ""}
                 ${p.Telefono ? `<b>📞 Telefono:</b> <a href="tel:${p.Telefono}">${p.Telefono}</a><br>` : ""}
                 ${p["Posti auto"] ? `<b>🅿️ Posti auto:</b> ${p["Posti auto"]}<br>` : ""}
