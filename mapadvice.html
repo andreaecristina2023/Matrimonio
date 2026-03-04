@@ -322,7 +322,7 @@ function createNumberIcon(text){
                 });
                 console.log("✅ Punti CSV caricati!");
                 // ===== FILTRO DINAMICO =====
-const categories = [...new Set(allMarkers.map(m => m.category))].sort();
+const categories = [...new Set(allMarkers.map(m => m.category))];
 
 const legendDiv = document.querySelector('.legend');
 
@@ -373,6 +373,8 @@ categories.forEach(cat => {
             div.style.borderRadius = '10px';
             div.style.fontFamily = "'Kaushan Script', cursive";
             div.innerHTML = "<b>Filtra categorie</b><br><br>";
+            div.style.textAlign = "left";
+div.style.fontSize = "1rem";
 
             return div;
         };
