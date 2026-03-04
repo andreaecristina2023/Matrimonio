@@ -240,17 +240,32 @@
         function getIconSize() { return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.06); }
         function getFontSize(size) { return Math.round(size * 0.45); }
 
-        function createCustomIcon(symbol, color = "#ff0000") {
-            const size = getIconSize();
-            const fontSize = getFontSize(size);
-            return L.divIcon({
-                className: 'marker-special',
-                html: `<div style="font-size:${fontSize}px; background:${color}; border-radius:50%; width:${size}px; height:${size}px; display:flex; align-items:center; justify-content:center;">${symbol}</div>`,
-                iconSize: [size, size],
-                iconAnchor: [size / 2, size / 2],
-                popupAnchor: [0, -size / 2]
-            });
-        }
+function createNumberIcon(text){
+    const size = getIconSize();
+    const fontSize = getFontSize(size);
+    return L.divIcon({
+        className:'marker-number',
+        html:`
+            <div style="
+                font-family:'Kaushan Script', cursive;
+                font-size:${fontSize}px;
+                background:#8e24aa;
+                border-radius:50%;
+                width:${size}px;
+                height:${size}px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                color:white;
+            ">
+                ${text}
+            </div>
+        `,
+        iconSize:[size,size],
+        iconAnchor:[size/2,size/2],
+        popupAnchor:[0,-size/2]
+    });
+}
 
         function createNumberIcon(text) {
             const size = getIconSize();
