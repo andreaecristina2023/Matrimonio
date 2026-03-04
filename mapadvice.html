@@ -183,6 +183,7 @@ fetch(csvURL)
 .then(r => r.text())
 .then(text => {
     const points = parseCSVtoObjects(text);
+    console.log(points);
     points.forEach(p => {
         const lat = parseFloat(p.Latitudine);
         const lon = parseFloat(p.Longitudine);
@@ -213,8 +214,6 @@ fetch(csvURL)
         }
     });
     console.log("✅ Punti CSV caricati!");
-const points = parseCSVtoObjects(text);
-console.log(points);;
 });
 
 // Punti speciali
