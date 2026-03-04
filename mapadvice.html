@@ -214,6 +214,8 @@ const legendControl = L.control({position:'topright'});
 
 legendControl.onAdd = function(map){
     const div = L.DomUtil.create('div','info legend');
+    L.DomEvent.disableClickPropagation(div);
+L.DomEvent.disableScrollPropagation(div);
     div.innerHTML = "<b>Filtra categorie</b><br><br>";
 
     categories.forEach(cat=>{
