@@ -147,8 +147,6 @@ function parseCSVtoObjects(text) {
         return obj;
     });
 }
-const points = parseCSVtoObjects(text);
-console.log(points);
 
 function getIconSize(){ return Math.round(Math.min(window.innerWidth,window.innerHeight)*0.06); }
 function getFontSize(size){ return Math.round(size*0.45); } 
@@ -215,6 +213,8 @@ fetch(csvURL)
         }
     });
     console.log("✅ Punti CSV caricati!");
+const points = parseCSVtoObjects(text);
+console.log(points);;
 });
 
 // Punti speciali
