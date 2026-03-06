@@ -529,7 +529,7 @@
             legendControl.addTo(map);
         });
 
-        function updateLegendVisibility() {
+       /* function updateLegendVisibility() {
             if (window.innerWidth > 768) {
                 legendDiv.classList.add('show'); // sempre visibile desktop
                 toggle.style.display = 'none';
@@ -538,11 +538,11 @@
                 toggle.style.display = 'block';
                 toggle.innerHTML = '☰'; // reset testo
             }
-        }
+        }*/
 
         // Aggiorna subito e al resize
-        updateLegendVisibility();
-        window.addEventListener('resize', updateLegendVisibility);
+        //updateLegendVisibility();
+        //window.addEventListener('resize', updateLegendVisibility);
 
         // ===== RIDIMENSIONAMENTO DINAMICO =====
         function resizeMarkers() {
