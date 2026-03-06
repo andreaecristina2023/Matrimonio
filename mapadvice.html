@@ -219,12 +219,23 @@ function createCustomIcon(symbol,color="#ff0000"){
     });
 }
 
-function createNumberIcon(text){
+function createNumberIcon(text,color="#2196f3"){
     const size = getIconSize();
     const fontSize = getFontSize(size);
+
     return L.divIcon({
         className:'marker-number',
-        html:`<div style="font-family:'Kaushan Script', cursive; font-size:${fontSize}px; background:#8e24aa; border-radius:50%; width:${size}px; height:${size}px; display:flex; align-items:center; justify-content:center; color:white;">${text}</div>`,
+        html:`<div style="
+            font-family:'Kaushan Script', cursive;
+            font-size:${fontSize}px;
+            background:${color};
+            border-radius:50%;
+            width:${size}px;
+            height:${size}px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;">${text}</div>`,
         iconSize:[size,size],
         iconAnchor:[size/2,size/2],
         popupAnchor:[0,-size/2]
@@ -255,7 +266,15 @@ fetch(csvURL)
                 </b>
                 <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>
             `;
-            let markerIcon = (/^P\d+/i.test(p.Simbolo) || /^\d+$/.test(p.Simbolo)) ? createNumberIcon(p.Simbolo) : createCustomIcon(p.Simbolo, p.Colore);
+const color = (p.Colore || "").trim() || "#ff0000";
+
+let markerIcon;
+
+if (p.Categoria === "Parcheggi") {
+    markerIcon = createNumberIcon(p.Simbolo, color);
+} else {
+    markerIcon = createCustomIcon(p.Simbolo, color);
+}
             const marker = L.marker([lat, lon], {icon: markerIcon});
             marker.category = p.Categoria || "Altro";
             marker.bindPopup(popupHTML).addTo(map);
