@@ -407,23 +407,23 @@
             });
 
             // Evento globale per centrare popup
-map.on('popupopen', e => {
-    const popup = e.popup;
-    const markerLatLng = popup.getLatLng();
+            map.on('popupopen', e => {
+                const popup = e.popup;
+                const markerLatLng = popup.getLatLng();
 
-    const popupHeight = popup._container.offsetHeight || 200;
+                const popupHeight = popup._container.offsetHeight || 200;
 
-    const markerPoint = map.latLngToContainerPoint(markerLatLng);
-    const mapSize = map.getSize();
+                const markerPoint = map.latLngToContainerPoint(markerLatLng);
+                const mapSize = map.getSize();
 
-    const offsetX = (mapSize.x / 2) - markerPoint.x;
-    const offsetY = (mapSize.y / 2) - markerPoint.y - popupHeight / 2;
+                const offsetX = (mapSize.x / 2) - markerPoint.x;
+                const offsetY = (mapSize.y / 2) - markerPoint.y - popupHeight / 2;
 
-    const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y + offsetY);
-    const newLatLng = map.containerPointToLatLng(newPoint);
+                const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y + offsetY);
+                const newLatLng = map.containerPointToLatLng(newPoint);
 
-    map.setView(newLatLng, map.getZoom(), { animate: true });
-});
+                map.setView(newLatLng, map.getZoom(), { animate: true });
+            });
 
             // ===== LEGENDA =====
             const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))]; // uniche e non vuote
