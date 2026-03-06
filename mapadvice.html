@@ -412,7 +412,7 @@ fetch(pubhtmlURL)
 
         // ===== CARICAMENTO MARKER + LEGENDA =====
         const allMarkers = [];
-        fetch(csvURL).then(r => r.text()).then(text => {
+        fetch(pubhtmlURL).then(r => r.text()).then(text => {
             const points = parseCSVtoObjects(text);
 points.forEach(p=>{
     const lat = parseFloat(p.Latitudine), lon = parseFloat(p.Longitudine);
