@@ -322,24 +322,24 @@
             });
         }
 
-/*function getIconSize() {
-    const base = Math.min(window.innerWidth, window.innerHeight) * 0.06;
-    if (window.innerWidth < 600) {
-        return base * 0.9; // più grande rispetto al 70%
-        // oppure: return Math.max(base * 0.9, 40); // almeno 40px
-    }
-    return base;
-}*/
+        /*function getIconSize() {
+            const base = Math.min(window.innerWidth, window.innerHeight) * 0.06;
+            if (window.innerWidth < 600) {
+                return base * 0.9; // più grande rispetto al 70%
+                // oppure: return Math.max(base * 0.9, 40); // almeno 40px
+            }
+            return base;
+        }*/
 
-function getIconSize() {
-    const base = Math.min(window.innerWidth, window.innerHeight) * 0.06;
-    if (window.innerWidth < 600) return base * 1.1; // leggermente più grande
-    return base;
-}
+        function getIconSize() {
+            const base = Math.min(window.innerWidth, window.innerHeight) * 0.06;
+            if (window.innerWidth < 600) return base * 1.1; // leggermente più grande
+            return base;
+        }
 
-function getFontSize(size) {
-    return Math.round(size * 0.45); // font scala proporzionalmente
-}
+        function getFontSize(size) {
+            return Math.round(size * 0.45); // font scala proporzionalmente
+        }
 
         function createCustomIcon(symbol, color = "#ff0000") {
             const size = getIconSize(), fontSize = getFontSize(size);
@@ -416,16 +416,14 @@ function getFontSize(size) {
 
                         // Dimensioni popup
                         const popupHeight = popup._container.offsetHeight || 200; // fallback 200px
-                        const popupWidth = popup._container.offsetWidth || 250; // fallback 250px
 
                         // Punto del marker in pixel nel container
                         const markerPoint = map.latLngToContainerPoint(markerLatLng);
 
-                        // Calcola nuovo punto: sposta verso l'alto metà popup + un margine
-                        const offsetY = -popupHeight / 2 - 20; // 20px margine sopra
-                        const offsetX = 0; // puoi modificare per spostare a destra/sinistra
+                        // Sposta la mappa verso il basso della metà del popup + margine
+                        const offsetY = popupHeight / 2 + 20; // positivo = verso il basso
+                        const offsetX = 0; // se vuoi spostare a destra/sinistra
 
-                        // Nuovo LatLng centrato
                         const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y + offsetY);
                         const newLatLng = map.containerPointToLatLng(newPoint);
 
