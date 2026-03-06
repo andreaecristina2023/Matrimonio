@@ -337,7 +337,9 @@
             const points = parseCSVtoObjects(text);
 points.forEach(p=>{
     const lat = parseFloat(p.Latitudine), lon = parseFloat(p.Longitudine);
-    if(isNaN(lat) || isNaN(lon)) return;
+    if(isNaN(lat) || isNaN(lon)) {
+        console.warn("⚠ Punto ignorato per Lat/Lon non valido:", p);
+        return;
 
 const color = (p.Colore||"#ff0000").trim();
 
@@ -409,7 +411,7 @@ marker.bindPopup(popupHTML).addTo(map).on('popupopen', e => {
 });
 
             // ===== LEGENDA =====
-            const categories = ["Luoghi principali", "Parcheggi", "Enoteche", "Ristoranti", "Monumenti", "Altro"];
+const categories = [...new Set(points.map(p => p.Categoria).filter(c=>c))]; // uniche e non vuote
             const legendControl = L.control({ position: 'topright' });
             legendControl.onAdd = function (map) {
                 const wrapper = L.DomUtil.create('div');
