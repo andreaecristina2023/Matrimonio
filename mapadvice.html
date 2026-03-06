@@ -98,21 +98,27 @@
       if(isNaN(lat)||isNaN(lon)) return;
       const color=p.Colore||"#ff0000";
       const markerIcon=(p.Categoria==="Parcheggi")?createNumberIcon(p.Simbolo,color):createCustomIcon(p.Simbolo,color);
-      const popupHTML=`<div style="line-height:1.4;background:rgba(255,255,255,0.9);padding:8px;border-radius:10px;border:2px solid ${color};">
-        <div style="background:white;color:${color};font-weight:bold;padding:6px 10px;border-radius:6px;text-align:center;margin-bottom:6px;">${p.Descrizione}</div>
-        ${p.Indirizzo?`📍 Indirizzo: ${p.Indirizzo}<br>`:""}
-         ${p.Telefono ? `📞 Telefono: <a href="tel:${p.Telefono}">${p.Telefono}</a><br>` : ""}
-        ${p["Posti auto"]?🅿️ Posti: ${p["Posti auto"]}<br>:""}
-        ${p.Accessibilità?♿ Accessibilità: ${p.Accessibilità}<br>:""}
-        ${p.Distanza?📏 Distanza: ${p.Distanza}<br>:""}
-        ${p["Lunghezza percorso dal Comune"]?📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}<br>:""}
-        ${p.Dislivello?⛰️ Dislivello: ${p.Dislivello}<br>:""} ${p.Note?📝 Note: ${p.Note}<br>:""}
-        ${p.Telefono?`📞 Telefono: <a href="tel:${p.Telefono}">${p.Telefono}</a><br>`:""}
+      const popupHTML = `
+        <div style="line-height:1.4;background:rgba(255,255,255,0.9);padding:8px;border-radius:10px;border:2px solid ${color};">
+        <div style="background:white;color:${color};font-weight:bold;padding:6px 10px;border-radius:6px;text-align:center;margin-bottom:6px;">
+            ${p.Descrizione}
+        </div>
+        ${p.Indirizzo ? `📍 Indirizzo: ${p.Indirizzo}<br>` : ""}
+        ${p.Telefono ? `📞 Telefono: <a href="tel:${p.Telefono}">${p.Telefono}</a><br>` : ""}
+        ${p["Posti auto"] ? `🅿️ Posti: ${p["Posti auto"]}<br>` : ""}
+        ${p.Accessibilità ? `♿ Accessibilità: ${p.Accessibilità}<br>` : ""}
+        ${p.Distanza ? `📏 Distanza: ${p.Distanza}<br>` : ""}
+        ${p["Lunghezza percorso dal Comune"] ? `📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}<br>` : ""}
+        ${p.Dislivello ? `⛰️ Dislivello: ${p.Dislivello}<br>` : ""}
+        ${p.Note ? `📝 Note: ${p.Note}<br>` : ""}
         ${p.SitoWeb ? `🌐 Sito web: <a href="${p.SitoWeb}" target="_blank">${p.SitoWeb}</a><br>` : ""}
         <div style="text-align:center;margin-top:6px;">
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" style="background:white;color:${color};padding:6px 12px;border-radius:5px;font-weight:bold;text-decoration:none;">🚗 Naviga 🚗</a>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" style="background:white;color:${color};padding:6px 12px;border-radius:5px;font-weight:bold;text-decoration:none;">
+            🚗 Naviga 🚗
+            </a>
         </div>
-      </div>`;
+        </div>
+        `;
       const marker=L.marker([lat,lon],{icon:markerIcon});
       marker.category=p.Categoria||"Altro";
       marker.bindPopup(popupHTML).addTo(map);
