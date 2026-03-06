@@ -393,7 +393,7 @@
                     ${p["Lunghezza percorso dal Comune"] ? `<div style=color:#555>📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}</div>` : ""}
                     ${p.Dislivello ? `<div style=color:#555>⛰️ Dislivello: ${p.Dislivello}</div>` : ""}
                     ${p.Link ? `<div style="color:#555;">🌐 Sito Web: <a href="${p.Link}" target="_blank" style="color:${descriptionTextColor}; text-decoration:underline;">Link</a></div>` : ""}
-                    ${p.Note ? `<div style=color:#555>📝 Note:<br>${p.Note}</div>` : ""}
+                    ${p.Note ? `<div style=color:#555><strong>📝 Note degli Sposi!</strong><br>${p.Note}</div>` : ""}
                     <div style="display:flex;justify-content:center;margin-top:6px;">
                         <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank"
                         style="background:white; color:${color}; padding:${window.innerWidth < 600 ? '4px 8px' : '6px 12px'}; border-radius:5px; font-weight:bold; font-size:${window.innerWidth < 600 ? '0.85rem' : '1rem'}; text-decoration:none; box-shadow:0 1px 4px rgba(0,0,0,0.2);">🚗 Naviga 🚗</a>
