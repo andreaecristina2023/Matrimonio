@@ -189,7 +189,7 @@
     background: rgba(255,255,255,0.9); /* sfondo leggermente trasparente */
     border-radius: 10px;
     padding: 0 !important;
-    border: 2px solid var(--popup-border-color, #ff0000); /* cornice color $color */
+    border: 2px solid transparent; /* start transparent */
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 .leaflet-popup-tip {
@@ -359,6 +359,7 @@ const popupHTML = `
     background:${popupBackground};
     padding:8px;
     border-radius:10px;
+    border:2px solid ${color};   /* <-- qui imposti il bordo */
 ">
     <div style="
         background:white;
@@ -399,7 +400,10 @@ const popupHTML = `
 
     const marker = L.marker([lat,lon], {icon: markerIcon});
     marker.category = p.Categoria || "Altro";
-    marker.bindPopup(popupHTML).addTo(map);
+marker.bindPopup(popupHTML).addTo(map).on('popupopen', e => {
+    const tip = e.popup._container.querySelector('.leaflet-popup-tip');
+    if(tip) tip.style.backgroundColor = color;  // punta stessa tinta del bordo
+});
     allMarkers.push(marker);
 });
 
