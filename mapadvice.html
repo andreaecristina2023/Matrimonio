@@ -222,6 +222,8 @@ fetch(csvURL).then(r=>r.text()).then(text=>{
         const color=(p.Colore||"#ff0000").trim();
         const markerIcon = (p.Categoria==="Parcheggi") ? createNumberIcon(p.Simbolo,color) : createCustomIcon(p.Simbolo,color);
 
+const descriptionBg = (color.toLowerCase() === "#d81b60") ? "white" : color;
+
 const popupHTML = `
 <div style="
     line-height:1.4;
@@ -230,8 +232,8 @@ const popupHTML = `
     border-radius:8px;
 ">
     <div style="
-        background:${color};      /* riquadro Descrizione colorato */
-        color:#ff0000;            /* testo Descrizione rosso */
+        background:${descriptionBg};      /* riquadro Descrizione */
+        color:#ff0000;                    /* testo Descrizione rosso */
         font-size:18px;
         font-weight:bold;
         padding:6px 10px;
@@ -254,7 +256,7 @@ const popupHTML = `
     ${p.Note?`📝 Note: ${p.Note}<br>`:""}
     <div style="
         display:flex;
-        justify-content:center;    /* centra il pulsante */
+        justify-content:center;
         margin-top:6px;
     ">
         <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" style="
