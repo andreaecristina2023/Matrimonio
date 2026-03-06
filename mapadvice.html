@@ -147,27 +147,61 @@ const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBV9faZqgv88uu4
 
 // ===== UTILITY =====
 function parseCSVtoObjects(text) {
-    const lines = text.trim().split("\n");
+
+    // rimuove eventuale BOM
+    text = text.replace(/^\uFEFF/, '');
+
+    const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
+
     function splitCSV(line) {
         const result = [];
-        let current = '';
+        let current = "";
         let insideQuotes = false;
+
         for (let i = 0; i < line.length; i++) {
+
             const char = line[i];
-            if (char === '"') insideQuotes = !insideQuotes;
-            else if (char === ',' && !insideQuotes) { result.push(current.trim()); current=''; }
-            else current += char;
+            const next = line[i+1];
+
+            if (char === '"' && insideQuotes && next === '"') {
+                current += '"';
+                i++;
+            }
+
+            else if (char === '"') {
+                insideQuotes = !insideQuotes;
+            }
+
+            else if (char === ',' && !insideQuotes) {
+                result.push(current.trim());
+                current = "";
+            }
+
+            else {
+                current += char;
+            }
         }
+
         result.push(current.trim());
         return result;
     }
-const header = splitCSV(lines[0]).map(h => h.trim());
+
+    const header = splitCSV(lines[0]).map(h => h.trim());
+
     return lines.slice(1).map(line => {
+
         const cols = splitCSV(line);
-        let obj = {};
-        header.forEach((h,i)=>{ obj[h] = cols[i] ? cols[i].replace(/^"|"$/g,'') : ''; });
+
+        const obj = {};
+
+        header.forEach((h,i)=>{
+            obj[h] = (cols[i] || "").replace(/^"|"$/g,'').trim();
+        });
+
         return obj;
+
     });
+
 }
 
 function getIconSize(){ return Math.round(Math.min(window.innerWidth,window.innerHeight)*0.06); }
