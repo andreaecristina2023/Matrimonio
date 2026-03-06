@@ -42,7 +42,7 @@
             text-align: center;
             width: 100%;
             min-height: 90vh;
-            padding-top: 5vh;
+            /*padding-top: 5vh;*/
         }
 
         .central-container {
@@ -151,6 +151,7 @@
             margin-bottom: 4px;
         }
 
+        /* Pulsante hamburger per legenda */
         .legend-toggle {
             display: none;
             font-family: 'Kaushan Script', cursive;
@@ -184,19 +185,39 @@
             }
         }
 
+        @media(max-width:600px) {
+            .legend-toggle {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                z-index: 1001;
+            }
+
+            .info.legend.show {
+                top: 60px;
+                right: 5px;
+                width: 200px;
+                font-size: 0.9rem;
+            }
+        }
+
         /* Popup wrapper */
-.leaflet-popup-content-wrapper {
-    background: transparent; /*rgba(255,255,255,0.9); /* sfondo leggermente trasparente */
-    color:transparent;
-    border-radius: 10px;
-    padding: 0 !important;
-    border: 2px solid transparent; /* start transparent */
-    /*box-shadow: 0 4px 12px rgba(0,0,0,0.25); /* start transparent */
-}
-.leaflet-popup-tip {
-    background: transparent;/*var(--popup-border-color, #ff0000) !important;*/
-    color:transparent;
-}
+        .leaflet-popup-content-wrapper {
+            background: transparent;
+            /*rgba(255,255,255,0.9); /* sfondo leggermente trasparente */
+            /*color: transparent;*/
+            border-radius: 10px;
+            padding: 0 !important;
+            border: 2px solid transparent;
+            /* start transparent */
+            /*box-shadow: 0 4px 12px rgba(0,0,0,0.25); /* start transparent */
+        }
+
+        .leaflet-popup-tip {
+            background: transparent;
+            /*var(--popup-border-color, #ff0000) !important;*/
+            color: transparent;
+        }
 
         /* Contenuto del popup */
         .leaflet-popup-content {
@@ -211,6 +232,7 @@
         @media(max-width:600px) {
             .leaflet-popup-content {
                 font-size: 1rem !important;
+                max-width: 250px;
             }
 
             .leaflet-popup-content div {
@@ -284,35 +306,40 @@
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBV9faZqgv88uu4_Z790474hIu-ik9XnOOQckWEWuPeMKSQ26VQrXwGCBeFn-WLRb7nbU0sd1pqkBg/pub?gid=279539594&single=true&output=csv";
+        const tsvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBV9faZqgv88uu4_Z790474hIu-ik9XnOOQckWEWuPeMKSQ26VQrXwGCBeFn-WLRb7nbU0sd1pqkBg/pub?gid=279539594&single=true&output=tsv";
 
         // ===== UTILITY =====
-        function parseCSVtoObjects(text) {
+        function parseTSVtoObjects(text) {
+            // Rimuove eventuale BOM iniziale
             text = text.replace(/^\uFEFF/, '');
             const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
-            function splitCSV(line) {
-                const result = [], n = line.length;
-                let current = "", insideQuotes = false;
-                for (let i = 0; i < n; i++) {
-                    const char = line[i], next = line[i + 1];
-                    if (char === '"' && insideQuotes && next === '"') { current += '"'; i++; }
-                    else if (char === '"') { insideQuotes = !insideQuotes; }
-                    else if (char === ',' && !insideQuotes) { result.push(current.trim()); current = ""; }
-                    else { current += char; }
-                }
-                result.push(current.trim());
-                return result;
-            }
-            const header = splitCSV(lines[0]).map(h => h.trim());
+            const header = lines[0].split(/\t/).map(h => h.trim());
             return lines.slice(1).map(line => {
-                const cols = splitCSV(line), obj = {};
+                const cols = line.split(/\t/);
+                const obj = {};
                 header.forEach((h, i) => { obj[h] = (cols[i] || "").trim(); });
                 return obj;
             });
         }
 
-        function getIconSize() { return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.06); }
-        function getFontSize(size) { return Math.round(size * 0.45); }
+        /*function getIconSize() {
+            const base = Math.min(window.innerWidth, window.innerHeight) * 0.06;
+            if (window.innerWidth < 600) {
+                return base * 0.9; // più grande rispetto al 70%
+                // oppure: return Math.max(base * 0.9, 40); // almeno 40px
+            }
+            return base;
+        }*/
+
+        function getIconSize() {
+            const base = Math.min(window.innerWidth, window.innerHeight) * 0.06;
+            if (window.innerWidth < 600) return base * 1.1; // leggermente più grande
+            return base;
+        }
+
+        function getFontSize(size) {
+            return Math.round(size * 0.45); // font scala proporzionalmente
+        }
 
         function createCustomIcon(symbol, color = "#ff0000") {
             const size = getIconSize(), fontSize = getFontSize(size);
@@ -332,92 +359,82 @@
             });
         }
 
+        function recenterWithOffset(lat, lon, offsetX = 0, offsetY = 0) {
+            // offsetX, offsetY in pixel (positivo = destra / basso)
+            const targetPoint = map.latLngToContainerPoint([lat, lon]); // punto del marker in pixel
+            const newPoint = L.point(targetPoint.x + offsetX, targetPoint.y + offsetY);
+            const newLatLng = map.containerPointToLatLng(newPoint);
+            map.setView(newLatLng, map.getZoom(), { animate: true });
+        }
+
         // ===== CARICAMENTO MARKER + LEGENDA =====
         const allMarkers = [];
-        fetch(csvURL).then(r => r.text()).then(text => {
-            const points = parseCSVtoObjects(text);
-points.forEach(p=>{
-    const lat = parseFloat(p.Latitudine), lon = parseFloat(p.Longitudine);
-    if(isNaN(lat) || isNaN(lon)) {
-        console.warn("⚠ Punto ignorato per Lat/Lon non valido:", p);
-        return;
-    }
-const color = (p.Colore||"#ff0000").trim();
+        fetch(tsvURL).then(r => r.text()).then(text => {
+            const points = parseTSVtoObjects(text);
+            points.forEach(p => {
+                const lat = parseFloat(p.Latitudine), lon = parseFloat(p.Longitudine);
+                if (isNaN(lat) || isNaN(lon)) { console.warn("⚠ Punto ignorato per Lat/Lon non valido:", p); return; }
+                const color = (p.Colore || "#ff0000").trim();
+                document.documentElement.style.setProperty('--popup-border-color', color);
+                const markerIcon = (p.Categoria === "Parcheggi") ? createNumberIcon(p.Simbolo, color) : createCustomIcon(p.Simbolo, color);
+                const isSpecialColor = color.toLowerCase() === "#d81b60";
+                const descriptionTextColor = isSpecialColor ? "#ff0000" : color;
+                const popupBackground = "rgba(255,255,255,0.9)";
+                const popupHTML = `
+                <div style="line-height:1.4;background:${popupBackground};padding:8px;border-radius:10px;border:2px solid ${color};">
+                    <div style="background:white;color:${descriptionTextColor};padding:6px 10px;border-radius:6px;margin-bottom:6px;text-align:center;width:100%;box-sizing:border-box;box-shadow:0 2px 6px rgba(0,0,0,0.25);">
+                        <div style="font-size:18px;font-weight:bold;">${p.Descrizione}</div>
+                        ${p.Indirizzo ? `<div style="font-size:14px;margin-top:4px;color:#555;">📍 ${p.Indirizzo}</div>` : ""}
+                    </div>
+                    ${p.Telefono ? `<div style=color:#555>📞 Telefono: <a href="tel:${p.Telefono}" style="color:${descriptionTextColor}; text-decoration:none;">${p.Telefono}</a></div>` : ""}
+                    ${p["Posti auto"] ? `<div style=color:#555>🅿️ Posti: ${p["Posti auto"]}</div>` : ""}
+                    ${p.Accessibilità ? `<div style=color:#555>♿ Accessibilità: ${p.Accessibilità}</div>` : ""}
+                    ${p["Distanza dal Comune"] ? `<div style=color:#555>📏 Distanza: ${p["Distanza dal Comune"]}</div>` : ""}
+                    ${p["Lunghezza percorso dal Comune"] ? `<div style=color:#555>📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}</div>` : ""}
+                    ${p.Dislivello ? `<div style=color:#555>⛰️ Dislivello: ${p.Dislivello}</div>` : ""}
+                    ${p.Link ? `<div style="color:#555;">🌐 Sito Web: <a href="${p.Link}" target="_blank" style="color:${descriptionTextColor}; text-decoration:underline;">Link</a></div>` : ""}
+                    ${p.Note ? `<div style=color:#555><strong>📝 Note degli Sposi!</strong><br>${p.Note}</div>` : ""}
+                    <div style="display:flex;justify-content:center;margin-top:6px;">
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank"
+                        style="background:white; color:${color}; padding:${window.innerWidth < 600 ? '4px 8px' : '6px 12px'}; border-radius:5px; font-weight:bold; font-size:${window.innerWidth < 600 ? '0.85rem' : '1rem'}; text-decoration:none; box-shadow:0 1px 4px rgba(0,0,0,0.2);">🚗 Naviga 🚗</a>
+                    </div>
+                </div>
+                        `;
+                const marker = L.marker([lat, lon], { icon: markerIcon });
+                marker.category = p.Categoria || "Altro";
+                marker.bindPopup(popupHTML).addTo(map);
+                allMarkers.push(marker);
+            });
 
-// aggiorna colore cornice e punta
-document.documentElement.style.setProperty('--popup-border-color', color);
+// Evento globale per centrare popup
+map.on('popupopen', function (e) {
 
-// icona marker
-const markerIcon = (p.Categoria==="Parcheggi") ? createNumberIcon(p.Simbolo,color) : createCustomIcon(p.Simbolo,color);
+    const markerLatLng = e.popup.getLatLng();
 
-// colore testo Descrizione
-const isSpecialColor = color.toLowerCase() === "#d81b60";
-const descriptionTextColor = isSpecialColor ? "#ff0000" : color;
+    const mapSize = map.getSize();
 
-// sfondo popup contenuto bianco trasparente
-const popupBackground = "rgba(255,255,255,0.9)";
+    // punto desiderato sullo schermo (centro orizzontale, 1/4 altezza)
+    const targetPoint = L.point(mapSize.x / 2, mapSize.y * 0.75);
 
-const popupHTML = `
-<div style="
-    line-height:1.4;
-    background:${popupBackground};
-    padding:8px;
-    border-radius:10px;
-    border:2px solid ${color};   /* <-- qui imposti il bordo */
-">
-    <div style="
-        background:white;
-        color:${descriptionTextColor};
-        font-size:18px;
-        font-weight:bold;
-        padding:6px 10px;
-        border-radius:6px;
-        margin-bottom:6px;
-        text-align:center;
-        width:100%;
-        box-sizing:border-box;
-        box-shadow:0 2px 6px rgba(0,0,0,0.25);
-    ">
-        ${p.Descrizione}
-    </div>
-    ${p.Indirizzo?`📍 Indirizzo: ${p.Indirizzo}<br>`:""}
-    ${p.Telefono?`📞 Telefono: <a href="tel:${p.Telefono}">${p.Telefono}</a><br>`:""}
-    ${p["Posti auto"]?`🅿️ Posti: ${p["Posti auto"]}<br>`:""}
-    ${p.Accessibilità?`♿ Accessibilità: ${p.Accessibilità}<br>`:""}
-    ${p.Distanza?`📏 Distanza: ${p.Distanza}<br>`:""}
-    ${p["Lunghezza percorso dal Comune"]?`📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}<br>`:""}
-    ${p.Dislivello?`⛰️ Dislivello: ${p.Dislivello}<br>`:""}
-    ${p.Note?`📝 Note: ${p.Note}<br>`:""}
-    <div style="display:flex;justify-content:center;margin-top:6px;">
-        <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" style="
-            background:white;
-            color:${color};
-            padding:6px 12px;
-            border-radius:5px;
-            font-weight:bold;
-            text-decoration:none;
-            box-shadow:0 1px 4px rgba(0,0,0,0.2);
-        ">🚗 Naviga 🚗</a>
-    </div>
-</div>
-`;
+    // posizione attuale del marker
+    const markerPoint = map.latLngToContainerPoint(markerLatLng);
 
-    const marker = L.marker([lat,lon], {icon: markerIcon});
-    marker.category = p.Categoria || "Altro";
-marker.bindPopup(popupHTML).addTo(map).on('popupopen', e => {
-    const tip = e.popup._container.querySelector('.leaflet-popup-tip');
-    if(tip) tip.style.backgroundColor = color;  // punta stessa tinta del bordo
-});
-    allMarkers.push(marker);
+    // differenza
+    const dx = markerPoint.x - targetPoint.x;
+    const dy = markerPoint.y - targetPoint.y;
+
+    // sposta la mappa
+    map.panBy([dx, dy], { animate: true });
+
 });
 
             // ===== LEGENDA =====
-const categories = [...new Set(points.map(p => p.Categoria).filter(c=>c))]; // uniche e non vuote
+            const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))]; // uniche e non vuote
             const legendControl = L.control({ position: 'topright' });
             legendControl.onAdd = function (map) {
                 const wrapper = L.DomUtil.create('div');
                 const toggle = L.DomUtil.create('button', 'legend-toggle', wrapper);
-                toggle.innerHTML = '☰ Legenda';
+                toggle.innerHTML = '☰';
                 const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
                 legendDiv.innerHTML = "<b>Legenda</b>"; legendDiv.querySelector('b').style.marginBottom = '6px';
 
