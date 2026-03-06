@@ -414,14 +414,14 @@ map.on('popupopen', function (e) {
     const mapSize = map.getSize();
 
     // punto desiderato sullo schermo (centro orizzontale, 1/4 altezza)
-    const targetPoint = L.point(mapSize.x / 2, mapSize.y * 0.25);
+    const targetPoint = L.point(mapSize.x / 2, mapSize.y * 0.75);
 
     // posizione attuale del marker
     const markerPoint = map.latLngToContainerPoint(markerLatLng);
 
     // differenza
     const dx = markerPoint.x - targetPoint.x;
-    const dy = markerPoint.y + targetPoint.y;
+    const dy = markerPoint.y - targetPoint.y;
 
     // sposta la mappa
     map.panBy([dx, dy], { animate: true });
