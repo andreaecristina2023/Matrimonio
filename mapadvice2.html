@@ -407,31 +407,31 @@
             });
 
             // Evento globale per centrare popup
-map.on('popupopen', function (e) {
+            map.on('popupopen', function (e) {
 
-    const popup = e.popup;
-    const markerLatLng = popup.getLatLng();
+                const popup = e.popup;
+                const markerLatLng = popup.getLatLng();
 
-    const mapSize = map.getSize();
-    const popupHeight = popup._container.offsetHeight || 200;
+                const mapSize = map.getSize();
+                const popupHeight = popup._container.offsetHeight || 200;
 
-    // centro mappa
-    const centerPoint = L.point(mapSize.x / 2, mapSize.y / 2);
+                // centro mappa
+                const centerPoint = L.point(mapSize.x / 2, mapSize.y / 2);
 
-    // posizione marker
-    const markerPoint = map.latLngToContainerPoint(markerLatLng);
+                // posizione marker
+                const markerPoint = map.latLngToContainerPoint(markerLatLng);
 
-    // differenza tra marker e centro
-    const dx = markerPoint.x - centerPoint.x;
-    const dy = markerPoint.y - centerPoint.y;
+                // differenza tra marker e centro
+                const dx = markerPoint.x - centerPoint.x;
+                const dy = markerPoint.y - centerPoint.y;
 
-    // spostamento finale
-    const offsetX = dx;
-    const offsetY = dy + popupHeight * 0.6;
+                // spostamento finale
+                const offsetX = dx;
+                const offsetY = - dy - popupHeight * 0.6;
 
-    map.panBy([offsetX, offsetY], { animate: true });
+                map.panBy([offsetX, offsetY], { animate: true });
 
-});
+            });
 
             // ===== LEGENDA =====
             const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))]; // uniche e non vuote
