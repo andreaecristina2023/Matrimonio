@@ -211,7 +211,34 @@ fetch(csvURL)
         const color = (p.Colore||"#ff0000").trim();
         const markerIcon = (p.Categoria==="Parcheggi") ? createNumberIcon(p.Simbolo,color) : createCustomIcon(p.Simbolo,color);
 
-        const popupHTML = `
+const popupHTML = `
+<div style="font-size:14px; line-height:1.4;">
+    <div style="
+        background:#ff5252;
+        color:white;
+        font-size:18px;
+        font-weight:bold;
+        padding:6px 10px;
+        border-radius:6px;
+        margin-bottom:6px;
+        text-align:center;
+        box-shadow:0 2px 6px rgba(0,0,0,0.25);
+        ">
+        ${p.Descrizione}
+    </div>
+    ${p.Indirizzo ? `📍 ${p.Indirizzo}<br>` : ""}
+    ${p.Telefono ? `📞 <a href="tel:${p.Telefono}">${p.Telefono}</a><br>` : ""}
+    ${p["Posti auto"] ? `🅿️ ${p["Posti auto"]}<br>` : ""}
+    ${p.Accessibilità ? `♿ ${p.Accessibilità}<br>` : ""}
+    ${p.Distanza ? `📏 ${p.Distanza}<br>` : ""}
+    ${p["Lunghezza percorso dal Comune"] ? `📐 ${p["Lunghezza percorso dal Comune"]}<br>` : ""}
+    ${p.Dislivello ? `⛰️ ${p.Dislivello}<br>` : ""}
+    ${p.Note ? `📝 ${p.Note}<br>` : ""}
+    <div style="text-align:center; margin-top:6px;">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>
+    </div>
+</div>
+`;
 <div style="font-size:14px; line-height:1.4;">
 <div style="background:#d32f2f; color:white; font-size:18px; font-weight:bold; padding:6px 10px; border-radius:6px; margin-bottom:6px; text-align:center; box-shadow:0 2px 6px rgba(0,0,0,0.25);">
 ${p["Nome luogo"]||""}
