@@ -407,22 +407,14 @@
             });
 
             // Evento globale per centrare popup
-            map.on('popupopen', e => {
-                const popup = e.popup;
-                const markerLatLng = popup.getLatLng();
+            map.on('popupopen', function (e) {
+                const latlng = e.popup.getLatLng();
 
-                const popupHeight = popup._container.offsetHeight || 200;
-
-                const markerPoint = map.latLngToContainerPoint(markerLatLng);
-                const mapSize = map.getSize();
-
-                const offsetX = (mapSize.x / 2) - markerPoint.x;
-                const offsetY = (mapSize.y / 2) - markerPoint.y - popupHeight * 0.6;
-
-                const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y + offsetY);
-                const newLatLng = map.containerPointToLatLng(newPoint);
-
-                map.setView(newLatLng, map.getZoom(), { animate: true });
+                map.panInside(latlng, {
+                    paddingTopLeft: [50, 50],
+                    paddingBottomRight: [50, 200],
+                    animate: true
+                });
             });
 
             // ===== LEGENDA =====
