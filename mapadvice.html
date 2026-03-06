@@ -406,50 +406,96 @@
                 allMarkers.push(marker);
             });
 
-// Evento globale per centrare popup
-map.on('popupopen', function (e) {
+            // Evento globale per centrare popup
+            map.on('popupopen', function (e) {
 
-    const markerLatLng = e.popup.getLatLng();
+                const markerLatLng = e.popup.getLatLng();
 
-    const mapSize = map.getSize();
+                const mapSize = map.getSize();
 
-    // punto desiderato sullo schermo (centro orizzontale, 1/4 altezza)
-    const targetPoint = L.point(mapSize.x / 2, mapSize.y * 0.75);
+                // punto desiderato sullo schermo (centro orizzontale, 1/4 altezza)
+                const targetPoint = L.point(mapSize.x / 2, mapSize.y * 0.75);
 
-    // posizione attuale del marker
-    const markerPoint = map.latLngToContainerPoint(markerLatLng);
+                // posizione attuale del marker
+                const markerPoint = map.latLngToContainerPoint(markerLatLng);
 
-    // differenza
-    const dx = markerPoint.x - targetPoint.x;
-    const dy = markerPoint.y - targetPoint.y;
+                // differenza
+                const dx = markerPoint.x - targetPoint.x;
+                const dy = markerPoint.y - targetPoint.y;
 
-    // sposta la mappa
-    map.panBy([dx, dy], { animate: true });
+                // sposta la mappa
+                map.panBy([dx, dy], { animate: true });
 
-});
+            });
 
             // ===== LEGENDA =====
-            const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))]; // uniche e non vuote
+            // ===== LEGENDA DINAMICA COLORATA =====
+            const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))]; // categorie uniche
             const legendControl = L.control({ position: 'topright' });
+
             legendControl.onAdd = function (map) {
                 const wrapper = L.DomUtil.create('div');
+
+                // pulsante hamburger
                 const toggle = L.DomUtil.create('button', 'legend-toggle', wrapper);
                 toggle.innerHTML = '☰';
-                const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
-                legendDiv.innerHTML = "<b>Legenda</b>"; legendDiv.querySelector('b').style.marginBottom = '6px';
+                toggle.style.fontWeight = 'bold';
 
+                // contenitore legenda
+                const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
+                legendDiv.style.background = 'white';
+                legendDiv.style.padding = '12px';
+                legendDiv.style.borderRadius = '10px';
+                legendDiv.style.boxShadow = '0 6px 18px rgba(0,0,0,0.2)';
+                legendDiv.innerHTML = "<b>Legenda</b>";
+                legendDiv.querySelector('b').style.marginBottom = '6px';
+
+                // per ogni categoria crea riga checkbox colorata
                 categories.forEach(cat => {
-                    const id = "chk_" + cat.replace(/\s/g, ''), isChecked = (cat === "Luoghi principali" || cat === "Parcheggi");
-                    const row = document.createElement('div'); row.style.marginTop = '4px';
-                    row.innerHTML = `<input type="checkbox" id="${id}" ${isChecked ? "checked" : ""}><label for="${id}"> ${cat}</label>`;
+                    const color = points.find(p => p.Categoria === cat)?.Colore || "#ff0000";
+                    const id = "chk_" + cat.replace(/\s/g, '');
+                    const isChecked = (cat === "Luoghi principali" || cat === "Parcheggi");
+
+                    const row = document.createElement('div');
+                    row.style.display = 'flex';
+                    row.style.alignItems = 'center';
+                    row.style.marginTop = '4px';
+
+                    // checkbox
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = id;
+                    if (isChecked) checkbox.checked = true;
+
+                    // label colorata
+                    const label = document.createElement('label');
+                    label.setAttribute('for', id);
+                    label.innerText = ' ' + cat;
+                    label.style.color = color;
+                    label.style.fontWeight = 'bold';
+                    label.style.flex = '1';
+
+                    row.appendChild(checkbox);
+                    row.appendChild(label);
                     legendDiv.appendChild(row);
+
+                    // mostra/nascondi marker al cambio checkbox
                     allMarkers.forEach(m => { if (m.category === cat && !isChecked) map.removeLayer(m); });
-                    row.querySelector('input').addEventListener('change', e => {
-                        allMarkers.forEach(m => { if (m.category === cat) { e.target.checked ? m.addTo(map) : map.removeLayer(m); } });
+                    checkbox.addEventListener('change', e => {
+                        allMarkers.forEach(m => {
+                            if (m.category === cat) {
+                                e.target.checked ? m.addTo(map) : map.removeLayer(m);
+                            }
+                        });
                     });
                 });
 
-                toggle.addEventListener('click', () => { legendDiv.classList.toggle('show'); });
+                // toggle mobile
+                toggle.addEventListener('click', () => {
+                    legendDiv.classList.toggle('show');
+                    toggle.innerHTML = legendDiv.classList.contains('show') ? '☰ Legenda' : '☰';
+                });
+
                 return wrapper;
             };
             legendControl.addTo(map);
