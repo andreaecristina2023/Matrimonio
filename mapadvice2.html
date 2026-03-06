@@ -399,7 +399,7 @@
                     // Uso: sposto verso l'alto in base allo zoom
                     map.on('popupopen', e => {
                         const zoom = map.getZoom();
-                        const factor = 50 * Math.pow(1.5, 13 - zoom); // più zoom = meno spostamento
+                        const factor = 100 * Math.pow(1.5, 13 - zoom); // più zoom = meno spostamento
                         recenterWithOffset(e.popup.getLatLng().lat, e.popup.getLatLng().lng, 0, -factor);
                     });
                 });
