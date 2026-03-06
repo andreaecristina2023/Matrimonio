@@ -202,16 +202,16 @@ fetch(csvURL).then(r=>r.text()).then(text=>{
     <div style="background:${color};color:white;font-size:18px;font-weight:bold;padding:6px 10px;border-radius:6px;margin-bottom:6px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.25);">
         ${p.Descrizione}
     </div>
-    ${p.Indirizzo?`📍 ${p.Indirizzo}<br>`:""}
-    ${p.Telefono?`📞 <a href="tel:${p.Telefono}">${p.Telefono}</a><br>`:""}
-    ${p["Posti auto"]?`🅿️ ${p["Posti auto"]}<br>`:""}
-    ${p.Accessibilità?`♿ ${p.Accessibilità}<br>`:""}
-    ${p.Distanza?`📏 ${p.Distanza}<br>`:""}
-    ${p["Lunghezza percorso dal Comune"]?`📐 ${p["Lunghezza percorso dal Comune"]}<br>`:""}
-    ${p.Dislivello?`⛰️ ${p.Dislivello}<br>`:""}
-    ${p.Note?`📝 ${p.Note}<br>`:""}
+    ${p.Indirizzo?`📍 Indirizzo: ${p.Indirizzo}<br>`:""}
+    ${p.Telefono?`📞 Telefono: <a href="tel:${p.Telefono}">${p.Telefono}</a><br>`:""}
+    ${p["Posti auto"]?`🅿️ Posti: ${p["Posti auto"]}<br>`:""}
+    ${p.Accessibilità?`♿ Accessibilità: ${p.Accessibilità}<br>`:""}
+    ${p.Distanza?`📏 Distanza: ${p.Distanza}<br>`:""}
+    ${p["Lunghezza percorso dal Comune"]?`📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}<br>`:""}
+    ${p.Dislivello?`⛰️ Dislivello: ${p.Dislivello}<br>`:""}
+    ${p.Note?`📝 Note: ${p.Note}<br>`:""}
     <div style="text-align:center;margin-top:6px;">
-        <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga 🚗</a>
     </div>
 </div>
         `;
