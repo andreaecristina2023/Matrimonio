@@ -410,26 +410,29 @@
                     //map.setView(e.popup.getLatLng(), map.getZoom(), { animate: true });
                     //map.setView([lat + 0.015, lon], map.getZoom(), { animate: true });
                     // Uso: sposto verso l'alto in base allo zoom
-                    map.on('popupopen', e => {
-                        const popup = e.popup;
-                        const markerLatLng = popup.getLatLng();
+map.on('popupopen', e => {
+    const popup = e.popup;
+    const markerLatLng = popup.getLatLng();
 
-                        // Dimensioni popup
-                        const popupHeight = popup._container.offsetHeight || 200; // fallback 200px
+    // Dimensioni del popup
+    const popupHeight = popup._container.offsetHeight || 200; // fallback
+    const popupWidth  = popup._container.offsetWidth  || 250; // fallback
 
-                        // Punto del marker in pixel nel container
-                        const markerPoint = map.latLngToContainerPoint(markerLatLng);
+    // Punto del marker in pixel rispetto al container
+    const markerPoint = map.latLngToContainerPoint(markerLatLng);
 
-                        // Sposta la mappa verso il basso della metà del popup + margine
-                        const offsetY = popupHeight / 2 + 20; // positivo = verso il basso
-                        const offsetX = 0; // se vuoi spostare a destra/sinistra
+    // Calcolo offset per centrare il popup nella viewport
+    const mapSize = map.getSize(); // larghezza e altezza della mappa
+    const offsetX = (mapSize.x / 2) - markerPoint.x; // sposta orizzontalmente al centro
+    const offsetY = (mapSize.y / 2) - markerPoint.y - popupHeight / 2; // sposta verticalmente al centro considerando metà popup
 
-                        const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y - offsetY);
-                        const newLatLng = map.containerPointToLatLng(newPoint);
+    // Punto finale in pixel
+    const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y + offsetY);
+    const newLatLng = map.containerPointToLatLng(newPoint);
 
-                        // Aggiorna vista
-                        map.setView(newLatLng, map.getZoom(), { animate: true });
-                    });
+    // Aggiorna vista con animazione
+    map.setView(newLatLng, map.getZoom(), { animate: true });
+});
                 });
                 allMarkers.push(marker);
             });
