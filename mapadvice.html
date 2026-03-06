@@ -369,7 +369,7 @@ const popupHTML = `
     background:${popupBackground};
     padding:8px;
     border-radius:10px;
-    border:2px solid ${color};   /* <-- qui imposti il bordo */
+    border:2px solid ${color};
 ">
     <div style="
         background:white;
@@ -387,13 +387,13 @@ const popupHTML = `
         ${cleanField(p.Descrizione)}
     </div>
     ${cleanField(p.Indirizzo)?`📍 Indirizzo: ${cleanField(p.Indirizzo)}<br>`:""}
-    ${p.Telefono?`📞 Telefono: <a href="tel:${p.Telefono}">${p.Telefono}</a><br>`:""}
-    ${p["Posti auto"]?`🅿️ Posti: ${p["Posti auto"]}<br>`:""}
-    ${p.Accessibilità?`♿ Accessibilità: ${p.Accessibilità}<br>`:""}
-    ${p.Distanza?`📏 Distanza: ${p.Distanza}<br>`:""}
-    ${p["Lunghezza percorso dal Comune"]?`📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}<br>`:""}
-    ${p.Dislivello?`⛰️ Dislivello: ${p.Dislivello}<br>`:""}
-    ${p.Note?`📝 Note: ${p.Note}<br>`:""}
+    ${cleanField(p.Telefono)?`📞 Telefono: <a href="tel:${cleanField(p.Telefono)}">${cleanField(p.Telefono)}</a><br>`:""}
+    ${cleanField(p["Posti auto"])?`🅿️ Posti: ${cleanField(p["Posti auto"])}<br>`:""}
+    ${cleanField(p.Accessibilità)?`♿ Accessibilità: ${cleanField(p.Accessibilità)}<br>`:""}
+    ${cleanField(p.Distanza)?`📏 Distanza: ${cleanField(p.Distanza)}<br>`:""}
+    ${cleanField(p["Lunghezza percorso dal Comune"])?`📐 Lunghezza percorso: ${cleanField(p["Lunghezza percorso dal Comune"])}<br>`:""}
+    ${cleanField(p.Dislivello)?`⛰️ Dislivello: ${cleanField(p.Dislivello)}<br>`:""}
+    ${cleanField(p.Note)?`📝 Note: ${cleanField(p.Note)}<br>`:""}
     <div style="display:flex;justify-content:center;margin-top:6px;">
         <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" style="
             background:white;
