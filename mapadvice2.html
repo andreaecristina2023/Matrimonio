@@ -346,6 +346,14 @@
             });
         }
 
+        function recenterWithOffset(lat, lon, offsetX = 0, offsetY = 0) {
+            // offsetX, offsetY in pixel (positivo = destra / basso)
+            const targetPoint = map.latLngToContainerPoint([lat, lon]); // punto del marker in pixel
+            const newPoint = L.point(targetPoint.x + offsetX, targetPoint.y + offsetY);
+            const newLatLng = map.containerPointToLatLng(newPoint);
+            map.setView(newLatLng, map.getZoom(), { animate: true });
+        }
+
         // ===== CARICAMENTO MARKER + LEGENDA =====
         const allMarkers = [];
         fetch(tsvURL).then(r => r.text()).then(text => {
@@ -384,10 +392,16 @@
                 marker.bindPopup(popupHTML).addTo(map).on('popupopen', e => {
                     const tip = e.popup._container.querySelector('.leaflet-popup-tip');
                     if (tip) tip.style.backgroundColor = color;
-                    
+
                     // 🔹 Ricentra la mappa sul marker aperto
                     map.setView(e.popup.getLatLng(), map.getZoom(), { animate: true });
                     map.setView([lat + 0.015, lon], map.getZoom(), { animate: true });
+                    // Uso: sposto verso l'alto in base allo zoom
+                    map.on('popupopen', e => {
+                        const zoom = map.getZoom();
+                        const factor = 50 * Math.pow(1.5, 13 - zoom); // più zoom = meno spostamento
+                        recenterWithOffset(e.popup.getLatLng().lat, e.popup.getLatLng().lng, 0, -factor);
+                    });
                 });
                 allMarkers.push(marker);
             });
