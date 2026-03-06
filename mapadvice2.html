@@ -322,11 +322,24 @@
             });
         }
 
-        function getIconSize() {
-            const base = Math.min(window.innerWidth, window.innerHeight) * 0.06;
-            return window.innerWidth < 600 ? base * 0.7 : base; // 30% più piccolo su mobile
-        }
-        function getFontSize(size) { return Math.round(size * 0.45); }
+/*function getIconSize() {
+    const base = Math.min(window.innerWidth, window.innerHeight) * 0.06;
+    if (window.innerWidth < 600) {
+        return base * 0.9; // più grande rispetto al 70%
+        // oppure: return Math.max(base * 0.9, 40); // almeno 40px
+    }
+    return base;
+}*/
+
+function getIconSize() {
+    const base = Math.min(window.innerWidth, window.innerHeight) * 0.06;
+    if (window.innerWidth < 600) return base * 1.1; // leggermente più grande
+    return base;
+}
+
+function getFontSize(size) {
+    return Math.round(size * 0.45); // font scala proporzionalmente
+}
 
         function createCustomIcon(symbol, color = "#ff0000") {
             const size = getIconSize(), fontSize = getFontSize(size);
