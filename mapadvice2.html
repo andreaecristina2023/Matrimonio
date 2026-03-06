@@ -421,7 +421,7 @@ map.on('popupopen', function (e) {
 
     // differenza
     const dx = markerPoint.x - targetPoint.x;
-    const dy = markerPoint.y - targetPoint.y;
+    const dy = markerPoint.y + targetPoint.y;
 
     // sposta la mappa
     map.panBy([dx, dy], { animate: true });
