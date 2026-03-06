@@ -347,7 +347,7 @@
                     ${p.Telefono ? `📞 Telefono: <a href="tel:${p.Telefono}">${p.Telefono}</a><br>` : ""}
                     ${p["Posti auto"] ? `🅿️ Posti: ${p["Posti auto"]}<br>` : ""}
                     ${p.Accessibilità ? `♿ Accessibilità: ${p.Accessibilità}<br>` : ""}
-                    ${p.Distanza ? `📏 Distanza: ${p.Distanza}<br>` : ""}
+                    ${p.["Distanza dal Comune"]? `📏 Distanza: ${p.["Distanza dal Comune"]}<br>` : ""}
                     ${p["Lunghezza percorso dal Comune"] ? `📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}<br>` : ""}
                     ${p.Dislivello ? `⛰️ Dislivello: ${p.Dislivello}<br>` : ""}
                     ${p.Note ? `📝 Note: ${p.Note}<br>` : ""}
