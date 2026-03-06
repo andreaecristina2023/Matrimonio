@@ -409,31 +409,22 @@
 // Evento globale per centrare popup
 map.on('popupopen', function (e) {
 
-    const popup = e.popup;
-    const markerLatLng = popup.getLatLng();
+    const markerLatLng = e.popup.getLatLng();
 
-    setTimeout(function () {
+    const mapSize = map.getSize();
 
-        const mapSize = map.getSize();
-        const popupHeight = popup._container.offsetHeight || 200;
+    // punto desiderato sullo schermo (centro orizzontale, 1/4 altezza)
+    const targetPoint = L.point(mapSize.x / 2, mapSize.y * 0.25);
 
-        // centro mappa
-        const centerPoint = L.point(mapSize.x / 2, mapSize.y / 2);
+    // posizione attuale del marker
+    const markerPoint = map.latLngToContainerPoint(markerLatLng);
 
-        // posizione marker
-        const markerPoint = map.latLngToContainerPoint(markerLatLng);
+    // differenza
+    const dx = markerPoint.x - targetPoint.x;
+    const dy = markerPoint.y - targetPoint.y;
 
-        // differenza tra marker e centro
-        const dx = markerPoint.x - centerPoint.x;
-        const dy = markerPoint.y - centerPoint.y;
-
-        // spostamento finale
-        const offsetX = dx;
-        const offsetY = -dy - popupHeight * 0.6;
-
-        map.panBy([offsetX, offsetY], { animate: true });
-
-    }, 100); // attende che il popup sia completamente aperto
+    // sposta la mappa
+    map.panBy([dx, dy], { animate: true });
 
 });
 
