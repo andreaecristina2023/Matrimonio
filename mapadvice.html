@@ -412,7 +412,11 @@ marker.bindPopup(popupHTML).addTo(map).on('popupopen', e => {
 });
 
             // ===== LEGENDA =====
-const categories = [...new Set(points.map(p => p.Categoria).filter(c=>c))]; // uniche e non vuote
+const categories = [...new Set(
+    points
+      .map(p => (p.Categoria || "").trim())
+      .filter(c => c)
+)];
             const legendControl = L.control({ position: 'topright' });
             legendControl.onAdd = function (map) {
                 const wrapper = L.DomUtil.create('div');
