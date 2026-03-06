@@ -76,17 +76,29 @@ nav .menu a.active, .mobile-menu a.active { color:#ff0000; font-weight:bold; }
     .info.legend { display:none; position:absolute; top:50px; right:10px; z-index:1000; }
     .info.legend.show { display:block; }
 }
+
+/* Popup wrapper */
 .leaflet-popup-content-wrapper {
-    /*background: transparent;   /* rimuove il bianco */
-    /*box-shadow: none;          /* rimuove l'ombra */
-    /*border: none;              /* rimuove il bordo */
-    /*border-radius: 0;          /* opzionale, per togliere arrotondamento predefinito */
+    background: transparent !important;   /* rimuove il bianco */
+    /*box-shadow: none !important;          /* rimuove ombra */
+    border: none !important;              /* rimuove bordo */
 }
 
+/* Punta del popup */
 .leaflet-popup-tip {
-    /*background: transparent;   /* punta del popup trasparente */
+    /*background: transparent !important;*/
 }
 
+/* Contenuto del popup */
+.leaflet-popup-content {
+    font-family:'Kaushan Script', cursive !important;
+    font-size:1.1rem;
+    text-align:left;
+    min-width:220px;
+    padding:0;  /* rimuove padding predefinito */
+}
+
+/* Responsive mobile */
 @media(max-width:600px){
     .leaflet-popup-content {
         font-size:1rem !important;
@@ -96,7 +108,7 @@ nav .menu a.active, .mobile-menu a.active { color:#ff0000; font-weight:bold; }
         font-size:16px !important;
     }
 
-    a[target="_blank"] {
+    .leaflet-popup-content a[target="_blank"] {
         padding:5px 8px !important;
         font-size:14px !important;
     }
@@ -223,11 +235,12 @@ fetch(csvURL).then(r=>r.text()).then(text=>{
         const markerIcon = (p.Categoria==="Parcheggi") ? createNumberIcon(p.Simbolo,color) : createCustomIcon(p.Simbolo,color);
 
 const descriptionBg = (color.toLowerCase() === "#d81b60") ? "white" : color;
+const popupBackground = `${color}33`;  // stesso colore dello sfondo leggero
 
 const popupHTML = `
 <div style="
     line-height:1.4;
-    background:${color}33;   /* sfondo popup leggero */
+    background:${popupBackground};  /* sfondo popup leggero */
     padding:8px;
     border-radius:8px;
 ">
@@ -242,7 +255,7 @@ const popupHTML = `
         text-align:center;
         width:100%;
         box-sizing:border-box;
-        box-shadow:0 2px 6px rgba(0,0,0,1.0);
+        box-shadow:0 2px 6px rgba(0,0,0,0.25);
     ">
         ${p.Descrizione}
     </div>
