@@ -151,6 +151,7 @@
             margin-bottom: 4px;
         }
 
+        /* Pulsante hamburger per legenda */
         .legend-toggle {
             display: none;
             font-family: 'Kaushan Script', cursive;
@@ -185,6 +186,13 @@
         }
 
         @media(max-width:600px) {
+            .legend-toggle {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                z-index: 1001;
+            }
+
             .info.legend.show {
                 top: 60px;
                 right: 5px;
