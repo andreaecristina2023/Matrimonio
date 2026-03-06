@@ -402,41 +402,28 @@
                         `;
                 const marker = L.marker([lat, lon], { icon: markerIcon });
                 marker.category = p.Categoria || "Altro";
-                marker.bindPopup(popupHTML).addTo(map).on('popupopen', e => {
-                    /*on('popupopen', e => {
-                    const tip = e.popup._container.querySelector('.leaflet-popup-tip');
-                    if (tip) tip.style.backgroundColor = color;
-
-                    // 🔹 Ricentra la mappa sul marker aperto
-                    //map.setView(e.popup.getLatLng(), map.getZoom(), { animate: true });
-                    //map.setView([lat + 0.015, lon], map.getZoom(), { animate: true });
-                    // Uso: sposto verso l'alto in base allo zoom
-                    //map.*/
-                        const popup = e.popup;
-                        const markerLatLng = popup.getLatLng();
-
-                        // Dimensioni del popup
-                        const popupHeight = popup._container.offsetHeight || 200; // fallback
-                        const popupWidth = popup._container.offsetWidth || 250; // fallback
-
-                        // Punto del marker in pixel rispetto al container
-                        const markerPoint = map.latLngToContainerPoint(markerLatLng);
-
-                        // Calcolo offset per centrare il popup nella viewport
-                        const mapSize = map.getSize(); // larghezza e altezza della mappa
-                        const offsetX = (mapSize.x / 2) - markerPoint.x; // sposta orizzontalmente al centro
-                        const offsetY = (mapSize.y / 2) - markerPoint.y - popupHeight / 2; // sposta verticalmente al centro considerando metà popup
-
-                        // Punto finale in pixel
-                        const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y + offsetY);
-                        const newLatLng = map.containerPointToLatLng(newPoint);
-
-                        // Aggiorna vista con animazione
-                        map.setView(newLatLng, map.getZoom(), { animate: true });
-                    });
-                });
+                marker.bindPopup(popupHTML).addTo(map);
                 allMarkers.push(marker);
             });
+
+            // Evento globale per centrare popup
+map.on('popupopen', e => {
+    const popup = e.popup;
+    const markerLatLng = popup.getLatLng();
+
+    const popupHeight = popup._container.offsetHeight || 200;
+
+    const markerPoint = map.latLngToContainerPoint(markerLatLng);
+    const mapSize = map.getSize();
+
+    const offsetX = (mapSize.x / 2) - markerPoint.x;
+    const offsetY = (mapSize.y / 2) - markerPoint.y - popupHeight / 2;
+
+    const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y + offsetY);
+    const newLatLng = map.containerPointToLatLng(newPoint);
+
+    map.setView(newLatLng, map.getZoom(), { animate: true });
+});
 
             // ===== LEGENDA =====
             const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))]; // uniche e non vuote
