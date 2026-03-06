@@ -184,6 +184,15 @@
             }
         }
 
+        @media(max-width:600px) {
+            .info.legend.show {
+                top: 60px;
+                right: 5px;
+                width: 200px;
+                font-size: 0.9rem;
+            }
+        }
+
         /* Popup wrapper */
         .leaflet-popup-content-wrapper {
             background: transparent;
@@ -215,6 +224,7 @@
         @media(max-width:600px) {
             .leaflet-popup-content {
                 font-size: 1rem !important;
+                max-width: 250px;
             }
 
             .leaflet-popup-content div {
@@ -304,7 +314,10 @@
             });
         }
 
-        function getIconSize() { return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.06); }
+        function getIconSize() {
+            const base = Math.min(window.innerWidth, window.innerHeight) * 0.06;
+            return window.innerWidth < 600 ? base * 0.7 : base; // 30% più piccolo su mobile
+        }
         function getFontSize(size) { return Math.round(size * 0.45); }
 
         function createCustomIcon(symbol, color = "#ff0000") {
@@ -344,18 +357,19 @@
                         ${p.Descrizione}
                     </div>
                     ${p.Indirizzo ? `📍 ${p.Indirizzo}<br>` : ""}
-                    ${p.Telefono ? `📞 Telefono: <a href="tel:${p.Telefono}">${p.Telefono}</a><br>` : ""}
+                    ${p.Telefono ? `📞 Telefono: <a href="tel:${p.Telefono}" style="color:${descriptionTextColor}; text-decoration:none;">${p.Telefono}</a><br>` : ""}
                     ${p["Posti auto"] ? `🅿️ Posti: ${p["Posti auto"]}<br>` : ""}
                     ${p.Accessibilità ? `♿ Accessibilità: ${p.Accessibilità}<br>` : ""}
-                    ${p["Distanza dal Comune"]? `📏 Distanza: ${p["Distanza dal Comune"]}<br>` : ""}
+                    ${p["Distanza dal Comune"] ? `📏 Distanza: ${p["Distanza dal Comune"]}<br>` : ""}
                     ${p["Lunghezza percorso dal Comune"] ? `📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}<br>` : ""}
                     ${p.Dislivello ? `⛰️ Dislivello: ${p.Dislivello}<br>` : ""}
                     ${p.Note ? `📝 Note: ${p.Note}<br>` : ""}
                     <div style="display:flex;justify-content:center;margin-top:6px;">
-                        <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" style="background:white;color:${color};padding:6px 12px;border-radius:5px;font-weight:bold;text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,0.2);">🚗 Naviga 🚗</a>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank"
+                        style="background:white; color:${color}; padding:${window.innerWidth < 600 ? '4px 8px' : '6px 12px'}; border-radius:5px; font-weight:bold; font-size:${window.innerWidth < 600 ? '0.85rem' : '1rem'}; text-decoration:none; box-shadow:0 1px 4px rgba(0,0,0,0.2);">🚗 Naviga 🚗</a>
                     </div>
                 </div>
-                        `;  
+                        `;
                 const marker = L.marker([lat, lon], { icon: markerIcon });
                 marker.category = p.Categoria || "Altro";
                 marker.bindPopup(popupHTML).addTo(map).on('popupopen', e => {
