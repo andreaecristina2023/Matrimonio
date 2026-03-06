@@ -428,7 +428,6 @@
 
             });
 
-            // ===== LEGENDA =====
             // ===== LEGENDA DINAMICA COLORATA =====
             const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))]; // categorie uniche
             const legendControl = L.control({ position: 'topright' });
@@ -447,7 +446,7 @@
                 legendDiv.style.padding = '12px';
                 legendDiv.style.borderRadius = '10px';
                 legendDiv.style.boxShadow = '0 6px 18px rgba(0,0,0,0.2)';
-                legendDiv.innerHTML = "<b>Legenda</b>";
+                //legendDiv.innerHTML = "<b>Legenda</b>";
                 legendDiv.querySelector('b').style.marginBottom = '6px';
 
                 // per ogni categoria crea riga checkbox colorata
