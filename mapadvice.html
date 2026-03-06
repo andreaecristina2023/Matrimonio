@@ -444,89 +444,105 @@
             });
 
             // ===== LEGENDA VISIVA DINAMICA COLORATA =====
-const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))];
-const legendControl = L.control({ position: 'topright' });
+            const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))];
+            const legendControl = L.control({ position: 'topright' });
 
-legendControl.onAdd = function(map) {
-    const wrapper = L.DomUtil.create('div');
+            legendControl.onAdd = function (map) {
+                const wrapper = L.DomUtil.create('div');
 
-    // pulsante hamburger
-    const toggle = L.DomUtil.create('button', 'legend-toggle', wrapper);
-    toggle.style.fontWeight = 'bold';
-    toggle.style.cursor = 'pointer';
-    toggle.style.boxShadow = '0 2px 6px rgba(0,0,0,0.25)';
+                // pulsante hamburger
+                const toggle = L.DomUtil.create('button', 'legend-toggle', wrapper);
+                toggle.style.fontWeight = 'bold';
+                toggle.style.cursor = 'pointer';
+                toggle.style.boxShadow = '0 2px 6px rgba(0,0,0,0.25)';
 
-    // contenitore legenda
-    const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
-    legendDiv.style.maxWidth = '250px';
-    legendDiv.style.background = 'white';
-    legendDiv.style.padding = '12px';
-    legendDiv.style.borderRadius = '10px';
-    legendDiv.style.boxShadow = '0 6px 18px rgba(0,0,0,0.2)';
+                // contenitore legenda
+                const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
+                legendDiv.style.maxWidth = '250px';
+                legendDiv.style.background = 'white';
+                legendDiv.style.padding = '12px';
+                legendDiv.style.borderRadius = '10px';
+                legendDiv.style.boxShadow = '0 6px 18px rgba(0,0,0,0.2)';
 
-    // aggiunge le categorie
-    categories.forEach(cat => {
-        const color = points.find(p => p.Categoria === cat)?.Colore || "#ff0000";
-        const id = "chk_" + cat.replace(/\s/g, '');
-        const isChecked = (cat === "Luoghi principali" || cat === "Parcheggi");
+                // aggiunge le categorie
+                categories.forEach(cat => {
+                    const color = points.find(p => p.Categoria === cat)?.Colore || "#ff0000";
+                    const id = "chk_" + cat.replace(/\s/g, '');
+                    const isChecked = (cat === "Luoghi principali" || cat === "Parcheggi");
 
-        const row = document.createElement('div');
-        row.style.display = 'flex';
-        row.style.alignItems = 'center';
-        row.style.marginTop = '6px';
+                    const row = document.createElement('div');
+                    row.style.display = 'flex';
+                    row.style.alignItems = 'center';
+                    row.style.marginTop = '6px';
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = id;
-        if (isChecked) checkbox.checked = true;
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = id;
+                    if (isChecked) checkbox.checked = true;
 
-        const colorCircle = document.createElement('span');
-        const circleSize = getIconSize() * 0.4;
-        colorCircle.style.width = `${circleSize}px`;
-        colorCircle.style.height = `${circleSize}px`;
-        colorCircle.style.borderRadius = '50%';
-        colorCircle.style.margin = '0 6px';
-        colorCircle.style.backgroundColor = color;
-        colorCircle.style.display = 'inline-block';
+                    const colorCircle = document.createElement('span');
+                    const circleSize = getIconSize() * 0.4;
+                    colorCircle.style.width = `${circleSize}px`;
+                    colorCircle.style.height = `${circleSize}px`;
+                    colorCircle.style.borderRadius = '50%';
+                    colorCircle.style.margin = '0 6px';
+                    colorCircle.style.backgroundColor = color;
+                    colorCircle.style.display = 'inline-block';
 
-        const label = document.createElement('label');
-        label.setAttribute('for', id);
-        label.innerText = cat;
-        label.style.flex = '1';
-        label.style.fontWeight = 'bold';
-        label.style.color = '#333';
+                    const label = document.createElement('label');
+                    label.setAttribute('for', id);
+                    label.innerText = cat;
+                    label.style.flex = '1';
+                    label.style.fontWeight = 'bold';
+                    label.style.color = '#333';
 
-        row.appendChild(checkbox);
-        row.appendChild(colorCircle);
-        row.appendChild(label);
-        legendDiv.appendChild(row);
+                    row.appendChild(checkbox);
+                    row.appendChild(colorCircle);
+                    row.appendChild(label);
+                    legendDiv.appendChild(row);
 
-        allMarkers.forEach(m => { if (m.category === cat && !isChecked) map.removeLayer(m); });
-        checkbox.addEventListener('change', e => {
-            allMarkers.forEach(m => {
-                if (m.category === cat) {
-                    e.target.checked ? m.addTo(map) : map.removeLayer(m);
+                    allMarkers.forEach(m => { if (m.category === cat && !isChecked) map.removeLayer(m); });
+                    checkbox.addEventListener('change', e => {
+                        allMarkers.forEach(m => {
+                            if (m.category === cat) {
+                                e.target.checked ? m.addTo(map) : map.removeLayer(m);
+                            }
+                        });
+                    });
+                });
+
+                // toggle dinamico
+                function updateToggleText() {
+                    toggle.innerHTML = window.innerWidth > 768 ? '☰ Legenda' : '☰';
                 }
-            });
+
+                toggle.addEventListener('click', () => {
+                    legendDiv.classList.toggle('show');
+                });
+
+                window.addEventListener('resize', updateToggleText);
+                updateToggleText(); // iniziale
+
+                return wrapper;
+            };
+
+            legendControl.addTo(map);
         });
-    });
 
-    // toggle dinamico
-    function updateToggleText() {
-        toggle.innerHTML = window.innerWidth > 768 ? '☰ Legenda' : '☰';
-    }
+        function updateLegendVisibility() {
+            if (window.innerWidth > 768) {
+                legendDiv.classList.add('show'); // sempre visibile desktop
+                toggle.style.display = 'none';
+            } else {
+                legendDiv.classList.remove('show'); // nascosta mobile
+                toggle.style.display = 'block';
+                toggle.innerHTML = '☰'; // reset testo
+            }
+        }
 
-    toggle.addEventListener('click', () => {
-        legendDiv.classList.toggle('show');
-    });
-
-    window.addEventListener('resize', updateToggleText);
-    updateToggleText(); // iniziale
-
-    return wrapper;
-};
-
-legendControl.addTo(map);
+        // Aggiorna subito e al resize
+        updateLegendVisibility();
+        window.addEventListener('resize', updateLegendVisibility);
 
         // ===== RIDIMENSIONAMENTO DINAMICO =====
         function resizeMarkers() {
