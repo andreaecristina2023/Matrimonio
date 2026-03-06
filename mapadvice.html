@@ -195,7 +195,7 @@ function parseCSVtoObjects(text) {
         const obj = {};
 
         header.forEach((h,i)=>{
-            obj[h] = (cols[i] || "").replace(/^"|"$/g,'').trim();
+            obj[h] = (cols[i] || "").trim();
         });
 
         return obj;
@@ -253,7 +253,7 @@ fetch(csvURL)
         const lon = parseFloat(p.Longitudine);
         if(!isNaN(lat) && !isNaN(lon)){
             const popupHTML = `
-                <span style="color:#ff0000;">${p.Descrizione}:</span><br>
+                <span style="color:#ff0000;">${p.Descrizione}</span><br>
                 <b>
                     ${p.Indirizzo ? `📍 ${p.Indirizzo}<br>` : ""}
                     ${p.Telefono ? `📞 <a href="tel:${p.Telefono}">${p.Telefono}</a><br>` : ""}
