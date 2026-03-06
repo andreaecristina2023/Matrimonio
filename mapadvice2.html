@@ -365,13 +365,14 @@
                         <div style="font-size:18px;font-weight:bold;">${p.Descrizione}</div>
                         ${p.Indirizzo ? `<div style="font-size:14px;margin-top:4px;color:#555;">📍 ${p.Indirizzo}</div>` : ""}
                     </div>
-                    ${p.Telefono ? `<div style=color:#555>📞 Telefono: <a href="tel:${p.Telefono}" style="color:${descriptionTextColor}; text-decoration:none;">${p.Telefono}</a></div><br>` : ""}
-                    ${p["Posti auto"] ? `<div style=color:#555>🅿️ Posti: ${p["Posti auto"]}</div><br>` : ""}
-                    ${p.Accessibilità ? `<div style=color:#555>♿ Accessibilità: ${p.Accessibilità}</div><br>` : ""}
-                    ${p["Distanza dal Comune"] ? `<div style=color:#555>📏 Distanza: ${p["Distanza dal Comune"]}</div><br>` : ""}
-                    ${p["Lunghezza percorso dal Comune"] ? `<div style=color:#555>📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}</div><br>` : ""}
-                    ${p.Dislivello ? `<div style=color:#555>⛰️ Dislivello: ${p.Dislivello}</div><br>` : ""}
-                    ${p.Note ? `<div style=color:#555>📝 Note: ${p.Note}</div><br>` : ""}
+                    ${p.Telefono ? `<div style=color:#555>📞 Telefono: <a href="tel:${p.Telefono}" style="color:${descriptionTextColor}; text-decoration:none;">${p.Telefono}</a></div>` : ""}
+                    ${p["Posti auto"] ? `<div style=color:#555>🅿️ Posti: ${p["Posti auto"]}</div>` : ""}
+                    ${p.Accessibilità ? `<div style=color:#555>♿ Accessibilità: ${p.Accessibilità}</div>` : ""}
+                    ${p["Distanza dal Comune"] ? `<div style=color:#555>📏 Distanza: ${p["Distanza dal Comune"]}</div>` : ""}
+                    ${p["Lunghezza percorso dal Comune"] ? `<div style=color:#555>📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}</div>` : ""}
+                    ${p.Dislivello ? `<div style=color:#555>⛰️ Dislivello: ${p.Dislivello}</div>` : ""}
+                    ${p.Note ? `<div style=color:#555>📝 Note: ${p.Note}</div>` : ""}
+                    ${p.Link ? `<div style=color:#555>🌐 Sito Web: ${p.Link}</div>` : ""}
                     </div>
                     <div style="display:flex;justify-content:center;margin-top:6px;">
                         <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank"
