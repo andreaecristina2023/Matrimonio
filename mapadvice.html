@@ -516,10 +516,17 @@ legendControl.onAdd = function(map) {
     });
 
     // toggle mobile
-    toggle.addEventListener('click', () => {
-        legendDiv.classList.toggle('show');
-        toggle.innerHTML = legendDiv.classList.contains('show') ? '☰ Legenda' : '☰';
-    });
+    // toggle mobile
+toggle.addEventListener('click', () => {
+    legendDiv.classList.toggle('show');
+    toggle.innerHTML = legendDiv.classList.contains('show') ? '☰ Legenda' : '☰';
+});
+
+// Mostra sempre legenda su desktop
+if(window.innerWidth > 768){
+    legendDiv.classList.add('show');
+    toggle.style.display = 'none'; // nascondi pulsante
+}
 
     return wrapper;
 };
