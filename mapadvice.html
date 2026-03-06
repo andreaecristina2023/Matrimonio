@@ -76,6 +76,16 @@ nav .menu a.active, .mobile-menu a.active { color:#ff0000; font-weight:bold; }
     .info.legend { display:none; position:absolute; top:50px; right:10px; z-index:1000; }
     .info.legend.show { display:block; }
 }
+.leaflet-popup-content-wrapper {
+    background: transparent;   /* rimuove il bianco */
+    box-shadow: none;          /* rimuove l'ombra */
+    border: none;              /* rimuove il bordo */
+    border-radius: 0;          /* opzionale, per togliere arrotondamento predefinito */
+}
+
+.leaflet-popup-tip {
+    background: transparent;   /* punta del popup trasparente */
+}
 </style>
 </head>
 
