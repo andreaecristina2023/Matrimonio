@@ -395,7 +395,7 @@
 
                     // 🔹 Ricentra la mappa sul marker aperto
                     map.setView(e.popup.getLatLng(), map.getZoom(), { animate: true });
-                    map.setView([lat + 0.015, lon], map.getZoom(), { animate: true });
+                    //map.setView([lat + 0.015, lon], map.getZoom(), { animate: true });
                     // Uso: sposto verso l'alto in base allo zoom
                     map.on('popupopen', e => {
                         const zoom = map.getZoom();
