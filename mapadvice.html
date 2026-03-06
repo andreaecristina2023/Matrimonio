@@ -428,8 +428,7 @@
 
             });
 
-            // ===== LEGENDA DINAMICA COLORATA =====
-            // ===== LEGENDA VISIVA DINAMICA =====
+            // ===== LEGENDA VISIVA DINAMICA COLORATA =====
 const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))];
 const legendControl = L.control({ position: 'topright' });
 
@@ -448,7 +447,7 @@ legendControl.onAdd = function(map) {
     legendDiv.style.borderRadius = '10px';
     legendDiv.style.boxShadow = '0 6px 18px rgba(0,0,0,0.2)';
     legendDiv.style.maxWidth = '250px';
-    //legendDiv.innerHTML = "<b>Legenda</b>";
+    legendDiv.innerHTML = "<b>Legenda</b>";
     legendDiv.querySelector('b').style.marginBottom = '6px';
 
     categories.forEach(cat => {
@@ -505,6 +504,9 @@ legendControl.onAdd = function(map) {
         legendDiv.classList.toggle('show');
         toggle.innerHTML = legendDiv.classList.contains('show') ? '☰ Legenda' : '☰';
     });
+
+    return wrapper;
+};
 
 legendControl.addTo(map);
         });
