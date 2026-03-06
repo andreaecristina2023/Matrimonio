@@ -306,7 +306,9 @@
             const header = splitCSV(lines[0]).map(h => h.trim());
             return lines.slice(1).map(line => {
                 const cols = splitCSV(line), obj = {};
-                header.forEach((h, i) => { obj[h] = (cols[i] || "").trim(); });
+                header.forEach((h, i) => { 
+    obj[h] = (cols[i] || "").trim().replace(/[\u200B-\u200D\uFEFF]/g, ''); 
+});
                 return obj;
             });
         }
@@ -331,6 +333,10 @@
                 iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2]
             });
         }
+
+        function cleanField(field) {
+    return (field || "").trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
+}
 
         // ===== CARICAMENTO MARKER + LEGENDA =====
         const allMarkers = [];
@@ -378,9 +384,9 @@ const popupHTML = `
         box-sizing:border-box;
         box-shadow:0 2px 6px rgba(0,0,0,0.25);
     ">
-        ${p.Descrizione}
+        ${cleanField(p.Descrizione)}
     </div>
-    ${p.Indirizzo?`📍 Indirizzo: ${p.Indirizzo}<br>`:""}
+    ${cleanField(p.Indirizzo)?`📍 Indirizzo: ${cleanField(p.Indirizzo)}<br>`:""}
     ${p.Telefono?`📞 Telefono: <a href="tel:${p.Telefono}">${p.Telefono}</a><br>`:""}
     ${p["Posti auto"]?`🅿️ Posti: ${p["Posti auto"]}<br>`:""}
     ${p.Accessibilità?`♿ Accessibilità: ${p.Accessibilità}<br>`:""}
@@ -403,7 +409,8 @@ const popupHTML = `
 `;
 
     const marker = L.marker([lat,lon], {icon: markerIcon});
-    marker.category = p.Categoria || "Altro";
+const category = (p.Categoria || "").trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
+marker.category = category || "Altro";
 marker.bindPopup(popupHTML).addTo(map).on('popupopen', e => {
     const tip = e.popup._container.querySelector('.leaflet-popup-tip');
     if(tip) tip.style.backgroundColor = color;  // punta stessa tinta del bordo
