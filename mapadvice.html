@@ -77,14 +77,14 @@ nav .menu a.active, .mobile-menu a.active { color:#ff0000; font-weight:bold; }
     .info.legend.show { display:block; }
 }
 .leaflet-popup-content-wrapper {
-    background: transparent;   /* rimuove il bianco */
-    box-shadow: none;          /* rimuove l'ombra */
-    border: none;              /* rimuove il bordo */
-    border-radius: 0;          /* opzionale, per togliere arrotondamento predefinito */
+    /*background: transparent;   /* rimuove il bianco */
+    /*box-shadow: none;          /* rimuove l'ombra */
+    /*border: none;              /* rimuove il bordo */
+    /*border-radius: 0;          /* opzionale, per togliere arrotondamento predefinito */
 }
 
 .leaflet-popup-tip {
-    background: transparent;   /* punta del popup trasparente */
+    /*background: transparent;   /* punta del popup trasparente */
 }
 
 @media(max-width:600px){
@@ -242,7 +242,7 @@ const popupHTML = `
         text-align:center;
         width:100%;
         box-sizing:border-box;
-        box-shadow:0 2px 6px rgba(0,0,0,0.25);
+        box-shadow:0 2px 6px rgba(0,0,0,1.0);
     ">
         ${p.Descrizione}
     </div>
