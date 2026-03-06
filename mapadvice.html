@@ -203,6 +203,7 @@ const popupHTML = `
     background:${color}33;   /* sfondo popup leggero */
     padding:8px;
     border-radius:8px;
+    box-shadow:none;          /* niente bordo bianco */
 ">
     <div style="
         background:${color};
@@ -213,6 +214,8 @@ const popupHTML = `
         border-radius:6px;
         margin-bottom:6px;
         text-align:center;
+        width:100%;
+        box-sizing:border-box;
         box-shadow:0 2px 6px rgba(0,0,0,0.25);
     ">
         ${p.Descrizione}
@@ -226,17 +229,19 @@ const popupHTML = `
     ${p.Dislivello?`⛰️ Dislivello: ${p.Dislivello}<br>`:""}
     ${p.Note?`📝 Note: ${p.Note}<br>`:""}
     <div style="
-        text-align:center;
+        display:flex;
+        justify-content:center;    /* centra il pulsante */
         margin-top:6px;
-        background:white;         /* pulsante Naviga bianco */
-        color:${color};
-        padding:4px 8px;
-        border-radius:5px;
-        font-weight:bold;
-        display:inline-block;
-        box-shadow:0 1px 4px rgba(0,0,0,0.2);
     ">
-        <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" style="color:${color}; text-decoration:none;">🚗 Naviga 🚗</a>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" style="
+            background:white;           /* pulsante bianco */
+            color:${color};
+            padding:6px 12px;
+            border-radius:5px;
+            font-weight:bold;
+            text-decoration:none;
+            box-shadow:0 1px 4px rgba(0,0,0,0.2);
+        ">🚗 Naviga 🚗</a>
     </div>
 </div>
 `;
