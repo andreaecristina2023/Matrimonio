@@ -387,7 +387,7 @@
                     
                     // 🔹 Ricentra la mappa sul marker aperto
                     map.setView(e.popup.getLatLng(), map.getZoom(), { animate: true });
-                    map.setView([lat - 0.001, lon], map.getZoom(), { animate: true });
+                    map.setView([lat - 0.01, lon], map.getZoom(), { animate: true });
                 });
                 allMarkers.push(marker);
             });
