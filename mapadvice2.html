@@ -417,7 +417,7 @@
                 const mapSize = map.getSize();
 
                 const offsetX = (mapSize.x / 2) - markerPoint.x;
-                const offsetY = (mapSize.y / 2) - markerPoint.y - popupHeight / 2;
+                const offsetY = (mapSize.y / 2) - markerPoint.y - popupHeight * 0.6;
 
                 const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y + offsetY);
                 const newLatLng = map.containerPointToLatLng(newPoint);
