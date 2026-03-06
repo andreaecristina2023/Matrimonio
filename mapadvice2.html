@@ -383,6 +383,10 @@
                 marker.bindPopup(popupHTML).addTo(map).on('popupopen', e => {
                     const tip = e.popup._container.querySelector('.leaflet-popup-tip');
                     if (tip) tip.style.backgroundColor = color;
+                    
+                    // 🔹 Ricentra la mappa sul marker aperto
+                    map.setView(e.popup.getLatLng(), map.getZoom(), { animate: true });
+                    map.setView([lat - 0.001, lon], map.getZoom(), { animate: true });
                 });
                 allMarkers.push(marker);
             });
