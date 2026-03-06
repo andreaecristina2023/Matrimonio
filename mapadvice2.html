@@ -403,6 +403,7 @@
                 const marker = L.marker([lat, lon], { icon: markerIcon });
                 marker.category = p.Categoria || "Altro";
                 marker.bindPopup(popupHTML).addTo(map).on('popupopen', e => {
+                    /*on('popupopen', e => {
                     const tip = e.popup._container.querySelector('.leaflet-popup-tip');
                     if (tip) tip.style.backgroundColor = color;
 
@@ -410,7 +411,7 @@
                     //map.setView(e.popup.getLatLng(), map.getZoom(), { animate: true });
                     //map.setView([lat + 0.015, lon], map.getZoom(), { animate: true });
                     // Uso: sposto verso l'alto in base allo zoom
-                    map.on('popupopen', e => {
+                    //map.*/
                         const popup = e.popup;
                         const markerLatLng = popup.getLatLng();
 
