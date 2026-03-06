@@ -424,7 +424,7 @@
                         const offsetY = popupHeight / 2 + 20; // positivo = verso il basso
                         const offsetX = 0; // se vuoi spostare a destra/sinistra
 
-                        const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y + offsetY);
+                        const newPoint = L.point(markerPoint.x + offsetX, markerPoint.y - offsetY);
                         const newLatLng = map.containerPointToLatLng(newPoint);
 
                         // Aggiorna vista
