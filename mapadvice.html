@@ -284,34 +284,106 @@
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBV9faZqgv88uu4_Z790474hIu-ik9XnOOQckWEWuPeMKSQ26VQrXwGCBeFn-WLRb7nbU0sd1pqkBg/pub?gid=279539594&single=true&output=csv";
+const pubhtmlURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBV9faZqgv88uu4_Z790474hIu-ik9XnOOQckWEWuPeMKSQ26VQrXwGCBeFn-WLRb7nbU0sd1pqkBg/pubhtml?gid=279539594&single=true";
 
-        // ===== UTILITY =====
-        function parseCSVtoObjects(text) {
-            text = text.replace(/^\uFEFF/, '');
-            const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
-            function splitCSV(line) {
-                const result = [], n = line.length;
-                let current = "", insideQuotes = false;
-                for (let i = 0; i < n; i++) {
-                    const char = line[i], next = line[i + 1];
-                    if (char === '"' && insideQuotes && next === '"') { current += '"'; i++; }
-                    else if (char === '"') { insideQuotes = !insideQuotes; }
-                    else if (char === ',' && !insideQuotes) { result.push(current.trim()); current = ""; }
-                    else { current += char; }
-                }
-                result.push(current.trim());
-                return result;
-            }
-            const header = splitCSV(lines[0]).map(h => h.trim());
-            return lines.slice(1).map(line => {
-                const cols = splitCSV(line), obj = {};
-                header.forEach((h, i) => { 
-    obj[h] = (cols[i] || "").trim().replace(/[\u200B-\u200D\uFEFF]/g, ''); 
-});
-                return obj;
+function cleanField(field) {
+    return (field || "").trim().replace(/[\u200B-\u200D\uFEFF]/g, '');
+}
+
+fetch(pubhtmlURL)
+  .then(resp => resp.text())
+  .then(html => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    // Prende tutte le righe della tabella pubblicata
+    const rows = Array.from(doc.querySelectorAll('table tbody tr'));
+
+    const points = rows.map(tr => {
+        const cells = tr.querySelectorAll('td');
+        return {
+            Descrizione: cleanField(cells[0]?.textContent),
+            Latitudine: cleanField(cells[1]?.textContent),
+            Longitudine: cleanField(cells[2]?.textContent),
+            Colore: cleanField(cells[3]?.textContent),
+            Categoria: cleanField(cells[4]?.textContent),
+            Indirizzo: cleanField(cells[5]?.textContent),
+            Telefono: cleanField(cells[6]?.textContent),
+            "Posti auto": cleanField(cells[7]?.textContent),
+            Accessibilità: cleanField(cells[8]?.textContent),
+            Distanza: cleanField(cells[9]?.textContent),
+            "Lunghezza percorso dal Comune": cleanField(cells[10]?.textContent),
+            Dislivello: cleanField(cells[11]?.textContent),
+            Note: cleanField(cells[12]?.textContent),
+            Simbolo: cleanField(cells[13]?.textContent)
+        };
+    });
+
+    // ===== CREAZIONE MARKER =====
+    points.forEach(p => {
+        const lat = parseFloat(p.Latitudine), lon = parseFloat(p.Longitudine);
+        if (isNaN(lat) || isNaN(lon)) return;
+
+        const color = p.Colore || "#ff0000";
+        const markerIcon = (p.Categoria === "Parcheggi") ? createNumberIcon(p.Simbolo, color) : createCustomIcon(p.Simbolo, color);
+        const descriptionTextColor = (color.toLowerCase() === "#d81b60") ? "#ff0000" : color;
+        const popupBackground = "rgba(255,255,255,0.9)";
+
+        const popupHTML = `
+        <div style="line-height:1.4;background:${popupBackground};padding:8px;border-radius:10px;border:2px solid ${color};">
+            <div style="background:white;color:${descriptionTextColor};font-size:18px;font-weight:bold;padding:6px 10px;border-radius:6px;margin-bottom:6px;text-align:center;width:100%;box-sizing:border-box;box-shadow:0 2px 6px rgba(0,0,0,0.25);">
+                ${p.Descrizione}
+            </div>
+            ${p.Indirizzo?`📍 Indirizzo: ${p.Indirizzo}<br>`:""}
+            ${p.Telefono?`📞 Telefono: <a href="tel:${p.Telefono}">${p.Telefono}</a><br>`:""}
+            ${p["Posti auto"]?`🅿️ Posti: ${p["Posti auto"]}<br>`:""}
+            ${p.Accessibilità?`♿ Accessibilità: ${p.Accessibilità}<br>`:""}
+            ${p.Distanza?`📏 Distanza: ${p.Distanza}<br>`:""}
+            ${p["Lunghezza percorso dal Comune"]?`📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}<br>`:""}
+            ${p.Dislivello?`⛰️ Dislivello: ${p.Dislivello}<br>`:""}
+            ${p.Note?`📝 Note: ${p.Note}<br>`:""}
+            ${p.SitoWeb ? `🌐 Sito web: <a href="${p.SitoWeb}" target="_blank">${p.SitoWeb}</a><br>` : ""}
+            <div style="display:flex;justify-content:center;margin-top:6px;">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" style="background:white;color:${color};padding:6px 12px;border-radius:5px;font-weight:bold;text-decoration:none;box-shadow:0 1px 4px rgba(0,0,0,0.2);">🚗 Naviga 🚗</a>
+            </div>
+        </div>
+        `;
+
+        const marker = L.marker([lat, lon], { icon: markerIcon });
+        marker.category = p.Categoria || "Altro";
+        marker.bindPopup(popupHTML).addTo(map);
+        allMarkers.push(marker);
+    });
+
+    // ===== LEGENDA =====
+    const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))];
+    const legendControl = L.control({ position: 'topright' });
+    legendControl.onAdd = function(map) {
+        const wrapper = L.DomUtil.create('div');
+        const toggle = L.DomUtil.create('button', 'legend-toggle', wrapper);
+        toggle.innerHTML = '☰ Legenda';
+        const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
+        legendDiv.innerHTML = "<b>Legenda</b>";
+
+        categories.forEach(cat => {
+            const id = "chk_" + cat.replace(/\s/g, '');
+            const isChecked = (cat === "Luoghi principali" || cat === "Parcheggi");
+            const row = document.createElement('div'); row.style.marginTop = '4px';
+            row.innerHTML = `<input type="checkbox" id="${id}" ${isChecked ? "checked" : ""}><label for="${id}"> ${cat}</label>`;
+            legendDiv.appendChild(row);
+
+            allMarkers.forEach(m => { if (m.category === cat && !isChecked) map.removeLayer(m); });
+            row.querySelector('input').addEventListener('change', e => {
+                allMarkers.forEach(m => { if (m.category === cat) { e.target.checked ? m.addTo(map) : map.removeLayer(m); } });
             });
-        }
+        });
+
+        toggle.addEventListener('click', () => { legendDiv.classList.toggle('show'); });
+        return wrapper;
+    };
+    legendControl.addTo(map);
+
+  });
 
         function getIconSize() { return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.06); }
         function getFontSize(size) { return Math.round(size * 0.45); }
