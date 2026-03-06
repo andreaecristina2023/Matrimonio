@@ -161,7 +161,7 @@ function parseCSVtoObjects(text) {
         result.push(current.trim());
         return result;
     }
-    const header = splitCSV(lines[0]);
+const header = splitCSV(lines[0]).map(h => h.trim());
     return lines.slice(1).map(line => {
         const cols = splitCSV(line);
         let obj = {};
