@@ -483,9 +483,10 @@ legendControl.onAdd = function(map) {
 
         // piccolo cerchio colorato
         const colorCircle = document.createElement('span');
+        const circleSize = getIconSize() * 0.4; // 40% del marker
         colorCircle.style.display = 'inline-block';
-        colorCircle.style.width = '16px';
-        colorCircle.style.height = '16px';
+colorCircle.style.width = `${circleSize}px`;
+colorCircle.style.height = `${circleSize}px`;
         colorCircle.style.backgroundColor = color;
         colorCircle.style.borderRadius = '50%';
         colorCircle.style.margin = '0 6px';
