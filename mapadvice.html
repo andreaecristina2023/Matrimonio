@@ -294,22 +294,23 @@
             .catch(err => console.warn('❌ Errore caricamento menu:', err));
 
                     // ===== Centra wrapper verticale =====
-        function updateCentralPosition() {
-            const nav = document.querySelector('nav');
-            const wrapper = document.getElementById('centralWrapper');
-            const menuTitle = document.getElementById('menuPageTitle');
-            if (nav) {
-                const totalHeight = 2 * nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
-                const availableHeight = window.innerHeight - totalHeight;
-                wrapper.style.height = `${availableHeight}px`;
-                wrapper.style.paddingTop = `${availableHeight * 0.38}px`;
-                wrapper.style.visibility = 'visible';
-            }
-        }
+function updateCentralPosition() {
+    const nav = document.querySelector('nav');
+    const wrapper = document.getElementById('centralWrapper');
+    const menuTitle = document.getElementById('menuPageTitle');
 
-// Chiamala al caricamento
+    // Altezza totale nav + titolo
+    const totalHeight = (nav ? nav.offsetHeight : 0) + (menuTitle ? menuTitle.offsetHeight : 0);
+
+    // Aggiorna variabile CSS
+    document.documentElement.style.setProperty('--nav-height', totalHeight + 'px');
+
+    // Mostra wrapper
+    wrapper.style.visibility = 'visible';
+}
+
+// Chiamata sicura
 window.addEventListener('load', updateCentralPosition);
-// Chiamala al resize
 window.addEventListener('resize', updateCentralPosition);
         console.log("🚀 Inizio script mappa");
 
