@@ -330,7 +330,7 @@ function updateCentralPosition() {
     const wrapper = document.getElementById('centralWrapper');
 
     // Calcola altezza totale nav + titolo + eventuale margine
-    const totalHeight = (nav ? nav.offsetHeight : 0) + (menuTitle ? menuTitle.offsetHeight : 0);
+    const totalHeight = 2*(nav ? nav.offsetHeight : 0) + (menuTitle ? menuTitle.offsetHeight : 0);
 
     // Aggiorna variabile CSS
     document.documentElement.style.setProperty('--nav-height', totalHeight + 'px');
