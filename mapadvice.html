@@ -36,45 +36,51 @@
             z-index: -1;
         }
 
-.central-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;   /* centra verticalmente tutto il contenuto */
-    width: 100%;
-    height: calc(100vh - var(--nav-height));
-    visibility: hidden;
-}
+        .central-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* centra verticalmente tutto il contenuto */
+            width: 100%;
+            height: calc(100vh - var(--nav-height));
+            /*visibility: hidden;*/
+        }
 
-.central-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;  /* centra il contenitore interno */
-    width: 100%;
-}
+        .central-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            /* centra il contenitore interno */
+            width: 100%;
+        }
 
-#map-container {
-    width: 90%;
-    max-width: 1000px;
-    aspect-ratio: 16/9;       /* come lo slider, mantiene proporzioni */
-    /*flex-grow:1;*/
-    display: flex;
-    justify-content: center;
-    align-items: center;       /* centra la mappa dentro il container */
-}
+        #map-container {
+            width: 90%;
+            max-width: 1000px;
+            aspect-ratio: 16/9;
+            /* come lo slider, mantiene proporzioni */
+            /*flex-grow:1;*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* centra la mappa dentro il container */
+        }
 
-#map {
-    width: 100%;
-    height: 100%;             /* riempie il map-container */
-    border-radius: 15px;
-}
+        #map {
+            width: 100%;
+            height: 100%;
+            /* riempie il map-container */
+            border-radius: 15px;
+        }
 
-@media(max-width:600px){
-    .central-wrapper {
-        padding-top: 0; /* evita offset non necessario */
-    }
-}
+        @media(max-width:600px) {
+            .central-wrapper {
+                padding-top: 0;
+                /* evita offset non necessario */
+            }
+        }
 
 
         /*.central-container {
@@ -84,14 +90,16 @@
         }
 
             /* ===== CONTENITORE ===== */
-    .central-container {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* centra la mappa dentro il container */
-    width: 100%;
-    height: 100%;      /* occupa tutto lo spazio del wrapper */
-    flex-direction: column;
-}
+        .central-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* centra la mappa dentro il container */
+            width: 100%;
+            height: 100%;
+            /* occupa tutto lo spazio del wrapper */
+            flex-direction: column;
+        }
 
         #map {
             width: 90%;
@@ -285,13 +293,13 @@
 
 <body>
     <div id="menu-placeholder"></div>
-<div class="central-wrapper" id="centralWrapper">
-    <div class="central-container">
-        <div id="map-container">
-            <div id="map"></div>
+    <div class="central-wrapper" id="centralWrapper">
+        <div class="central-container">
+            <div id="map-container">
+                <div id="map"></div>
+            </div>
         </div>
     </div>
-</div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
@@ -317,31 +325,37 @@
                 const currentPage = location.pathname.split("/").pop() || 'homepage.html';
                 document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
                     if (link.getAttribute('href') === currentPage) link.classList.add('active');
+
+
                 });
+                // 🔹 Aggiorna la posizione centrale solo adesso
+                updateCentralPosition();
+                window.addEventListener('load', updateCentralPosition);
+                window.addEventListener('resize', updateCentralPosition);
 
             })
             .catch(err => console.warn('❌ Errore caricamento menu:', err));
 
 
-    // Centra wrapper verticale
-function updateCentralPosition() {
-    const nav = document.querySelector('nav');
-    const menuTitle = document.getElementById('menuPageTitle');
-    const wrapper = document.getElementById('centralWrapper');
+        // Centra wrapper verticale
+        function updateCentralPosition() {
+            const nav = document.querySelector('nav');
+            const menuTitle = document.getElementById('menuPageTitle');
+            const wrapper = document.getElementById('centralWrapper');
 
-    // Altezza reale nav + titolo
-    const navHeight = nav ? nav.offsetHeight : 0;
-    const titleHeight = menuTitle ? menuTitle.offsetHeight : 0;
+            // Altezza reale nav + titolo
+            const navHeight = nav ? nav.offsetHeight : 0;
+            const titleHeight = menuTitle ? menuTitle.offsetHeight : 0;
 
-    // Altezza totale sopra la mappa
-    const totalHeight = navHeight + titleHeight;
+            // Altezza totale sopra la mappa
+            const totalHeight = navHeight + titleHeight;
 
-    // Aggiorna variabile CSS
-    document.documentElement.style.setProperty('--nav-height', totalHeight + 'px');
+            // Aggiorna variabile CSS
+            document.documentElement.style.setProperty('--nav-height', totalHeight + 'px');
 
-    // Mostra il wrapper
-    wrapper.style.visibility = 'visible';
-}
+            // Mostra il wrapper
+            wrapper.style.visibility = 'visible';
+        }
 
         console.log("🚀 Inizio script mappa");
 
@@ -494,9 +508,7 @@ function updateCentralPosition() {
             legendControl.addTo(map);
 
         });
-        
-window.addEventListener('load', updateCentralPosition);
-window.addEventListener('resize', updateCentralPosition);
+
     </script>
 </body>
 
