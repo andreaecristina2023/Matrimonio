@@ -185,20 +185,15 @@
 
         /* ===== LEGENDA ===== */
 
-        .info.legend {
-            font-family: 'Kaushan Script', cursive;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 10px 12px;
-            border-radius: 0 0 12px 12px;
-            text-align: left;
-            font-size: 1rem;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-            max-width: 220px;
+.info.legend{
+    padding:10px 12px;
+    text-align:left;
+    font-size:1rem;
 
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s ease;
-        }
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.35s ease;
+}
 
         .info.legend.show {
             max-height: 400px;
@@ -238,18 +233,22 @@
 
         /* hamburger */
 
-        .legend-toggle {
-            width: 100%;
-            text-align: left;
-            font-family: 'Kaushan Script', cursive;
-            font-size: 1.1rem;
-            background: #ff0000;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 8px 12px;
-            cursor: pointer;
-        }
+.legend-toggle{
+    width:100%;
+    text-align:left;
+    font-family:'Kaushan Script', cursive;
+    font-size:1.1rem;
+    background:#ff0000;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    cursor:pointer;
+}
+
+.legend-arrow{
+    float:right;
+    font-size:0.9em;
+}
 
         /* mobile */
 
@@ -462,7 +461,7 @@ L.DomEvent.disableScrollPropagation(wrapper);
 const container = L.DomUtil.create('div','legend-container',wrapper);
 
 const toggleBtn = L.DomUtil.create('button','legend-toggle',container);
-toggleBtn.innerHTML="☰";
+toggleBtn.innerHTML="☰ <span class='legend-arrow'>▾</span>";
 
 const legendDiv = L.DomUtil.create('div','info legend',container);
 
@@ -507,37 +506,39 @@ const legendDiv = L.DomUtil.create('div','info legend',container);
 
                 });
 
-                toggleBtn.addEventListener('click', () => {
+toggleBtn.addEventListener('click',()=>{
 
-                    legendDiv.classList.toggle("show");
+    legendDiv.classList.toggle("show");
 
-                    if (window.innerWidth <= 768) {
+    if(window.innerWidth <= 768){
 
-                        if (legendDiv.classList.contains("show")) {
-                            toggleBtn.innerHTML = "☰ Legenda";
-                        } else {
-                            toggleBtn.innerHTML = "☰";
-                        }
+        const arrow = toggleBtn.querySelector(".legend-arrow");
 
-                    }
+        if(legendDiv.classList.contains("show")){
+            toggleBtn.innerHTML="☰ Legenda <span class='legend-arrow'>▴</span>";
+        }else{
+            toggleBtn.innerHTML="☰ <span class='legend-arrow'>▾</span>";
+        }
 
-                });
+    }
 
-                function updateLegend() {
+});
 
-                    if (window.innerWidth > 768) {
+function updateLegend(){
 
-                        legendDiv.classList.add("show");
-                        toggleBtn.innerHTML = "☰ Legenda";
+    if(window.innerWidth>768){
 
-                    } else {
+        legendDiv.classList.add("show");
+        toggleBtn.innerHTML="☰ Legenda";
 
-                        legendDiv.classList.remove("show");
-                        toggleBtn.innerHTML = "☰";
+    }else{
 
-                    }
+        legendDiv.classList.remove("show");
+        toggleBtn.innerHTML="☰ <span class='legend-arrow'>▾</span>";
 
-                }
+    }
+
+}
 
                 updateLegend();
                 window.addEventListener("resize", updateLegend);
