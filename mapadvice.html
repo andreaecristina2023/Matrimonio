@@ -391,7 +391,11 @@
                 const marker = L.marker([lat, lon], { icon: markerIcon });
                 marker.category = p.Categoria || "Altro";
                 marker.bindPopup(popupHTML).addTo(map);
-                allMarkers.push(marker);
+                const visibleInitially = ["Luoghi principali", "Parcheggi"];
+allMarkers.push(marker);
+if (visibleInitially.includes(marker.category)) {
+    marker.addTo(map);
+}
             });
 
             // Evento globale per centrare popup
@@ -449,6 +453,7 @@ map.on('popupopen', function (e) {
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
                     checkbox.checked = defaultOrder.includes(cat);
+updateMarkers(cat, checkbox.checked); // Assicurati che lo stato dei marker corrisponda
                     checkbox.id = "chk_" + cat.replace(/\s/g, '');
 
                     // Imposta colore dinamico
@@ -478,6 +483,11 @@ colorCircle.style.borderColor = color;
                         if (e.target !== checkbox) checkbox.checked = !checkbox.checked;
                         updateMarkers(cat, checkbox.checked);
                     });
+
+                    label.addEventListener('click', () => {
+    checkbox.checked = !checkbox.checked;
+    updateMarkers(cat, checkbox.checked);
+});
 
                     // Cambio checkbox direttamente
                     checkbox.addEventListener('change', () => {
