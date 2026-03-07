@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <style>
-        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -41,75 +40,45 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* centra verticalmente tutto il contenuto */
+            text-align: center;
             width: 100%;
-            height: calc(100vh - var(--nav-height));
-            /*visibility: hidden;*/
+            min-height: 90vh;
+            padding-top: 5vh;
         }
 
-        .central-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            /* centra il contenitore interno */
-            width: 100%;
-        }
-
-        #map-container {
-            width: 90%;
-            max-width: 1000px;
-            aspect-ratio: 16/9;
-            /* come lo slider, mantiene proporzioni */
-            /*flex-grow:1;*/
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* centra la mappa dentro il container */
-        }
-
-        #map {
-            width: 100%;
-            height: 100%;
-            /* riempie il map-container */
-            border-radius: 15px;
-        }
-
-        @media(max-width:600px) {
-            .central-wrapper {
-                padding-top: 0;
-                /* evita offset non necessario */
-            }
-        }
-
-
-        /*.central-container {
+       .central-container {
             width: 100%;
             display: flex;
             justify-content: center;
-        }
-
-            /* ===== CONTENITORE ===== */
-        .central-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* centra la mappa dentro il container */
-            width: 100%;
-            height: 100%;
-            /* occupa tutto lo spazio del wrapper */
-            flex-direction: column;
         }
 
         #map {
             width: 90%;
             max-width: 1000px;
-            /*height: 80%;*/
+            height: 70vh;
             border-radius: 15px;
-            /*overflow: hidden;*/
+            overflow: hidden;
         }
 
-        /* Marker */
+                nav .menu a,
+        .mobile-menu a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        nav .menu a:hover:not(.active),
+        .mobile-menu a:hover:not(.active) {
+            border-bottom: 2px solid #ff0000;
+        }
+
+        nav .menu a.active,
+        .mobile-menu a.active {
+            color: #ff0000;
+            font-weight: bold;
+        }
+
         .marker-number div,
         .marker-special div,
         .marker-municipio div {
@@ -120,9 +89,8 @@
             width: 100%;
             height: 100%;
             text-align: center;
-            font-size: 2em;
+            font-size: 2.0em;
             color: white;
-            font-family: 'Kaushan Script', cursive;
         }
 
         .marker-number div {
@@ -137,12 +105,10 @@
             background: #4caf50;
         }
 
-        /* Popup */
         .leaflet-popup-content {
             font-family: 'Kaushan Script', cursive !important;
             font-size: 1.1rem;
-            text-align: left;
-            min-width: 220px;
+            text-align: center;
         }
 
         .leaflet-popup-content a {
@@ -155,11 +121,18 @@
             text-decoration: underline;
         }
 
+        .leaflet-popup-content b {
+            color: #ff0000;
+            /* rosso elegante */
+            font-weight: bold;
+        }
+
         .leaflet-popup-content-wrapper {
             background: transparent;
             border-radius: 10px;
             padding: 0 !important;
             border: 2px solid transparent;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
         }
 
         .leaflet-popup-tip {
@@ -292,27 +265,29 @@
 </head>
 
 <body>
+
     <div id="menu-placeholder"></div>
+
     <div class="central-wrapper" id="centralWrapper">
         <div class="central-container">
-            <div id="map-container">
-                <div id="map"></div>
-            </div>
+            <div id="map"></div>
         </div>
     </div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
+                console.log("🚀 Inizio script mappa");
+
+        // ===== CARICA MENU =====
         fetch('menu.html')
             .then(resp => resp.text())
             .then(html => {
                 document.getElementById('menu-placeholder').innerHTML = html;
+                console.log("✅ Menu caricato");
 
-                // Imposta titolo pagina menu
                 const menuTitle = document.getElementById('menuPageTitle');
                 if (menuTitle) menuTitle.textContent = "Mappa dei consigli";
 
-                // Gestione hamburger mobile
                 const hamburger = document.getElementById('hamburger');
                 const mobileMenu = document.getElementById('mobileMenu');
                 if (hamburger && mobileMenu) {
@@ -321,44 +296,31 @@
                     window.addEventListener('resize', () => { if (window.innerWidth > 768) mobileMenu.style.display = 'none'; });
                 }
 
-                // Evidenzia pagina corrente
                 const currentPage = location.pathname.split("/").pop() || 'homepage.html';
                 document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
                     if (link.getAttribute('href') === currentPage) link.classList.add('active');
-
-
                 });
-                // 🔹 Aggiorna la posizione centrale solo adesso
-                updateCentralPosition();
-                window.addEventListener('load', updateCentralPosition);
-                window.addEventListener('resize', updateCentralPosition);
 
+                updateCentralPosition();
+                window.addEventListener('resize', updateCentralPosition);
             })
             .catch(err => console.warn('❌ Errore caricamento menu:', err));
-
 
         // Centra wrapper verticale
         function updateCentralPosition() {
             const nav = document.querySelector('nav');
-            const menuTitle = document.getElementById('menuPageTitle');
             const wrapper = document.getElementById('centralWrapper');
+            const menuTitle = document.getElementById('menuPageTitle');
 
-            // Altezza reale nav + titolo
-            const navHeight = nav ? nav.offsetHeight : 0;
-            const titleHeight = menuTitle ? menuTitle.offsetHeight : 0;
-
-            // Altezza totale sopra la mappa
-            const totalHeight = navHeight + titleHeight;
-
-            // Aggiorna variabile CSS
-            document.documentElement.style.setProperty('--nav-height', totalHeight + 'px');
-
-            // Mostra il wrapper
-            wrapper.style.visibility = 'visible';
+            if (nav) {
+                const totalHeight = 2 * nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
+                const availableHeight = window.innerHeight - totalHeight;
+                wrapper.style.height = `${availableHeight}px`;
+                wrapper.style.paddingTop = `${availableHeight * 0.35}px`;
+                wrapper.style.visibility = 'visible';
+            }
         }
-
-        console.log("🚀 Inizio script mappa");
-
+/*-----------------------------------------*/
         // ===== MAPPA =====
         const CENTRO = { lat: 44.15058, lon: 12.141665 };
         const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lon], 13);
