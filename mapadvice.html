@@ -132,116 +132,6 @@
             background: white;
         }
 
-        /* Legenda sempre a comparsa tramite toggle */
-        .info.legend {
-            font-family: 'Kaushan Script', cursive;
-            background: white;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: left;
-            font-size: 1rem;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-            max-width: 250px;
-            display: none;
-            /* di default nascosta */
-            position: absolute;
-            top: 50px;
-            right: 10px;
-            z-index: 1000;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-
-        .info.legend.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Pulsante toggle */
-        .legend-toggle {
-            font-family: 'Kaushan Script', cursive;
-            font-size: 1.1rem;
-            background: #ff0000;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 6px 12px;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 1001;
-        }
-        }
-
-        .info.legend:not(.show) {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-
-        .info.legend b {
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .info.legend div {
-            margin-bottom: 4px;
-        }
-
-        /* Pulsante hamburger per legenda */
-        .legend-toggle {
-            display: none;
-            font-family: 'Kaushan Script', cursive;
-            font-size: 1.1rem;
-            background: #ff0000;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 6px 6px;
-            cursor: pointer;
-            margin-bottom: 5px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-        }
-
-        @media(max-width:768px) {
-            .legend-toggle {
-                display: block;
-                background: #ff0000;
-                color: white;
-            }
-
-            .info.legend {
-                display: none;
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                z-index: 1000;
-            }
-
-            .info.legend.show {
-                display: block;
-            }
-        }
-
-        @media(max-width:600px) {
-            .legend-toggle {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                z-index: 1001;
-            }
-
-            .info.legend.show {
-                top: 60px;
-                right: 5px;
-                width: 200px;
-                font-size: 0.9rem;
-            }
-        }
-
         /* Popup wrapper */
         .leaflet-popup-content-wrapper {
             background: transparent;
@@ -286,56 +176,73 @@
             }
         }
 
-        /* LEGGENDA UNICA */
-.info.legend {
-    font-family: 'Kaushan Script', cursive;
-    background: white;
-    padding: 12px;
-    border-radius: 10px;
-    text-align: left;
-    font-size: 1rem;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-    max-width: 250px;
+        /* ===== LEGENDA ===== */
+
+/* ===== LEGENDA ===== */
+
+.info.legend{
+    font-family:'Kaushan Script', cursive;
+    background:rgba(255,255,255,0.95);
+    padding:12px;
+    border-radius:0 0 12px 12px;
+    text-align:left;
+    font-size:1rem;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    max-width:220px;
 }
 
-.legend-row {
-    display: flex;
-    align-items: center;
-    margin-top: 6px;
+.legend-row{
+    display:flex;
+    align-items:center;
+    margin-top:6px;
 }
 
-.legend-row span.color-circle {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 0 6px;
+.legend-row input{
+    margin-right:6px;
 }
 
-.legend-row label {
-    font-weight: bold;
-    flex: 1;
-    color: #333;
+.legend-row span.color-circle{
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:8px;
 }
 
-.legend-toggle {
-    display: none;
-    font-family: 'Kaushan Script', cursive;
-    font-size: 1.1rem;
-    background: #ff0000;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 6px 12px;
-    cursor: pointer;
-    margin-bottom: 5px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+.legend-row label{
+    flex:1;
+    font-weight:bold;
+    color:#333;
 }
 
-@media(max-width:768px) {
-    .legend-toggle { display: block; }
+/* hamburger */
+
+.legend-toggle{
+    width:100%;
+    text-align:left;
+    font-family:'Kaushan Script', cursive;
+    font-size:1.1rem;
+    background:#ff0000;
+    color:white;
+    border:none;
+    border-radius:10px 10px 0 0;
+    padding:8px 12px;
+    cursor:pointer;
 }
 
+/* mobile */
+
+@media(max-width:768px){
+
+    .info.legend{
+        display:none;
+    }
+
+    .info.legend.show{
+        display:block;
+    }
+
+}
     </style>
 </head>
 
@@ -521,89 +428,92 @@
             });
 
             // ===== LEGENDA VISIVA DINAMICA COLORATA =====
-            // LEGENDA UNICA DINAMICA
             const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))];
             const legendControl = L.control({ position: 'topright' });
 
-            legendControl.onAdd = function (map) {
-                const wrapper = L.DomUtil.create('div');
+legendControl.onAdd = function () {
 
-                // Pulsante toggle (mobile)
-                const toggleBtn = L.DomUtil.create('button', 'legend-toggle', wrapper);
-                toggleBtn.innerHTML = '☰';
+    const wrapper = L.DomUtil.create('div');
 
-                // Contenitore legenda
-                const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
+    const toggleBtn = L.DomUtil.create('button','legend-toggle',wrapper);
+    toggleBtn.innerHTML="☰";
 
-                categories.forEach(cat => {
-                    const color = points.find(p => p.Categoria === cat)?.Colore || "#ff0000";
-                    const id = "chk_" + cat.replace(/\s/g, '');
-                    const isChecked = true;
+    const legendDiv = L.DomUtil.create('div','info legend',wrapper);
 
-                    const row = document.createElement('div');
-                    row.className = 'legend-row';
+    categories.forEach(cat=>{
 
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.id = id;
-                    if (isChecked) checkbox.checked = true;
+        const color = points.find(p=>p.Categoria===cat)?.Colore || "#ff0000";
+        const id="chk_"+cat.replace(/\s/g,'');
 
-                    const colorCircle = document.createElement('span');
-                    colorCircle.className = 'color-circle';
-                    colorCircle.style.backgroundColor = color;
+        const row=document.createElement('div');
+        row.className='legend-row';
 
-                    const label = document.createElement('label');
-                    label.setAttribute('for', id);
-                    label.innerText = cat;
+        const checkbox=document.createElement('input');
+        checkbox.type='checkbox';
+        checkbox.id=id;
+        checkbox.checked=true;
 
-                    row.appendChild(checkbox);
-                    row.appendChild(colorCircle);
-                    row.appendChild(label);
-                    legendDiv.appendChild(row);
+        const colorCircle=document.createElement('span');
+        colorCircle.className='color-circle';
+        colorCircle.style.backgroundColor=color;
 
-                    // Controllo visibilità marker
-                    allMarkers.forEach(m => { if (m.category === cat && !isChecked) map.removeLayer(m); });
-                    checkbox.addEventListener('change', e => {
-                        allMarkers.forEach(m => {
-                            if (m.category === cat) e.target.checked ? m.addTo(map) : map.removeLayer(m);
-                        });
-                    });
-                });
+        const label=document.createElement('label');
+        label.setAttribute('for',id);
+        label.innerText=cat;
 
-                // Toggle mobile
-                toggleBtn.addEventListener('click', () => {
-                    legendDiv.style.display = legendDiv.style.display === 'none' ? 'block' : 'none';
-                });
+        row.appendChild(checkbox);
+        row.appendChild(colorCircle);
+        row.appendChild(label);
 
-                // Desktop sempre visibile
-                if (window.innerWidth > 768) legendDiv.style.display = 'block';
-                else legendDiv.style.display = 'none';
+        legendDiv.appendChild(row);
 
-                window.addEventListener('resize', () => {
-                    if (window.innerWidth > 768) legendDiv.style.display = 'block';
-                    else legendDiv.style.display = 'none';
-                });
-
-                return wrapper;
-            };
-
-            legendControl.addTo(map);
+        checkbox.addEventListener('change',e=>{
+            allMarkers.forEach(m=>{
+                if(m.category===cat){
+                    e.target.checked ? m.addTo(map) : map.removeLayer(m);
+                }
+            });
         });
 
-        /* function updateLegendVisibility() {
-             if (window.innerWidth > 768) {
-                 legendDiv.classList.add('show'); // sempre visibile desktop
-                 toggle.style.display = 'none';
-             } else {
-                 legendDiv.classList.remove('show'); // nascosta mobile
-                 toggle.style.display = 'block';
-                 toggle.innerHTML = '☰'; // reset testo
-             }
-         }*/
+    });
 
-        // Aggiorna subito e al resize
-        //updateLegendVisibility();
-        //window.addEventListener('resize', updateLegendVisibility);
+    toggleBtn.addEventListener('click',()=>{
+
+        legendDiv.classList.toggle("show");
+
+        if(legendDiv.classList.contains("show")){
+            toggleBtn.innerHTML="☰ Legenda";
+        }else{
+            toggleBtn.innerHTML="☰";
+        }
+
+    });
+
+    function updateLegend(){
+
+        if(window.innerWidth>768){
+
+            legendDiv.classList.add("show");
+            toggleBtn.innerHTML="☰ Legenda";
+
+        }else{
+
+            legendDiv.classList.remove("show");
+            toggleBtn.innerHTML="☰";
+
+        }
+
+    }
+
+    updateLegend();
+    window.addEventListener("resize",updateLegend);
+
+    return wrapper;
+
+};
+
+legendControl.addTo(map);
+        });
 
         // ===== RIDIMENSIONAMENTO DINAMICO =====
         function resizeMarkers() {
