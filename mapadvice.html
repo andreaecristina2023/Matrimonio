@@ -176,9 +176,12 @@
             }
         }
 
-        /* ===== LEGENDA ===== */
-
-        /* ===== LEGENDA ===== */
+        .legend-container{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    overflow:hidden;
+}
 
         /* ===== LEGENDA ===== */
 
@@ -452,13 +455,16 @@
             legendControl.onAdd = function () {
 
                 const wrapper = L.DomUtil.create('div');
-                L.DomEvent.disableClickPropagation(wrapper);
-                L.DomEvent.disableScrollPropagation(wrapper);
 
-                const toggleBtn = L.DomUtil.create('button', 'legend-toggle', wrapper);
-                toggleBtn.innerHTML = "☰";
+L.DomEvent.disableClickPropagation(wrapper);
+L.DomEvent.disableScrollPropagation(wrapper);
 
-                const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
+const container = L.DomUtil.create('div','legend-container',wrapper);
+
+const toggleBtn = L.DomUtil.create('button','legend-toggle',container);
+toggleBtn.innerHTML="☰";
+
+const legendDiv = L.DomUtil.create('div','info legend',container);
 
                 categories.forEach(cat => {
 
