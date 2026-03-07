@@ -450,11 +450,10 @@ map.on('popupopen', function (e) {
                     checkbox.type = 'checkbox';
                     checkbox.checked = defaultOrder.includes(cat);
                     checkbox.id = "chk_" + cat.replace(/\s/g, '');
+
                     // Imposta colore dinamico
 checkbox.style.setProperty('--color', color);
 checkbox.style.borderColor = color; // bordo iniziale
-colorCircle.style.borderColor = color;
-
                     // Pallino colorato
                     const colorCircle = document.createElement('span');
                     colorCircle.style.display = 'inline-block';
@@ -463,6 +462,7 @@ colorCircle.style.borderColor = color;
                     colorCircle.style.borderRadius = '50%';
                     colorCircle.style.backgroundColor = color;
                     colorCircle.style.marginRight = '8px';
+colorCircle.style.borderColor = color;
 
                     const label = document.createElement('label');
                     label.setAttribute('for', checkbox.id);
