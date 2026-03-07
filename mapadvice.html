@@ -292,6 +292,11 @@
                 wrapper.style.visibility = 'visible';
             }
         }
+
+// Chiamala al caricamento
+window.addEventListener('load', updateCentralPosition);
+// Chiamala al resize
+window.addEventListener('resize', updateCentralPosition);
         console.log("🚀 Inizio script mappa");
 
         // ===== MAPPA =====
