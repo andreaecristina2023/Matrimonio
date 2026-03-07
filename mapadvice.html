@@ -178,89 +178,89 @@
 
         /* ===== LEGENDA ===== */
 
-/* ===== LEGENDA ===== */
+        /* ===== LEGENDA ===== */
 
-/* ===== LEGENDA ===== */
+        /* ===== LEGENDA ===== */
 
-.info.legend{
-    font-family:'Kaushan Script', cursive;
-    background:rgba(255,255,255,0.95);
-    padding:10px 12px;
-    border-radius:0 0 12px 12px;
-    text-align:left;
-    font-size:1rem;
-    box-shadow:0 6px 18px rgba(0,0,0,0.25);
-    max-width:220px;
+        .info.legend {
+            font-family: 'Kaushan Script', cursive;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 12px;
+            border-radius: 0 0 12px 12px;
+            text-align: left;
+            font-size: 1rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            max-width: 220px;
 
-    max-height:0;
-    overflow:hidden;
-    transition:max-height 0.35s ease;
-}
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
 
-.info.legend.show{
-    max-height:400px;
-}
+        .info.legend.show {
+            max-height: 400px;
+        }
 
-.legend-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 4px;
-    cursor:pointer;
-    border-radius:6px;
-    transition:background 0.2s;
-}
+        .legend-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 4px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
 
-.legend-row:hover{
-    background:#f3f3f3;
-}
+        .legend-row:hover {
+            background: #f3f3f3;
+        }
 
-.legend-row input{
-    display:none;
-}
+        .legend-row input {
+            display: none;
+        }
 
-.legend-row span.color-circle{
-    width:16px;
-    height:16px;
-    border-radius:50%;
-    display:inline-block;
-}
+        .legend-row span.color-circle {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+        }
 
-.legend-row label{
-    flex:1;
-    font-weight:bold;
-    color:#333;
-    cursor:pointer;
-}
+        .legend-row label {
+            flex: 1;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
 
-/* hamburger */
+        /* hamburger */
 
-.legend-toggle{
-    width:100%;
-    text-align:left;
-    font-family:'Kaushan Script', cursive;
-    font-size:1.1rem;
-    background:#ff0000;
-    color:white;
-    border:none;
-    border-radius:10px;
-    padding:8px 12px;
-    cursor:pointer;
-}
+        .legend-toggle {
+            width: 100%;
+            text-align: left;
+            font-family: 'Kaushan Script', cursive;
+            font-size: 1.1rem;
+            background: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
 
-/* mobile */
+        /* mobile */
 
-@media(max-width:768px){
+        @media(max-width:768px) {
 
-    .info.legend{
-        max-height:0;
-    }
+            .info.legend {
+                max-height: 0;
+            }
 
-    .info.legend.show{
-        max-height:400px;
-    }
+            .info.legend.show {
+                max-height: 400px;
+            }
 
-}
+        }
     </style>
 </head>
 
@@ -449,88 +449,98 @@
             const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))];
             const legendControl = L.control({ position: 'topright' });
 
-legendControl.onAdd = function () {
+            legendControl.onAdd = function () {
 
-    const wrapper = L.DomUtil.create('div');
+                const wrapper = L.DomUtil.create('div');
+                L.DomEvent.disableClickPropagation(wrapper);
+                L.DomEvent.disableScrollPropagation(wrapper);
 
-    const toggleBtn = L.DomUtil.create('button','legend-toggle',wrapper);
-    toggleBtn.innerHTML="☰";
+                const toggleBtn = L.DomUtil.create('button', 'legend-toggle', wrapper);
+                toggleBtn.innerHTML = "☰";
 
-    const legendDiv = L.DomUtil.create('div','info legend',wrapper);
+                const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
 
-    categories.forEach(cat=>{
+                categories.forEach(cat => {
 
-        const color = points.find(p=>p.Categoria===cat)?.Colore || "#ff0000";
-        const id="chk_"+cat.replace(/\s/g,'');
+                    const color = points.find(p => p.Categoria === cat)?.Colore || "#ff0000";
+                    const id = "chk_" + cat.replace(/\s/g, '');
 
-        const row=document.createElement('div');
-        row.className='legend-row';
+                    const row = document.createElement('div');
+                    row.className = 'legend-row';
 
-        const checkbox=document.createElement('input');
-        checkbox.type='checkbox';
-        checkbox.id=id;
-        checkbox.checked=true;
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = id;
+                    checkbox.checked = true;
 
-        const colorCircle=document.createElement('span');
-        colorCircle.className='color-circle';
-        colorCircle.style.backgroundColor=color;
+                    const colorCircle = document.createElement('span');
+                    colorCircle.className = 'color-circle';
+                    colorCircle.style.backgroundColor = color;
 
-        const label=document.createElement('label');
-        label.setAttribute('for',id);
-        label.innerText=cat;
+                    const label = document.createElement('label');
+                    label.setAttribute('for', id);
+                    label.innerText = cat;
 
-        row.appendChild(checkbox);
-        row.appendChild(colorCircle);
-        row.appendChild(label);
+                    row.appendChild(checkbox);
+                    row.appendChild(colorCircle);
+                    row.appendChild(label);
 
-        legendDiv.appendChild(row);
+                    legendDiv.appendChild(row);
 
-        checkbox.addEventListener('change',e=>{
-            allMarkers.forEach(m=>{
-                if(m.category===cat){
-                    e.target.checked ? m.addTo(map) : map.removeLayer(m);
+                    row.addEventListener('click', () => {
+
+                        checkbox.checked = !checkbox.checked;
+
+                        allMarkers.forEach(m => {
+                            if (m.category === cat) {
+                                checkbox.checked ? m.addTo(map) : map.removeLayer(m);
+                            }
+                        });
+
+                    });
+
+                });
+
+                toggleBtn.addEventListener('click', () => {
+
+                    legendDiv.classList.toggle("show");
+
+                    if (window.innerWidth <= 768) {
+
+                        if (legendDiv.classList.contains("show")) {
+                            toggleBtn.innerHTML = "☰ Legenda";
+                        } else {
+                            toggleBtn.innerHTML = "☰";
+                        }
+
+                    }
+
+                });
+
+                function updateLegend() {
+
+                    if (window.innerWidth > 768) {
+
+                        legendDiv.classList.add("show");
+                        toggleBtn.innerHTML = "☰ Legenda";
+
+                    } else {
+
+                        legendDiv.classList.remove("show");
+                        toggleBtn.innerHTML = "☰";
+
+                    }
+
                 }
-            });
-        });
 
-    });
+                updateLegend();
+                window.addEventListener("resize", updateLegend);
 
-    toggleBtn.addEventListener('click',()=>{
+                return wrapper;
 
-        legendDiv.classList.toggle("show");
+            };
 
-        if(legendDiv.classList.contains("show")){
-            toggleBtn.innerHTML="☰ Legenda";
-        }else{
-            toggleBtn.innerHTML="☰";
-        }
-
-    });
-
-    function updateLegend(){
-
-        if(window.innerWidth>768){
-
-            legendDiv.classList.add("show");
-            toggleBtn.innerHTML="☰ Legenda";
-
-        }else{
-
-            legendDiv.classList.remove("show");
-            toggleBtn.innerHTML="☰";
-
-        }
-
-    }
-
-    updateLegend();
-    window.addEventListener("resize",updateLegend);
-
-    return wrapper;
-
-};
-
-legendControl.addTo(map);
+            legendControl.addTo(map);
         });
 
         // ===== RIDIMENSIONAMENTO DINAMICO =====
