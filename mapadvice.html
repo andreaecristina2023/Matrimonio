@@ -132,24 +132,48 @@
             background: white;
         }
 
-        .info.legend {
-            font-family: 'Kaushan Script', cursive;
-            background: white;
+/* Legenda sempre a comparsa tramite toggle */
+.info.legend {
+    font-family: 'Kaushan Script', cursive;
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 1rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    max-width: 250px;
     display: none; /* di default nascosta */
-            padding: 12px;
-            border-radius: 10px;
-            text-align: left;
-            font-size: 1rem;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            opacity: 1;
-            transform: translateY(0);
-        }
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+}
 
-        .info.legend.show {
-            display: block !important;
-            opacity: 1;
-            transform: translateY(0);
+.info.legend.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Pulsante toggle */
+.legend-toggle {
+    font-family: 'Kaushan Script', cursive;
+    font-size: 1.1rem;
+    background: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1001;
+}
         }
 
         .info.legend:not(.show) {
@@ -446,88 +470,79 @@
 
             // ===== LEGENDA VISIVA DINAMICA COLORATA =====
             const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))];
-            const legendControl = L.control({ position: 'topright' });
+const legendControl = L.control({ position: 'topright' });
 
-            legendControl.onAdd = function (map) {
-                const wrapper = L.DomUtil.create('div');
+legendControl.onAdd = function(map) {
+    const wrapper = L.DomUtil.create('div');
 
-                // pulsante hamburger
-                const toggle = L.DomUtil.create('button', 'legend-toggle', wrapper);
-                toggle.style.fontWeight = 'bold';
-                toggle.style.cursor = 'pointer';
-                toggle.style.boxShadow = '0 2px 6px rgba(0,0,0,0.25)';
+    // pulsante toggle
+    const toggle = L.DomUtil.create('button', 'legend-toggle', wrapper);
 
-                // contenitore legenda
-                const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
-                legendDiv.style.maxWidth = '250px';
-                legendDiv.style.background = 'white';
-                legendDiv.style.padding = '12px';
-                legendDiv.style.borderRadius = '10px';
-                legendDiv.style.boxShadow = '0 6px 18px rgba(0,0,0,0.2)';
+    // contenitore legenda
+    const legendDiv = L.DomUtil.create('div', 'info legend', wrapper);
 
-                // aggiunge le categorie
-                categories.forEach(cat => {
-                    const color = points.find(p => p.Categoria === cat)?.Colore || "#ff0000";
-                    const id = "chk_" + cat.replace(/\s/g, '');
-                    const isChecked = (cat === "Luoghi principali" || cat === "Parcheggi");
+    categories.forEach(cat => {
+        const color = points.find(p => p.Categoria === cat)?.Colore || "#ff0000";
+        const id = "chk_" + cat.replace(/\s/g, '');
+        const isChecked = (cat === "Luoghi principali" || cat === "Parcheggi");
 
-                    const row = document.createElement('div');
-                    row.style.display = 'flex';
-                    row.style.alignItems = 'center';
-                    row.style.marginTop = '6px';
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.alignItems = 'center';
+        row.style.marginTop = '6px';
 
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.id = id;
-                    if (isChecked) checkbox.checked = true;
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = id;
+        if (isChecked) checkbox.checked = true;
 
-                    const colorCircle = document.createElement('span');
-                    const circleSize = getIconSize() * 0.4;
-                    colorCircle.style.width = `${circleSize}px`;
-                    colorCircle.style.height = `${circleSize}px`;
-                    colorCircle.style.borderRadius = '50%';
-                    colorCircle.style.margin = '0 6px';
-                    colorCircle.style.backgroundColor = color;
-                    colorCircle.style.display = 'inline-block';
+        const colorCircle = document.createElement('span');
+        const circleSize = getIconSize() * 0.4;
+        colorCircle.style.width = `${circleSize}px`;
+        colorCircle.style.height = `${circleSize}px`;
+        colorCircle.style.borderRadius = '50%';
+        colorCircle.style.margin = '0 6px';
+        colorCircle.style.backgroundColor = color;
+        colorCircle.style.display = 'inline-block';
 
-                    const label = document.createElement('label');
-                    label.setAttribute('for', id);
-                    label.innerText = cat;
-                    label.style.flex = '1';
-                    label.style.fontWeight = 'bold';
-                    label.style.color = '#333';
+        const label = document.createElement('label');
+        label.setAttribute('for', id);
+        label.innerText = cat;
+        label.style.flex = '1';
+        label.style.fontWeight = 'bold';
+        label.style.color = '#333';
 
-                    row.appendChild(checkbox);
-                    row.appendChild(colorCircle);
-                    row.appendChild(label);
-                    legendDiv.appendChild(row);
+        row.appendChild(checkbox);
+        row.appendChild(colorCircle);
+        row.appendChild(label);
+        legendDiv.appendChild(row);
 
-                    allMarkers.forEach(m => { if (m.category === cat && !isChecked) map.removeLayer(m); });
-                    checkbox.addEventListener('change', e => {
-                        allMarkers.forEach(m => {
-                            if (m.category === cat) {
-                                e.target.checked ? m.addTo(map) : map.removeLayer(m);
-                            }
-                        });
-                    });
-                });
-
-                // toggle dinamico
-                function updateToggleText() {
-                    toggle.innerHTML = window.innerWidth > 768 ? '☰ Legenda' : '☰';
+        // mostra/nascondi marker
+        allMarkers.forEach(m => { if (m.category === cat && !isChecked) map.removeLayer(m); });
+        checkbox.addEventListener('change', e => {
+            allMarkers.forEach(m => {
+                if (m.category === cat) {
+                    e.target.checked ? m.addTo(map) : map.removeLayer(m);
                 }
+            });
+        });
+    });
 
-                toggle.addEventListener('click', () => {
-                    legendDiv.classList.toggle('show');
-                });
+    // toggle dinamico
+    function updateToggleText() {
+        toggle.innerHTML = window.innerWidth > 768 ? '☰ Legenda' : '☰';
+    }
+    toggle.addEventListener('click', () => {
+        legendDiv.classList.toggle('show');
+    });
 
-                window.addEventListener('resize', updateToggleText);
-                updateToggleText(); // iniziale
+    window.addEventListener('resize', updateToggleText);
+    updateToggleText();
 
-                return wrapper;
-            };
+    return wrapper;
+};
 
-            legendControl.addTo(map);
+legendControl.addTo(map);
         });
 
         /* function updateLegendVisibility() {
