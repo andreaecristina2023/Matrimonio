@@ -339,8 +339,6 @@ function updateCentralPosition() {
     wrapper.style.visibility = 'visible';
 }
 
-window.addEventListener('load', updateCentralPosition);
-window.addEventListener('resize', updateCentralPosition);
         console.log("🚀 Inizio script mappa");
 
         // ===== MAPPA =====
@@ -492,6 +490,9 @@ window.addEventListener('resize', updateCentralPosition);
             legendControl.addTo(map);
 
         });
+        
+window.addEventListener('load', updateCentralPosition);
+window.addEventListener('resize', updateCentralPosition);
     </script>
 </body>
 
