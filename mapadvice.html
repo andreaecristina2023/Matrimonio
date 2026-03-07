@@ -598,15 +598,22 @@ legendControl.onAdd = function(map) {
     });
 
     // toggle dinamico
-    function updateToggleText() {
-        toggle.innerHTML = window.innerWidth > 768 ? '☰ Legenda' : '☰';
+function updateToggleText() {
+    if (window.innerWidth > 768) {
+        toggle.innerHTML = '☰ Legenda'; // desktop
+        legendDiv.classList.add('show'); // sempre visibile
+    } else {
+        toggle.innerHTML = '☰';         // mobile
+        legendDiv.classList.remove('show'); // nascosta di default
     }
-    toggle.addEventListener('click', () => {
-        legendDiv.classList.toggle('show');
-    });
+}
 
-    window.addEventListener('resize', updateToggleText);
-    updateToggleText();
+toggle.addEventListener('click', () => {
+    legendDiv.classList.toggle('show');
+});
+
+window.addEventListener('resize', updateToggleText);
+updateToggleText();
 
     return wrapper;
 };
