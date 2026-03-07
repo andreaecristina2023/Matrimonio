@@ -515,18 +515,7 @@ const legendDiv = L.DomUtil.create('div','info legend',container);
 toggleBtn.addEventListener('click',()=>{
 
     legendDiv.classList.toggle("show");
-
-    if(window.innerWidth <= 768){
-
-        const arrow = toggleBtn.querySelector(".legend-arrow");
-
-        if(legendDiv.classList.contains("show")){
-            toggleBtn.innerHTML="☰ Legenda <span class='legend-arrow'>▴</span>";
-        }else{
-            toggleBtn.innerHTML="☰ <span class='legend-arrow'>▾</span>";
-        }
-
-    }
+    toggleBtn.classList.toggle("legend-open");
 
 });
 
