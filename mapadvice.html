@@ -204,21 +204,32 @@
             appearance: none;
             width: 16px;
             height: 16px;
-            border: 2px solid #888;
+            border: 2px solid grey;
             border-radius: 50%;
-            margin-right: 4px;
+            margin-right: 8px;
             cursor: pointer;
+    transition: all 0.2s;
             position: relative;
         }
 
-        .legend-row input[type=checkbox]:checked {
-            background-color: GREY;
-            border-color: GREY;
-        }
 
-        .legend-row span.color-circle {
-            display: none;
-        }
+/* Quando è selezionato */
+.legend-row input[type=checkbox]:checked {
+    color: white;
+    border-color: var(--color); /* usa la variabile CSS */
+    background-color: var(--color);
+}
+
+/* Cerchio colorato dietro il checkbox */
+.legend-row span.color-circle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    border: 2px solid grey; /* default */
+    vertical-align: middle;
+}
 
 
 
@@ -382,7 +393,7 @@
                 marker.bindPopup(popupHTML).addTo(map);
                 allMarkers.push(marker);
             });
-            
+
             // Evento globale per centrare popup
 map.on('popupopen', function (e) {
 
@@ -439,6 +450,10 @@ map.on('popupopen', function (e) {
                     checkbox.type = 'checkbox';
                     checkbox.checked = defaultOrder.includes(cat);
                     checkbox.id = "chk_" + cat.replace(/\s/g, '');
+                    // Imposta colore dinamico
+checkbox.style.setProperty('--color', color);
+checkbox.style.borderColor = color; // bordo iniziale
+colorCircle.style.borderColor = color;
 
                     // Pallino colorato
                     const colorCircle = document.createElement('span');
