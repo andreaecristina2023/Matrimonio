@@ -524,11 +524,13 @@ function updateLegend(){
     if(window.innerWidth>768){
 
         legendDiv.classList.add("show");
-        toggleBtn.innerHTML="☰ Legenda";
+        toggleBtn.classList.add("legend-open");
+        toggleBtn.innerHTML="☰ Legenda <span class='legend-arrow'>▾</span>";
 
     }else{
 
         legendDiv.classList.remove("show");
+        toggleBtn.classList.remove("legend-open");
         toggleBtn.innerHTML="☰ <span class='legend-arrow'>▾</span>";
 
     }
