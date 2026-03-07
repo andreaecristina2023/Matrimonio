@@ -47,9 +47,25 @@ body::before{
 .legend-content{background:white;border-radius:0 0 12px 12px;padding:8px 12px 20px 12px;max-height:0;overflow:hidden;transition:max-height 0.3s ease, opacity 0.3s ease;opacity:0;}
 .legend-show .legend-content{max-height:500px;opacity:1;}
 .legend-row{display:flex;align-items:center;margin-top:6px;cursor:pointer;}
-.legend-row input[type=checkbox]{-webkit-appearance:none;appearance:none;width:16px;height:16px;border:2px solid #888;border-radius:50%;margin-right:8px;cursor:pointer;position:relative;}
-.legend-row input[type=checkbox]:checked{background-color:#2196f3;border-color:#2196f3;}
+.legend-row input[type=checkbox] {
+    -webkit-appearance: none;
+    appearance: none;
+    width:16px;
+    height:16px;
+    border:2px solid #888;
+    border-radius:50%;
+    margin-right:4px;
+    cursor:pointer;
+    position: relative;
+}
+.legend-row input[type=checkbox]:checked {
+    background-color:#2196f3;
+    border-color:#2196f3;
+}
 .legend-row span.color-circle{display:none;}
+
+
+
 .legend-toggle{width:100%;text-align:left;font-family:'Kaushan Script', cursive;font-size:1.1rem;background:#ff0000;color:white;border:none;border-radius:12px 12px 0 0;padding:8px 12px;cursor:pointer;position:relative;}
 .legend-toggle::after{content:'▼';position:absolute;left:50%;bottom:-10px;transform:translateX(-50%);font-size:1rem;transition: transform 0.3s ease;}
 .legend-open::after{transform:translateX(-50%) rotate(180deg);}
@@ -178,6 +194,55 @@ fetch(tsvURL).then(r=>r.text()).then(text=>{
         window.addEventListener("resize",updateLegend);
 
         return wrapper;
+
+        // ... dentro legendControl.onAdd
+orderedCategories.forEach(cat=>{
+    const color = points.find(p => p.Categoria === cat)?.Colore || "#ff0000";
+
+    const row = document.createElement('div');
+    row.className = 'legend-row';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = defaultOrder.includes(cat);
+    checkbox.id = "chk_" + cat.replace(/\s/g,'');
+
+    const colorCircle = document.createElement('span');
+    colorCircle.style.display = 'inline-block';
+    colorCircle.style.width = '12px';
+    colorCircle.style.height = '12px';
+    colorCircle.style.borderRadius = '50%';
+    colorCircle.style.backgroundColor = color;
+    colorCircle.style.marginRight = '8px';
+
+    const label = document.createElement('label');
+    label.setAttribute('for', checkbox.id);
+    label.innerText = cat;
+
+    row.appendChild(checkbox);
+    row.appendChild(colorCircle);
+    row.appendChild(label);
+    legendContent.appendChild(row);
+
+    // Click sulla riga (escluso il checkbox)
+    row.addEventListener('click', e => {
+        if(e.target !== checkbox) checkbox.checked = !checkbox.checked;
+        updateMarkers(cat, checkbox.checked);
+    });
+
+    // Evento sul checkbox
+    checkbox.addEventListener('change', () => {
+        updateMarkers(cat, checkbox.checked);
+    });
+});
+
+function updateMarkers(cat, visible){
+    allMarkers.forEach(m=>{
+        if(m.category===cat){
+            visible ? m.addTo(map) : map.removeLayer(m);
+        }
+    });
+}
     };
 
     legendControl.addTo(map);
