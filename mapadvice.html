@@ -36,17 +36,22 @@
             z-index: -1;
         }
 
-        .central-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            width: 100%;
-    min-height: calc(100vh - var(--nav-height, 0px)); /* altezza viewport meno nav */
-    padding-top: 1rem; /* piccolo margine dal titolo */
-    visibility: hidden; /* rimarrà nascosto fino al calcolo */
-        }
+.central-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: calc(100vh - var(--nav-height, 0px)); /* usa height non min-height */
+    visibility: hidden;
+}
+
+@media(max-width:600px){
+    .central-wrapper {
+        padding-top: 0; /* evita offset non necessario */
+    }
+}
 
 
         /*.central-container {
@@ -298,7 +303,7 @@ function updateCentralPosition() {
     const menuTitle = document.getElementById('menuPageTitle');
     const wrapper = document.getElementById('centralWrapper');
 
-    // Calcola l'altezza totale di nav + titolo
+    // Calcola altezza totale nav + titolo + eventuale margine
     const totalHeight = (nav ? nav.offsetHeight : 0) + (menuTitle ? menuTitle.offsetHeight : 0);
 
     // Aggiorna variabile CSS
