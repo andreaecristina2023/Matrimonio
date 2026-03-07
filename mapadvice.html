@@ -42,7 +42,7 @@
     align-items: center;
     justify-content: center;   /* centra verticalmente tutto il contenuto */
     width: 100%;
-    height: calc(100vh - var(--nav-height, 0px));
+    height: calc(100vh - var(--nav-height));
     visibility: hidden;
 }
 
@@ -329,8 +329,12 @@ function updateCentralPosition() {
     const menuTitle = document.getElementById('menuPageTitle');
     const wrapper = document.getElementById('centralWrapper');
 
-    // Calcola altezza totale nav + titolo + eventuale margine
-    const totalHeight = 3*(nav ? nav.offsetHeight : 0) + (menuTitle ? menuTitle.offsetHeight : 0);
+    // Altezza reale nav + titolo
+    const navHeight = nav ? nav.offsetHeight : 0;
+    const titleHeight = menuTitle ? menuTitle.offsetHeight : 0;
+
+    // Altezza totale sopra la mappa
+    const totalHeight = navHeight + titleHeight;
 
     // Aggiorna variabile CSS
     document.documentElement.style.setProperty('--nav-height', totalHeight + 'px');
