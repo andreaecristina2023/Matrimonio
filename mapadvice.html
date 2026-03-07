@@ -40,11 +40,34 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    justify-content: center;   /* centra verticalmente tutto il contenuto */
     width: 100%;
-    height: calc(100vh - var(--nav-height, 0px)); /* usa height non min-height */
+    height: calc(100vh - var(--nav-height, 0px));
     visibility: hidden;
+}
+
+.central-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;  /* centra il contenitore interno */
+    width: 100%;
+}
+
+#map-container {
+    width: 90%;
+    max-width: 1000px;
+    /*aspect-ratio: 16/9;       /* come lo slider, mantiene proporzioni */
+    flex-grow:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;       /* centra la mappa dentro il container */
+}
+
+#map {
+    width: 100%;
+    height: 100%;             /* riempie il map-container */
+    border-radius: 15px;
 }
 
 @media(max-width:600px){
@@ -73,7 +96,7 @@
         #map {
             width: 90%;
             max-width: 1000px;
-            height: 80%;
+            /*height: 80%;*/
             border-radius: 15px;
             /*overflow: hidden;*/
         }
@@ -262,11 +285,13 @@
 
 <body>
     <div id="menu-placeholder"></div>
-    <div class="central-wrapper" id="centralWrapper">
-        <div class="central-container">
+<div class="central-wrapper" id="centralWrapper">
+    <div class="central-container">
+        <div id="map-container">
             <div id="map"></div>
         </div>
     </div>
+</div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
