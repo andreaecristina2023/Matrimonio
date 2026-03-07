@@ -46,7 +46,7 @@
             padding-top: 5vh;
         }
 
-       .central-container {
+        .central-container {
             width: 100%;
             display: flex;
             justify-content: center;
@@ -60,7 +60,7 @@
             overflow: hidden;
         }
 
-                nav .menu a,
+        nav .menu a,
         .mobile-menu a {
             color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
@@ -276,7 +276,7 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-                console.log("🚀 Inizio script mappa");
+        console.log("🚀 Inizio script mappa");
 
         // ===== CARICA MENU =====
         fetch('menu.html')
@@ -320,7 +320,7 @@
                 wrapper.style.visibility = 'visible';
             }
         }
-/*-----------------------------------------*/
+        /*-----------------------------------------*/
         // ===== MAPPA =====
         const CENTRO = { lat: 44.15058, lon: 12.141665 };
         const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lon], 13);
@@ -359,25 +359,24 @@
                 if (isNaN(lat) || isNaN(lon)) { console.warn("⚠ Punto ignorato:", p); return; }
                 const color = (p.Colore || "#ff0000").trim();
                 const markerIcon = (p.Categoria === "Parcheggi") ? createNumberIcon(p.Simbolo, color) : createCustomIcon(p.Simbolo, color);
-                const popupHTML = `<div style="line-height:1.4;background:${popupBackground};padding:8px;border-radius:10px;border:2px solid ${color};">
-                    <div style="background:white;color:${descriptionTextColor};padding:6px 10px;border-radius:6px;margin-bottom:6px;text-align:center;width:100%;box-sizing:border-box;box-shadow:0 2px 6px rgba(0,0,0,0.25);">
+                const popupHTML = `<div style="line-height:1.4;background:rgba(255,255,255,0.9);padding:8px;border-radius:10px;border:2px solid ${color};">
+                    <div style="background:white;color:${color};padding:6px 10px;border-radius:6px;margin-bottom:6px;text-align:center;width:100%;box-sizing:border-box;box-shadow:0 2px 6px rgba(0,0,0,0.25);">
                         <div style="font-size:18px;font-weight:bold;">${p.Descrizione}</div>
                         ${p.Indirizzo ? `<div style="font-size:14px;margin-top:4px;color:#555;">📍 ${p.Indirizzo}</div>` : ""}
                     </div>
-                    ${p.Telefono ? `<div style=color:#555>📞 Telefono: <a href="tel:${p.Telefono}" style="color:${descriptionTextColor}; text-decoration:none;">${p.Telefono}</a></div>` : ""}
-                    ${p["Posti auto"] ? `<div style=color:#555>🅿️ Posti: ${p["Posti auto"]}</div>` : ""}
-                    ${p.Accessibilità ? `<div style=color:#555>♿ Accessibilità: ${p.Accessibilità}</div>` : ""}
-                    ${p["Distanza dal Comune"] ? `<div style=color:#555>📏 Distanza: ${p["Distanza dal Comune"]}</div>` : ""}
-                    ${p["Lunghezza percorso dal Comune"] ? `<div style=color:#555>📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}</div>` : ""}
-                    ${p.Dislivello ? `<div style=color:#555>⛰️ Dislivello: ${p.Dislivello}</div>` : ""}
-                    ${p.Link ? `<div style="color:#555;">🌐 Sito Web: <a href="${p.Link}" target="_blank" style="color:${descriptionTextColor}; text-decoration:underline;">Link</a></div>` : ""}
-                    ${p.Note ? `<div style=color:#555><strong>📝 Note degli Sposi!</strong><br>${p.Note}</div>` : ""}
+                    ${p.Telefono ? `<div style="color:#555;">📞 Telefono: <a href="tel:${p.Telefono}" style="color:${color}; text-decoration:none;">${p.Telefono}</a></div>` : ""}
+                    ${p["Posti auto"] ? `<div style="color:#555;">🅿️ Posti: ${p["Posti auto"]}</div>` : ""}
+                    ${p.Accessibilità ? `<div style="color:#555;">♿ Accessibilità: ${p.Accessibilità}</div>` : ""}
+                    ${p["Distanza dal Comune"] ? `<div style="color:#555;">📏 Distanza: ${p["Distanza dal Comune"]}</div>` : ""}
+                    ${p["Lunghezza percorso dal Comune"] ? `<div style="color:#555;">📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}</div>` : ""}
+                    ${p.Dislivello ? `<div style="color:#555;">⛰️ Dislivello: ${p.Dislivello}</div>` : ""}
+                    ${p.Link ? `<div style="color:#555;">🌐 Sito Web: <a href="${p.Link}" target="_blank" style="color:${color}; text-decoration:underline;">Link</a></div>` : ""}
+                    ${p.Note ? `<div style="color:#555;"><strong>📝 Note degli Sposi!</strong><br>${p.Note}</div>` : ""}
                     <div style="display:flex;justify-content:center;margin-top:6px;">
                         <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank"
                         style="background:white; color:${color}; padding:${window.innerWidth < 600 ? '4px 8px' : '6px 12px'}; border-radius:5px; font-weight:bold; font-size:${window.innerWidth < 600 ? '0.85rem' : '1rem'}; text-decoration:none; box-shadow:0 1px 4px rgba(0,0,0,0.2);">🚗 Naviga 🚗</a>
                     </div>
-                </div>
-                        `;
+                </div>`;
                 const marker = L.marker([lat, lon], { icon: markerIcon });
                 marker.category = p.Categoria || "Altro";
                 marker.bindPopup(popupHTML).addTo(map);
