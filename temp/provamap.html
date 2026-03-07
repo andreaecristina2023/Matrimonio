@@ -1,326 +1,209 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andrea e Cristina 04.06.2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrea e Cristina 04.06.2026</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png"
-        href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+<link rel="icon" type="image/png"
+    href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-    <!-- Google Font Kaushan Script -->
-    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{font-family:'Kaushan Script',cursive;width:100%;height:100%;overflow-x:hidden;}
+body::before{
+    content:"";position:fixed;inset:0;
+    background:linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)),
+    url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg') center/cover no-repeat;
+    z-index:-1;
+}
+.central-wrapper{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:calc(100vh - var(--nav-height));}
+.central-container{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;}
+#map-container{width:90%;max-width:1000px;aspect-ratio:16/9;display:flex;justify-content:center;align-items:center;}
+#map{width:100%;height:100%;border-radius:15px;}
 
-    <style>
-        /* ===== RESET ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+.marker-number div,.marker-special div,.marker-municipio div{
+    display:flex;align-items:center;justify-content:center;border-radius:50%;width:100%;height:100%;text-align:center;font-size:2em;color:white;font-family:'Kaushan Script',cursive;
+}
 
-        html, body {
-            width: 100%;
-            font-family: 'Kaushan Script', cursive;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
+.marker-number div{background:#8e24aa;}
+.marker-special div{background:#ff0000;}
+.marker-municipio div{background:#4caf50;}
 
-        /* ===== SFONDO FISSO ===== */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-                        url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
-            background-size: cover;
-            z-index: -1;
-        }
+.leaflet-popup-content{font-family:'Kaushan Script',cursive !important;font-size:1.1rem;text-align:left;min-width:220px;}
+.leaflet-popup-content a{color:#0000ff;text-decoration:none;font-weight:bold;}
+.leaflet-popup-content a:hover{text-decoration:underline;}
+.leaflet-popup-content-wrapper{background:transparent;border-radius:10px;padding:0 !important;border:2px solid transparent;}
+.leaflet-popup-tip{background:transparent;color:transparent;}
 
-        /* ===== MENU FISSO ===== */
-        nav {
-            font-family: 'Kaushan Script', cursive;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            height: 70px;
-            background-color: rgba(0, 0, 0, 0.7);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        nav .logo img {
-            display: block;
-            height: 50px;
-        }
-
-        nav .menu {
-            display: flex;
-        }
-
-        nav .menu a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            margin-left: 20px;
-            font-size: 1.2em;
-            transition: color 0.3s;
-        }
-
-        nav .menu a:hover {
-            color: #ff0000;
-        }
-
-        .hamburger {
-            display: none;
-            font-size: 2em;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            background-color: rgba(0, 0, 0, 0.7);
-            position: absolute;
-            top: 100%;
-            right: 0;
-            width: 200px;
-            border-radius: 0 0 12px 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .mobile-menu a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            transition: color 0.3s;
-        }
-
-        .mobile-menu a:hover {
-            color: #ff0000;
-        }
-
-        /* Responsive menu */
-        @media (max-width: 768px) {
-            nav .menu { display: none; }
-            .hamburger { display: block; }
-            nav .logo img { height: 40px; }
-            .mobile-menu { width: 160px; }
-            .mobile-menu a { font-size: 1em; padding: 8px 16px; }
-        }
-
-        @media (max-width: 480px) {
-            nav .logo img { height: 35px; }
-            .mobile-menu { width: 140px; }
-            .mobile-menu a { font-size: 0.9em; padding: 6px 12px; }
-        }
-
-        /* ===== CONTENITORE PRINCIPALE ===== */
-        .central-container {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding-top: 80px; /* spazio per il menu fisso */
-            text-align: center;
-            color: #fff;
-        }
-
-        #pageTitle {
-            font-size: clamp(28px, 6vw, 36px);
-            margin-bottom: 30px;
-            color: white;
-        }
-
-        /* ===== SLIDER ===== */
-        .slider-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        .slider-container {
-            width: 90%;
-            max-width: 900px;
-            overflow: hidden;
-            border-radius: 15px;
-            position: relative;
-            margin-top: 30px;
-            margin-bottom: 20px;
-            height: 50vh;
-        }
-
-        .slider {
-            display: flex;
-            transition: transform 0.5s ease;
-            height: 100%;
-        }
-
-        .slide {
-            position: relative;
-            min-width: 100%;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 15px;
-        }
-
-        .caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to top right, rgba(0,0,0,1.0), rgba(0,0,0,0.2));
-            padding: 15px 20px;
-            color: #fff;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            text-align: left;
-        }
-
-        .caption h2 { font-size: 1.5em; color: #ff0000; margin: 0; }
-        .caption h3 { font-size: 1.2em; color: #ff0000; margin: 2px 0; }
-        .caption p { font-size: 0.9em; margin: 4px 0 0; }
-
-        /* NAV BUTTONS */
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            border: none;
-            padding: 10px 14px;
-            cursor: pointer;
-            border-radius: 50px;
-            font-size: 18px;
-            z-index: 10;
-            transition: all 0.3s ease;
-        }
-
-        .nav-btn:hover { background: #ff0000; transform: translateY(-50%) scale(1.1); }
-        .prev { left: 10px; }
-        .next { right: 10px; }
-
-        .dots { text-align: center; padding: 5px 0; }
-        .dot {
-            display: inline-block;
-            width: 10px; height: 10px;
-            margin: 0 4px;
-            background: #bbb;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .dot.active { background: red; }
-
-    </style>
+#locateBtn{position:absolute;top:10px;right:10px;z-index:1000;padding:8px 12px;border:none;border-radius:12px;background:#ff0000;color:white;cursor:pointer;font-family:'Kaushan Script',cursive;font-size:1rem;}
+</style>
 </head>
 
 <body>
-    <!-- Menu incluso via fetch -->
-    <div id="menu-placeholder"></div>
+<div id="menu-placeholder"></div>
 
+<div class="central-wrapper" id="centralWrapper">
     <div class="central-container">
-        <h1 id="playTitle">I luoghi principali</h1>
-
-        <div class="slider-wrapper">
-            <div class="slider-container">
-                <div class="slider" id="slider">
-                    <!-- Slide 1 -->
-                    <div class="slide">
-                        <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/bertinoro.jpg" alt="Bertinoro">
-                        <div class="caption">
-                            <h3>Bertinoro "Il Balcone di Romagna"</h3>
-                            <p>Bertinoro è il Balcone di Romagna: la sua piazza è una vera terrazza panoramica sul mare e sulla pianura romagnola.</p>
-                            <p>Qui è situata anche la <strong>Colonna dell'Ospitalità</strong>, simbolo di Bertinoro e centro di un'importante tradizione, il <strong>rito dell'ospitalità</strong>.</p>
-                        </div>
-                    </div>
-                    <!-- Slide 2 -->
-                    <div class="slide">
-                        <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/frattaterme.jpg" alt="Fratta Terme">
-                        <div class="caption">
-                            <h3>Fratta Terme "La Casa degli Sposi"</h3>
-                            <p>Località termale nota per le sue sorgenti dalle proprietà benefiche.</p>
-                        </div>
-                    </div>
-                    <!-- Slide 3 -->
-                    <div class="slide">
-                        <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/palazzo.jpg" alt="Palazzo Comunale">
-                        <div class="caption">
-                            <h3>Palazzo Comunale "Palazzo Ordelaffi"</h3>
-                            <p>Costruito nel 1306 da Pino I Ordelaffi quando conquistò Bertinoro.</p>
-                        </div>
-                    </div>
-                    <!-- Slide 4 -->
-                    <div class="slide">
-                        <img src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/alcolle.jpg" alt="Agriturismo Al Colle">
-                        <div class="caption">
-                            <h3>Agriturismo "Al Colle"</h3>
-                            <p>Tra le dolci colline di Bertinoro, un luogo perfetto tra natura, gusto e convivialità.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="nav-btn prev" onclick="prevSlide()">&#10094;</button>
-                <button class="nav-btn next" onclick="nextSlide()">&#10095;</button>
-                <div class="dots" id="dots">
-                    <span class="dot active" onclick="goToSlide(0)"></span>
-                    <span class="dot" onclick="goToSlide(1)"></span>
-                    <span class="dot" onclick="goToSlide(2)"></span>
-                    <span class="dot" onclick="goToSlide(3)"></span>
-                </div>
-            </div>
+        <div id="map-container">
+            <div id="map"></div>
         </div>
     </div>
+</div>
 
-    <script>
-        // MENU MOBILE
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        hamburger.addEventListener('click', () => {
-            mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-        });
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => mobileMenu.style.display = 'none');
-        });
-        window.addEventListener('resize', () => {
-            if(window.innerWidth > 768) mobileMenu.style.display = 'none';
+<button id="locateBtn" onclick="locateUser()">📍 Mi Trova</button>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+console.log("🚀 Inizio script mappa");
+
+// ===== MAPPA =====
+const CENTRO = { lat:44.15058, lon:12.141665 };
+const map = L.map('map',{zoomControl:false}).setView([CENTRO.lat,CENTRO.lon],13);
+L.control.zoom({position:'bottomleft'}).addTo(map);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+// ===== UTILITY =====
+function getIconSize(){ return Math.round(Math.min(window.innerWidth, window.innerHeight)*0.06); }
+function getFontSize(size){ return Math.round(size*0.45); }
+
+function createNumberIcon(symbol, color="#2196f3"){
+    const size=getIconSize(), fontSize=getFontSize(size);
+    return L.divIcon({
+        className:'marker-number',
+        html:`<div style="font-size:${fontSize}px;background:${color};border-radius:50%;width:${size}px;height:${size}px;display:flex;align-items:center;justify-content:center;color:white;">${symbol}</div>`,
+        iconSize:[size,size],
+        iconAnchor:[size/2,size/2],
+        popupAnchor:[0,-size/2]
+    });
+}
+
+function createSpecialIcon(symbol, color="#ff0000"){
+    const size=getIconSize(), fontSize=getFontSize(size);
+    return L.divIcon({
+        className:'marker-special',
+        html:`<div style="font-size:${fontSize}px;background:${color};border-radius:50%;width:${size}px;height:${size}px;display:flex;align-items:center;justify-content:center;color:white;">${symbol}</div>`,
+        iconSize:[size,size],
+        iconAnchor:[size/2,size/2],
+        popupAnchor:[0,-size/2]
+    });
+}
+
+// ===== CARICAMENTO TSV =====
+const tsvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBV9faZqgv88uu4_Z790474hIu-ik9XnOOQckWEWuPeMKSQ26VQrXwGCBeFn-WLRb7nbU0sd1pqkBg/pub?gid=279539594&single=true&output=tsv";
+
+function parseTSVtoObjects(text){
+    text=text.replace(/^\uFEFF/,'');
+    const lines=text.split(/\r?\n/).filter(l=>l.trim()!=='');
+    const header=lines[0].split(/\t/).map(h=>h.trim());
+    return lines.slice(1).map(line=>{
+        const cols=line.split(/\t/);
+        const obj={};
+        header.forEach((h,i)=>obj[h]=cols[i]?cols[i].trim():"");
+        return obj;
+    });
+}
+
+const allMarkers = [];
+
+fetch(tsvURL).then(r=>r.text()).then(text=>{
+    const points=parseTSVtoObjects(text);
+
+    // ===== CREAZIONE MARKER =====
+    points.forEach(p=>{
+        const lat=parseFloat(p.Latitudine), lon=parseFloat(p.Longitudine);
+        if(isNaN(lat)||isNaN(lon)) return;
+        const color=p.Colore||"#ff0000";
+        const markerIcon = (p.Categoria==="Parcheggi") ? createNumberIcon(p.Simbolo,color) : createSpecialIcon(p.Simbolo,color);
+        const popupHTML = `<div style="line-height:1.4;background:rgba(255,255,255,0.9);padding:8px;border-radius:10px;border:2px solid ${color};">
+            <div style="background:white;color:${color};padding:6px 10px;border-radius:6px;margin-bottom:6px;text-align:center;width:100%;box-sizing:border-box;">
+                <div style="font-size:18px;font-weight:bold;">${p.Descrizione}</div>
+                ${p.Indirizzo?`<div style="font-size:14px;margin-top:4px;color:#555;">📍 ${p.Indirizzo}</div>`:""}
+            </div>
+            ${p.Telefono?`<div style="color:#555;">📞 Telefono: <a href="tel:${p.Telefono}" style="color:${color};text-decoration:none;">${p.Telefono}</a></div>`:""}
+            ${p["Posti auto"]?`<div style="color:#555;">🅿️ Posti: ${p["Posti auto"]}</div>`:""}
+            ${p.Accessibilità?`<div style="color:#555;">♿ Accessibilità: ${p.Accessibilità}</div>`:""}
+            ${p.Link?`<div style="color:#555;">🌐 Sito Web: <a href="${p.Link}" target="_blank" style="color:${color};text-decoration:underline;">Link</a></div>`:""}
+        </div>`;
+        const marker=L.marker([lat,lon],{icon:markerIcon});
+        marker.category=p.Categoria||"Altro";
+        marker.bindPopup(popupHTML).addTo(map);
+        allMarkers.push(marker);
+    });
+
+    // ===== LEGENDA =====
+    const categories=[...new Set(points.map(p=>p.Categoria).filter(c=>c))];
+    const legendControl=L.control({position:'topright'});
+    legendControl.onAdd=function(){
+        const wrapper=L.DomUtil.create('div');
+        L.DomEvent.disableClickPropagation(wrapper);
+        L.DomEvent.disableScrollPropagation(wrapper);
+
+        const container=L.DomUtil.create('div','legend-container',wrapper);
+        const toggleBtn=L.DomUtil.create('button','legend-toggle',container);
+        toggleBtn.innerHTML="☰ Legenda";
+        const legendDiv=L.DomUtil.create('div','info legend',container);
+        const legendContent=document.createElement('div');
+        legendContent.className='legend-content';
+        legendDiv.appendChild(legendContent);
+
+        categories.forEach(cat=>{
+            const color=points.find(p=>p.Categoria===cat)?.Colore||"#ff0000";
+            const row=document.createElement('div');
+            row.className='legend-row';
+            const checkbox=document.createElement('input');
+            checkbox.type='checkbox';
+            checkbox.checked=true;
+            checkbox.id="chk_"+cat.replace(/\s/g,'');
+            const colorCircle=document.createElement('span');
+            colorCircle.style.display='inline-block';
+            colorCircle.style.width='12px'; colorCircle.style.height='12px';
+            colorCircle.style.borderRadius='50%'; colorCircle.style.backgroundColor=color; colorCircle.style.marginRight='8px';
+            const label=document.createElement('label');
+            label.setAttribute('for',checkbox.id); label.innerText=cat;
+            row.appendChild(checkbox); row.appendChild(colorCircle); row.appendChild(label);
+            legendContent.appendChild(row);
+
+            row.addEventListener('click',e=>{
+                if(e.target!==checkbox) checkbox.checked=!checkbox.checked;
+                updateMarkers(cat,checkbox.checked);
+            });
+            checkbox.addEventListener('change',()=>updateMarkers(cat,checkbox.checked));
         });
 
-        // SLIDER
-        let currentIndex = 0;
-        const slides = document.querySelectorAll(".slide");
-        const dots = document.querySelectorAll(".dot");
-
-        function updateSlider() {
-            const slider = document.getElementById("slider");
-            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach(dot => dot.classList.remove("active"));
-            dots[currentIndex].classList.add("active");
+        function updateMarkers(cat,visible){
+            allMarkers.forEach(m=>{if(m.category===cat) visible? m.addTo(map): map.removeLayer(m);});
         }
 
-        function nextSlide() { currentIndex = (currentIndex + 1) % slides.length; updateSlider(); }
-        function prevSlide() { currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
-        function goToSlide(index) { currentIndex = index; updateSlider(); }
+        toggleBtn.addEventListener('click',()=>{
+            legendDiv.classList.toggle('legend-show');
+            toggleBtn.classList.toggle('legend-open');
+        });
 
-        setInterval(nextSlide, 5000);
-    </script>
+        function updateLegend(){
+            if(window.innerWidth>768){ legendDiv.classList.add('legend-show'); toggleBtn.classList.add('legend-open'); }
+            else{ legendDiv.classList.remove('legend-show'); toggleBtn.classList.remove('legend-open'); }
+        }
+        updateLegend();
+        window.addEventListener("resize",updateLegend);
+
+        return wrapper;
+    };
+    legendControl.addTo(map);
+});
+
+// ===== LOCALIZZAZIONE =====
+function locateUser(){ map.locate({setView:true,maxZoom:16}); }
+map.on('locationfound',e=>{ L.marker(e.latlng).addTo(map).bindPopup("Sei qui").openPopup(); });
+
+// ===== RIDIMENSIONAMENTO DINAMICO =====
+window.addEventListener('resize',()=>{ allMarkers.forEach(m=>{
+    const html=m.options?.icon?.options?.html?.match(/<div>(.*)<\/div>/)?.[1]||"";
+    if(m.options?.icon?.options?.className==="marker-number") m.setIcon(createNumberIcon(html));
+    else if(m.options?.icon?.options?.className==="marker-special") m.setIcon(createSpecialIcon(html));
+}); });
+</script>
 </body>
-
 </html>
