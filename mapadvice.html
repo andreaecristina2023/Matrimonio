@@ -252,6 +252,32 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
+        fetch('menu.html')
+            .then(resp => resp.text())
+            .then(html => {
+                document.getElementById('menu-placeholder').innerHTML = html;
+
+                // Imposta titolo pagina menu
+                const menuTitle = document.getElementById('menuPageTitle');
+                if (menuTitle) menuTitle.textContent = "Mappa dei consigli";
+
+                // Gestione hamburger mobile
+                const hamburger = document.getElementById('hamburger');
+                const mobileMenu = document.getElementById('mobileMenu');
+                if (hamburger && mobileMenu) {
+                    hamburger.addEventListener('click', () => mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex');
+                    mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.style.display = 'none'));
+                    window.addEventListener('resize', () => { if (window.innerWidth > 768) mobileMenu.style.display = 'none'; });
+                }
+
+                // Evidenzia pagina corrente
+                const currentPage = location.pathname.split("/").pop() || 'homepage.html';
+                document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
+                    if (link.getAttribute('href') === currentPage) link.classList.add('active');
+                });
+
+            })
+            .catch(err => console.warn('❌ Errore caricamento menu:', err));
         console.log("🚀 Inizio script mappa");
 
         // ===== MAPPA =====
