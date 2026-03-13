@@ -11,74 +11,49 @@
   <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
+    html, body {
+      width: 100%; height: 100%;
       overflow: hidden;
       font-family: 'Kaushan Script', cursive;
     }
 
     body::before {
       content: "";
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background:
-        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
         url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
       background-size: cover;
       z-index: -1;
     }
 
     /* ===== MENU ===== */
-    nav .menu a,
-    .mobile-menu a {
-      color: rgba(255, 255, 255, 0.85);
+    nav .menu a, .mobile-menu a {
+      color: rgba(255,255,255,0.85);
       text-decoration: none;
       border-bottom: 2px solid transparent;
       transition: all 0.3s;
     }
-
-    nav .menu a:hover:not(.active),
-    .mobile-menu a:hover:not(.active) {
+    nav .menu a:hover:not(.active), .mobile-menu a:hover:not(.active) {
       border-bottom: 2px solid #ff0000;
     }
-
-    nav .menu a.active,
-    .mobile-menu a.active {
-      color: #ff0000;
-      font-weight: bold;
+    nav .menu a.active, .mobile-menu a.active {
+      color: #ff0000; font-weight: bold;
     }
 
     /* ===== CONTENITORE ===== */
     .central-container {
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+      width: 100%; height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
       text-align: center;
-    }
-
-    /* ===== TITOLO PRINCIPALE ===== */
-    #playTitle {
-      font-size: 2.5em;
-      color: white;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
-      transition: opacity 0.5s ease;
     }
 
     /* ===== PULSANTI SI / NO ===== */
     #btnWrapper {
-      display: flex;
-      gap: 30px;
+      display: flex; gap: 30px;
       margin-bottom: 30px;
       transition: opacity 0.5s ease;
     }
@@ -88,54 +63,41 @@
       font-size: 26px;
       padding: 10px 30px;
       border-radius: 30px;
-      color: white;
-      border: none;
-      cursor: pointer;
+      color: white; border: none; cursor: pointer;
       animation: glowBtn 1.5s infinite alternate;
-      transition: transform 0.15s;
+      transition: background 0.4s, opacity 0.4s, transform 0.15s;
+      min-width: 120px;
+    }
+    .main-btn:not(:disabled):hover { transform: scale(1.07); }
+
+    #btnSi { background: #2e7d32; }
+    #btnNo { background: #a32f2f; }
+
+    /* Stato: grigio (non scelto) */
+    .main-btn.greyed {
+      background: #777 !important;
+      opacity: 0.55;
+      cursor: default;
+      animation: none;
     }
 
-    .main-btn:hover {
-      transform: scale(1.07);
+    /* Stato: pause (scelto, in esecuzione) */
+    .main-btn.is-pause {
+      background: #a32f2f !important;
+      animation: none;
+      opacity: 1;
     }
 
-    #btnSi {
-      background: #2e7d32;
-    }
-
-    #btnNo {
-      background: #a32f2f;
+    /* Stato: play (scelto, in pausa) */
+    .main-btn.is-play {
+      background: #1565c0 !important;
+      animation: none;
+      opacity: 1;
     }
 
     @keyframes glowBtn {
-      from {
-        box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
-      }
-
-      to {
-        box-shadow: 0 0 18px rgba(255, 255, 255, 0.5);
-      }
-    }
-
-    /* ===== PULSANTE PAUSA ===== */
-    #pauseBtn {
-      font-family: 'Kaushan Script', cursive;
-      font-size: 20px;
-      padding: 7px 22px;
-      border-radius: 30px;
-      background: #a32f2f;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-bottom: 25px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-    }
-
-    #pauseBtn.visible {
-      opacity: 1;
-      pointer-events: auto;
+      from { box-shadow: 0 0 4px rgba(255,255,255,0.2); }
+      to   { box-shadow: 0 0 18px rgba(255,255,255,0.5); }
     }
 
     /* ===== TITOLI SOVRAPPOSTI ===== */
@@ -148,18 +110,17 @@
 
     .title-wrapper span {
       position: absolute;
-      left: 50%;
-      top: 0;
+      left: 50%; top: 0;
       transform: translateX(-50%);
       white-space: nowrap;
       font-size: clamp(22px, 5vw, 28px);
       color: #ff0000;
-      text-shadow: 0px 0px 20px rgba(0, 0, 0, 1.0);
+      text-shadow: 0px 0px 20px rgba(0,0,0,1.0);
       opacity: 0;
       transition: opacity 0.7s ease;
     }
 
-    /* ===== STACK WRAPPER (lista e countdown sovrapposti) ===== */
+    /* ===== STACK WRAPPER ===== */
     #stackWrapper {
       position: relative;
       width: 100%;
@@ -172,13 +133,10 @@
     /* ===== LISTA ===== */
     .sequence {
       position: absolute;
-      top: 0;
-      left: 50%;
+      top: 0; left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      align-items: center;
+      display: flex; flex-direction: column;
+      gap: 14px; align-items: center;
       opacity: 0;
       transition: opacity 0.6s ease;
       pointer-events: none;
@@ -190,21 +148,13 @@
       transition: opacity 0.6s ease;
     }
 
-    .light {
-      color: white;
-      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.3);
-    }
-
-    .highlight {
-      color: #ff0000;
-      text-shadow: 0px 0px 20px rgba(0, 0, 0, 1.0);
-    }
+    .light     { color: white; text-shadow: 0 1px 4px rgba(255,255,255,0.3); }
+    .highlight { color: #ff0000; text-shadow: 0px 0px 20px rgba(0,0,0,1.0); }
 
     /* ===== COUNTDOWN ===== */
     #countdown {
       position: absolute;
-      top: 0;
-      left: 50%;
+      top: 0; left: 50%;
       transform: translateX(-50%);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -216,12 +166,10 @@
 
     .box {
       aspect-ratio: 1/1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
       border-radius: 20px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255,255,255,0.9);
       width: 110px;
       opacity: 0;
       transition: opacity 0.6s ease;
@@ -229,39 +177,17 @@
     }
 
     @keyframes blinkShadow {
-      from {
-        box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
-      }
-
-      to {
-        box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
-      }
+      from { box-shadow: 0 0 10px rgba(255,0,0,0.4); }
+      to   { box-shadow: 0 0 30px rgba(255,0,0,0.9); }
     }
 
-    .number {
-      font-size: 36px;
-      color: #ff0000;
-      text-shadow: 0px 0px 20px rgba(0, 0, 0, 1.0);
-    }
-
-    .label {
-      font-size: 16px;
-      color: #ff0000;
-      text-shadow: 0px 0px 20px rgba(0, 0, 0, 1.0);
-    }
+    .number { font-size: 36px; color: #ff0000; text-shadow: 0px 0px 20px rgba(0,0,0,1.0); }
+    .label  { font-size: 16px; color: #ff0000; text-shadow: 0px 0px 20px rgba(0,0,0,1.0); }
 
     @media(max-width:768px) {
-      #countdown {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .box {
-        width: 90px;
-      }
-
-      #stackWrapper {
-        min-height: 240px;
-      }
+      #countdown { grid-template-columns: repeat(2, 1fr); }
+      .box { width: 90px; }
+      #stackWrapper { min-height: 240px; }
     }
   </style>
 </head>
@@ -277,15 +203,11 @@
       <button class="main-btn" id="btnNo">No!!!</button>
     </div>
 
-    <button id="pauseBtn">⏸️ Pause</button>
-
-    <!-- Titoli in rosso, sovrapposti nello stesso punto -->
     <div class="title-wrapper">
       <span id="titleRicorda">Ricordatevi di portare:</span>
       <span id="titleMancano">...perché mancano solo...</span>
     </div>
 
-    <!-- Lista e countdown sovrapposti nello stesso spazio -->
     <div id="stackWrapper">
       <div class="sequence" id="sequence">
         <p class="light">1. Il vostro sorriso migliore!</p>
@@ -294,22 +216,10 @@
         <p class="highlight">4. Scarpe rosse e comode!</p>
       </div>
       <div id="countdown">
-        <div class="box">
-          <div class="number" id="days">0</div>
-          <div class="label">gg</div>
-        </div>
-        <div class="box">
-          <div class="number" id="hours">0</div>
-          <div class="label">hh</div>
-        </div>
-        <div class="box">
-          <div class="number" id="minutes">0</div>
-          <div class="label">mm</div>
-        </div>
-        <div class="box">
-          <div class="number" id="seconds">0</div>
-          <div class="label">ss</div>
-        </div>
+        <div class="box"><div class="number" id="days">0</div><div class="label">gg</div></div>
+        <div class="box"><div class="number" id="hours">0</div><div class="label">hh</div></div>
+        <div class="box"><div class="number" id="minutes">0</div><div class="label">mm</div></div>
+        <div class="box"><div class="number" id="seconds">0</div><div class="label">ss</div></div>
       </div>
     </div>
 
@@ -328,7 +238,7 @@
         const menuTitle = document.getElementById('menuPageTitle');
         if (menuTitle) menuTitle.textContent = "Siete pronti?!";
 
-        const hamburger = document.getElementById('hamburger');
+        const hamburger  = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         if (hamburger && mobileMenu) {
           hamburger.addEventListener('click', () => mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex');
@@ -347,33 +257,30 @@
       .catch(err => console.warn('❌ Errore caricamento menu:', err));
 
     function updateLayout() {
-      const nav = document.querySelector('nav');
+      const nav       = document.querySelector('nav');
       const container = document.querySelector('.central-container');
-      const btnWrap = document.getElementById('btnWrapper');
+      const btnWrap   = document.getElementById('btnWrapper');
       if (!nav || !container) return;
-
-      const navH = nav.offsetHeight;
-      const available = window.innerHeight - navH;
-      const padTop = Math.max(20, available * 0.15);  // 20% di respiro sopra i pulsanti
-      const gapBtns = Math.max(16, available * 0.06);  // 6% tra pulsanti e pausa
-
-      container.style.marginTop = navH + 'px';
-      container.style.paddingTop = padTop + 'px';
-      if (btnWrap) btnWrap.style.marginBottom = gapBtns + 'px';
+      const navH    = nav.offsetHeight;
+      const avail   = window.innerHeight - navH;
+      container.style.marginTop  = navH + 'px';
+      container.style.paddingTop = Math.max(20, avail * 0.15) + 'px';
+      if (btnWrap) btnWrap.style.marginBottom = Math.max(16, avail * 0.06) + 'px';
     }
 
     // ===== ELEMENTI =====
-    const bgMusic = document.getElementById("bgMusic");
-    const btnWrapper = document.getElementById("btnWrapper");
-    const playTitle = document.getElementById("playTitle");
-    const pauseBtn = document.getElementById("pauseBtn");
+    const bgMusic      = document.getElementById("bgMusic");
+    const btnSi        = document.getElementById("btnSi");
+    const btnNo        = document.getElementById("btnNo");
     const titleRicorda = document.getElementById("titleRicorda");
     const titleMancano = document.getElementById("titleMancano");
-    const sequence = document.getElementById("sequence");
-    const lines = document.querySelectorAll("#sequence p");
-    const countdown = document.getElementById("countdown");
+    const sequence     = document.getElementById("sequence");
+    const lines        = document.querySelectorAll("#sequence p");
+    const countdown    = document.getElementById("countdown");
 
     let timeouts = [], isPaused = false, resumeFn = null;
+    // stato: 'idle' | 'running-si' | 'running-no' | 'paused-si' | 'paused-no'
+    let state = 'idle';
 
     // ===== HELPERS =====
     function wait(ms, fn) {
@@ -381,25 +288,108 @@
       timeouts.push(t);
     }
 
-    function hideBtns(chosen) {
-      // Pulsante NON scelto → grigio e disabilitato
-      const other = chosen === 'si' ? document.getElementById('btnNo') : document.getElementById('btnSi');
-      other.disabled = true;
-      other.style.animation = 'none';
-      other.style.background = '#777';
-      other.style.opacity = '0.6';
-      other.style.cursor = 'default';
-
-      // Pulsante SCELTO → resta colorato ma disabilitato
-      const picked = document.getElementById(chosen === 'si' ? 'btnSi' : 'btnNo');
-      picked.disabled = true;
-      picked.style.animation = 'none';
-      picked.style.opacity = '0.85';
-      picked.style.cursor = 'default';
-
-      pauseBtn.classList.add('visible');
+    function resetVisuals() {
+      titleRicorda.style.opacity = 0;
+      titleMancano.style.opacity = 0;
+      sequence.style.opacity     = 0;
+      countdown.style.opacity    = 0;
+      lines.forEach(l => l.style.opacity = 0);
+      document.querySelectorAll(".box").forEach(b => b.style.opacity = 0);
     }
 
+    function resetTimers() {
+      timeouts.forEach(t => clearTimeout(t));
+      timeouts = [];
+      resumeFn = null;
+    }
+
+    // Aggiorna aspetto pulsanti in base allo stato
+    function renderBtns() {
+      // Defaults
+      btnSi.disabled = false; btnNo.disabled = false;
+      btnSi.className = 'main-btn'; btnNo.className = 'main-btn';
+      btnSi.innerText = "Sì!!!"; btnNo.innerText = "No!!!";
+
+      if (state === 'running-si') {
+        btnSi.classList.add('is-pause'); btnSi.innerText = "⏸️ Pause";
+        btnNo.classList.add('greyed');   btnNo.disabled = true;
+      } else if (state === 'running-no') {
+        btnNo.classList.add('is-pause'); btnNo.innerText = "⏸️ Pause";
+        btnSi.classList.add('greyed');   btnSi.disabled = true;
+      } else if (state === 'paused-si') {
+        btnSi.classList.add('is-play');  btnSi.innerText = "▶️ Play";
+        // btnNo è libero → si può cliccare per cambiare
+      } else if (state === 'paused-no') {
+        btnNo.classList.add('is-play');  btnNo.innerText = "▶️ Play";
+        // btnSi è libero → si può cliccare per cambiare
+      }
+    }
+
+    // ===== CLICK HANDLER UNICO =====
+    function onBtnClick(who) { // who: 'si' | 'no'
+      if (state === 'idle') {
+        // Partenza
+        who === 'si' ? startSi() : startNo();
+
+      } else if (state === 'running-si' && who === 'si') {
+        // Pausa
+        doPause('si');
+
+      } else if (state === 'running-no' && who === 'no') {
+        // Pausa
+        doPause('no');
+
+      } else if (state === 'paused-si' && who === 'si') {
+        // Riprendi
+        doResume('si');
+
+      } else if (state === 'paused-no' && who === 'no') {
+        // Riprendi
+        doResume('no');
+
+      } else if (state === 'paused-si' && who === 'no') {
+        // Cambio scelta: era si, ora no
+        doSwitch('no');
+
+      } else if (state === 'paused-no' && who === 'si') {
+        // Cambio scelta: era no, ora si
+        doSwitch('si');
+      }
+    }
+
+    function doPause(who) {
+      isPaused = true;
+      bgMusic.pause();
+      // Cancella solo i timer pendenti, ma preserva resumeFn
+      timeouts.forEach(t => clearTimeout(t));
+      timeouts = [];
+      state = who === 'si' ? 'paused-si' : 'paused-no';
+      renderBtns();
+    }
+
+    function doResume(who) {
+      isPaused = false;
+      bgMusic.play();
+      state = who === 'si' ? 'running-si' : 'running-no';
+      renderBtns();
+      if (resumeFn) resumeFn();
+    }
+
+    function doSwitch(who) {
+      isPaused = false;
+      resetTimers();
+      resetVisuals();
+      bgMusic.pause();
+      bgMusic.currentTime = 0;
+      state = 'idle';
+      renderBtns();
+      who === 'si' ? startSi() : startNo();
+    }
+
+    btnSi.addEventListener('click', () => onBtnClick('si'));
+    btnNo.addEventListener('click', () => onBtnClick('no'));
+
+    // ===== COUNTDOWN =====
     function showCountdown() {
       if (isPaused) { resumeFn = showCountdown; return; }
       titleMancano.style.opacity = 1;
@@ -415,7 +405,8 @@
 
     // ===== PERCORSO "Sì" =====
     function startSi() {
-      hideBtns('si');
+      state = 'running-si';
+      renderBtns();
       bgMusic.play();
       resumeFn = showCountdown;
       wait(1500, showCountdown);
@@ -423,7 +414,8 @@
 
     // ===== PERCORSO "No" =====
     function startNo() {
-      hideBtns('no');
+      state = 'running-no';
+      renderBtns();
       bgMusic.play();
 
       let idx = 0;
@@ -448,7 +440,6 @@
         }
       }
 
-      // stacco 1: aspetta prima di mostrare "Ricordatevi di portare:"
       wait(1500, () => {
         if (isPaused) { resumeFn = () => { titleRicorda.style.opacity = 1; wait(1200, showList); }; return; }
         titleRicorda.style.opacity = 1;
@@ -463,40 +454,18 @@
         resumeFn = showCountdown;
         wait(1500, showCountdown);
       }
-
     }
-
-    // ===== CLICK PULSANTI =====
-    document.getElementById('btnSi').addEventListener('click', startSi);
-    document.getElementById('btnNo').addEventListener('click', startNo);
-
-    // ===== PAUSA / PLAY =====
-    pauseBtn.addEventListener('click', () => {
-      if (!isPaused) {
-        isPaused = true;
-        pauseBtn.innerText = "▶️ Play";
-        bgMusic.pause();
-        timeouts.forEach(t => clearTimeout(t));
-        timeouts = [];
-      } else {
-        isPaused = false;
-        pauseBtn.innerText = "⏸️ Pause";
-        bgMusic.play();
-        if (resumeFn) resumeFn();
-      }
-    });
 
     // ===== TIMER =====
     const target = new Date("2026-06-04T18:00:00").getTime();
     setInterval(() => {
       const diff = target - Date.now();
       if (diff <= 0) return;
-      document.getElementById('days').innerText = Math.floor(diff / 86400000);
-      document.getElementById('hours').innerText = Math.floor(diff / 3600000) % 24;
+      document.getElementById('days').innerText    = Math.floor(diff / 86400000);
+      document.getElementById('hours').innerText   = Math.floor(diff / 3600000) % 24;
       document.getElementById('minutes').innerText = Math.floor(diff / 60000) % 60;
       document.getElementById('seconds').innerText = Math.floor(diff / 1000) % 60;
     }, 1000);
   </script>
 </body>
-
 </html>
