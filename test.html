@@ -11,43 +11,59 @@
   <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    html, body {
-      width: 100%; height: 100%;
+    html,
+    body {
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       font-family: 'Kaushan Script', cursive;
     }
 
     body::before {
       content: "";
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background:
-        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
         url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
       background-size: cover;
       z-index: -1;
     }
 
     /* ===== MENU ===== */
-    nav .menu a, .mobile-menu a {
-      color: rgba(255,255,255,0.85);
+    nav .menu a,
+    .mobile-menu a {
+      color: rgba(255, 255, 255, 0.85);
       text-decoration: none;
       border-bottom: 2px solid transparent;
       transition: all 0.3s;
     }
-    nav .menu a:hover:not(.active), .mobile-menu a:hover:not(.active) {
+
+    nav .menu a:hover:not(.active),
+    .mobile-menu a:hover:not(.active) {
       border-bottom: 2px solid #ff0000;
     }
-    nav .menu a.active, .mobile-menu a.active {
-      color: #ff0000; font-weight: bold;
+
+    nav .menu a.active,
+    .mobile-menu a.active {
+      color: #ff0000;
+      font-weight: bold;
     }
 
     /* ===== CONTENITORE ===== */
     .central-container {
-      width: 100%; height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: flex-start;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
       text-align: center;
     }
 
@@ -55,13 +71,14 @@
     #playTitle {
       font-size: 2.5em;
       color: white;
-      text-shadow: 0 0 8px rgba(255,255,255,0.6);
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
       transition: opacity 0.5s ease;
     }
 
     /* ===== PULSANTI SI / NO ===== */
     #btnWrapper {
-      display: flex; gap: 30px;
+      display: flex;
+      gap: 30px;
       margin-bottom: 30px;
       transition: opacity 0.5s ease;
     }
@@ -71,18 +88,33 @@
       font-size: 26px;
       padding: 10px 30px;
       border-radius: 30px;
-      color: white; border: none; cursor: pointer;
+      color: white;
+      border: none;
+      cursor: pointer;
       animation: glowBtn 1.5s infinite alternate;
       transition: transform 0.15s;
     }
-    .main-btn:hover { transform: scale(1.07); }
 
-    #btnSi { background: #2e7d32; }
-    #btnNo { background: #a32f2f; }
+    .main-btn:hover {
+      transform: scale(1.07);
+    }
+
+    #btnSi {
+      background: #2e7d32;
+    }
+
+    #btnNo {
+      background: #a32f2f;
+    }
 
     @keyframes glowBtn {
-      from { box-shadow: 0 0 4px rgba(255,255,255,0.2); }
-      to   { box-shadow: 0 0 18px rgba(255,255,255,0.5); }
+      from {
+        box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+      }
+
+      to {
+        box-shadow: 0 0 18px rgba(255, 255, 255, 0.5);
+      }
     }
 
     /* ===== PULSANTE PAUSA ===== */
@@ -92,12 +124,15 @@
       padding: 7px 22px;
       border-radius: 30px;
       background: #a32f2f;
-      color: white; border: none; cursor: pointer;
+      color: white;
+      border: none;
+      cursor: pointer;
       margin-bottom: 25px;
       opacity: 0;
       transition: opacity 0.5s ease;
       pointer-events: none;
     }
+
     #pauseBtn.visible {
       opacity: 1;
       pointer-events: auto;
@@ -113,12 +148,13 @@
 
     .title-wrapper span {
       position: absolute;
-      left: 50%; top: 0;
+      left: 50%;
+      top: 0;
       transform: translateX(-50%);
       white-space: nowrap;
       font-size: clamp(22px, 5vw, 28px);
       color: #ff0000;
-      text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 0 2px 6px rgba(255,255,255,0.5);
+      text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 0 2px 6px rgba(255, 255, 255, 0.5);
       opacity: 0;
       transition: opacity 0.7s ease;
     }
@@ -136,10 +172,13 @@
     /* ===== LISTA ===== */
     .sequence {
       position: absolute;
-      top: 0; left: 50%;
+      top: 0;
+      left: 50%;
       transform: translateX(-50%);
-      display: flex; flex-direction: column;
-      gap: 14px; align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
       opacity: 0;
       transition: opacity 0.6s ease;
       pointer-events: none;
@@ -151,16 +190,21 @@
       transition: opacity 0.6s ease;
     }
 
-    .light     { color: white; text-shadow: 0 1px 4px rgba(255,255,255,0.3); }
+    .light {
+      color: white;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.3);
+    }
+
     .highlight {
       color: #ff0000;
-      text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 0 2px 6px rgba(255,255,255,0.5);
+      text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 0 2px 6px rgba(255, 255, 255, 0.5);
     }
 
     /* ===== COUNTDOWN ===== */
     #countdown {
       position: absolute;
-      top: 0; left: 50%;
+      top: 0;
+      left: 50%;
       transform: translateX(-50%);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -172,10 +216,12 @@
 
     .box {
       aspect-ratio: 1/1;
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       border-radius: 20px;
-      background: rgba(255,255,255,0.9);
+      background: rgba(255, 255, 255, 0.9);
       width: 110px;
       opacity: 0;
       transition: opacity 0.6s ease;
@@ -183,23 +229,39 @@
     }
 
     @keyframes blinkShadow {
-      from { box-shadow: 0 0 10px rgba(255,0,0,0.4); }
-      to   { box-shadow: 0 0 30px rgba(255,0,0,0.9); }
+      from {
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+      }
+
+      to {
+        box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+      }
     }
 
     .number {
-      font-size: 36px; color: #ff0000;
-      text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+      font-size: 36px;
+      color: #ff0000;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
     }
-    .label  {
-      font-size: 16px; color: #ff0000;
-      text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+
+    .label {
+      font-size: 16px;
+      color: #ff0000;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
     }
 
     @media(max-width:768px) {
-      #countdown { grid-template-columns: repeat(2, 1fr); }
-      .box { width: 90px; }
-      #stackWrapper { min-height: 240px; }
+      #countdown {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .box {
+        width: 90px;
+      }
+
+      #stackWrapper {
+        min-height: 240px;
+      }
     }
   </style>
 </head>
@@ -232,10 +294,22 @@
         <p class="highlight">4. Scarpe rosse e comode!</p>
       </div>
       <div id="countdown">
-        <div class="box"><div class="number" id="days">0</div><div class="label">gg</div></div>
-        <div class="box"><div class="number" id="hours">0</div><div class="label">hh</div></div>
-        <div class="box"><div class="number" id="minutes">0</div><div class="label">mm</div></div>
-        <div class="box"><div class="number" id="seconds">0</div><div class="label">ss</div></div>
+        <div class="box">
+          <div class="number" id="days">0</div>
+          <div class="label">gg</div>
+        </div>
+        <div class="box">
+          <div class="number" id="hours">0</div>
+          <div class="label">hh</div>
+        </div>
+        <div class="box">
+          <div class="number" id="minutes">0</div>
+          <div class="label">mm</div>
+        </div>
+        <div class="box">
+          <div class="number" id="seconds">0</div>
+          <div class="label">ss</div>
+        </div>
       </div>
     </div>
 
@@ -247,57 +321,57 @@
   <script>
     // ===== CARICA MENU =====
     fetch('menu.html')
-        .then(resp => resp.text())
-        .then(html => {
-            document.getElementById('menu-placeholder').innerHTML = html;
+      .then(resp => resp.text())
+      .then(html => {
+        document.getElementById('menu-placeholder').innerHTML = html;
 
-            const menuTitle = document.getElementById('menuPageTitle');
-            if (menuTitle) menuTitle.textContent = "Siete pronti?!";
+        const menuTitle = document.getElementById('menuPageTitle');
+        if (menuTitle) menuTitle.textContent = "Siete pronti?!";
 
-            const hamburger = document.getElementById('hamburger');
-            const mobileMenu = document.getElementById('mobileMenu');
-            if (hamburger && mobileMenu) {
-                hamburger.addEventListener('click', () => mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex');
-                mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.style.display = 'none'));
-                window.addEventListener('resize', () => { if (window.innerWidth > 768) mobileMenu.style.display = 'none'; });
-            }
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (hamburger && mobileMenu) {
+          hamburger.addEventListener('click', () => mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex');
+          mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.style.display = 'none'));
+          window.addEventListener('resize', () => { if (window.innerWidth > 768) mobileMenu.style.display = 'none'; });
+        }
 
-            const currentPage = location.pathname.split("/").pop() || 'countdown.html';
-            document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
-                if (link.getAttribute('href') === currentPage) link.classList.add('active');
-            });
+        const currentPage = location.pathname.split("/").pop() || 'countdown.html';
+        document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
+          if (link.getAttribute('href') === currentPage) link.classList.add('active');
+        });
 
-            updateLayout();
-            window.addEventListener('resize', updateLayout);
-        })
-        .catch(err => console.warn('❌ Errore caricamento menu:', err));
+        updateLayout();
+        window.addEventListener('resize', updateLayout);
+      })
+      .catch(err => console.warn('❌ Errore caricamento menu:', err));
 
     function updateLayout() {
-        const nav       = document.querySelector('nav');
-        const container = document.querySelector('.central-container');
-        const btnWrap   = document.getElementById('btnWrapper');
-        if (!nav || !container) return;
+      const nav = document.querySelector('nav');
+      const container = document.querySelector('.central-container');
+      const btnWrap = document.getElementById('btnWrapper');
+      if (!nav || !container) return;
 
-        const navH      = nav.offsetHeight;
-        const available = window.innerHeight - navH;
-        const padTop    = Math.max(20, available * 0.20);  // 20% di respiro sopra i pulsanti
-        const gapBtns   = Math.max(16, available * 0.06);  // 6% tra pulsanti e pausa
+      const navH = nav.offsetHeight;
+      const available = window.innerHeight - navH;
+      const padTop = Math.max(20, available * 0.20);  // 20% di respiro sopra i pulsanti
+      const gapBtns = Math.max(16, available * 0.06);  // 6% tra pulsanti e pausa
 
-        container.style.marginTop  = navH + 'px';
-        container.style.paddingTop = padTop + 'px';
-        if (btnWrap) btnWrap.style.marginBottom = gapBtns + 'px';
+      container.style.marginTop = navH + 'px';
+      container.style.paddingTop = padTop + 'px';
+      if (btnWrap) btnWrap.style.marginBottom = gapBtns + 'px';
     }
 
     // ===== ELEMENTI =====
-    const bgMusic      = document.getElementById("bgMusic");
-    const btnWrapper   = document.getElementById("btnWrapper");
-    const playTitle    = document.getElementById("playTitle");
-    const pauseBtn     = document.getElementById("pauseBtn");
+    const bgMusic = document.getElementById("bgMusic");
+    const btnWrapper = document.getElementById("btnWrapper");
+    const playTitle = document.getElementById("playTitle");
+    const pauseBtn = document.getElementById("pauseBtn");
     const titleRicorda = document.getElementById("titleRicorda");
     const titleMancano = document.getElementById("titleMancano");
-    const sequence     = document.getElementById("sequence");
-    const lines        = document.querySelectorAll("#sequence p");
-    const countdown    = document.getElementById("countdown");
+    const sequence = document.getElementById("sequence");
+    const lines = document.querySelectorAll("#sequence p");
+    const countdown = document.getElementById("countdown");
 
     let timeouts = [], isPaused = false, resumeFn = null;
 
@@ -417,11 +491,12 @@
     setInterval(() => {
       const diff = target - Date.now();
       if (diff <= 0) return;
-      document.getElementById('days').innerText    = Math.floor(diff / 86400000);
-      document.getElementById('hours').innerText   = Math.floor(diff / 3600000) % 24;
+      document.getElementById('days').innerText = Math.floor(diff / 86400000);
+      document.getElementById('hours').innerText = Math.floor(diff / 3600000) % 24;
       document.getElementById('minutes').innerText = Math.floor(diff / 60000) % 60;
       document.getElementById('seconds').innerText = Math.floor(diff / 1000) % 60;
     }, 1000);
   </script>
 </body>
+
 </html>
