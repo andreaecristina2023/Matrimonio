@@ -398,14 +398,14 @@
                         <div style="font-size:18px;font-weight:bold;">${p.Descrizione}</div>
                         ${p.Indirizzo ? `<div style="font-size:14px;margin-top:4px;color:#555;">📍 ${p.Indirizzo}</div>` : ""}
                     </div>
-                    ${p.Telefono ? `<div style="color:#555;">📞 Telefono: <a href="tel:${p.Telefono}" style="color:${color}; text-decoration:underline;">${p.Telefono}</a></div>` : ""}
-                    ${p["Posti auto"] ? `<div style="color:#555;">🅿️ Posti: ${p["Posti auto"]}</div>` : ""}
-                    ${p.Accessibilità ? `<div style="color:#555;">♿ Accessibilità: ${p.Accessibilità}</div>` : ""}
-                    ${p["Distanza dal Comune"] ? `<div style="color:#555;">📏 Distanza: ${p["Distanza dal Comune"]}</div>` : ""}
-                    ${p["Lunghezza percorso dal Comune"] ? `<div style="color:#555;">📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}</div>` : ""}
-                    ${p.Dislivello ? `<div style="color:#555;">⛰️ Dislivello: ${p.Dislivello}</div>` : ""}
-                    ${p.Link ? `<div style="color:#555;">🌐 Sito Web: <a href="${p.Link}" target="_blank" style="color:${color}; text-decoration:underline;">Link</a></div>` : ""}
-                    ${p.Note ? `<div style="color:#555;">📝 Note degli Sposi!<br><strong>${p.Note}</strong></div>` : ""}
+                    ${p.Telefono ? `<div style="color:#555;"><span style="font-size:0.85em;">📞 Telefono:</span> <a href="tel:${p.Telefono}" style="color:${color}; text-decoration:underline;">${p.Telefono}</a></div>` : ""}
+                    ${p["Posti auto"] ? `<div style="color:#555;"><span style="font-size:0.85em;">🅿️ Posti:</span> ${p["Posti auto"]}</div>` : ""}
+                    ${p.Accessibilità ? `<div style="color:#555;"><span style="font-size:0.85em;">♿ Accessibilità:</span> ${p.Accessibilità}</div>` : ""}
+                    ${p["Distanza dal Comune"] ? `<div style="color:#555;"><span style="font-size:0.85em;">📏 Distanza:</span> ${p["Distanza dal Comune"]}</div>` : ""}
+                    ${p["Lunghezza percorso dal Comune"] ? `<div style="color:#555;"><span style="font-size:0.85em;">📐 Lunghezza percorso:</span> ${p["Lunghezza percorso dal Comune"]}</div>` : ""}
+                    ${p.Dislivello ? `<div style="color:#555;"><span style="font-size:0.85em;">⛰️ Dislivello:</span> ${p.Dislivello}</div>` : ""}
+                    ${p.Link ? `<div style="color:#555;"><span style="font-size:0.85em;">🌐 Sito Web:</span> <a href="${p.Link}" target="_blank" style="color:${color}; text-decoration:underline;">Link</a></div>` : ""}
+                    ${p.Note ? `<div style="color:#555;"><span style="font-size:0.85em;">📝 Note degli Sposi!</span><br><strong>${p.Note}</strong></div>` : ""}
                     <div style="display:flex;justify-content:center;margin-top:6px;">
                         <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank"
                         style="background:white; color:${color}; padding:${window.innerWidth < 600 ? '4px 8px' : '6px 12px'}; border-radius:5px; font-weight:bold; font-size:${window.innerWidth < 600 ? '0.85rem' : '1rem'}; text-decoration:none; box-shadow:0 1px 4px rgba(0,0,0,0.2);">🚗 Naviga 🚗</a>
