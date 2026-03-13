@@ -159,10 +159,10 @@
 
     /* ===== TESTI SEQUENZA ===== */
     .sequence {
-      position: absolute;
+      /*position: absolute;
       top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%);*/
       display: flex;
       flex-direction: column;
       gap: 15px;
@@ -225,7 +225,7 @@
 
     /* ===== COUNTDOWN ===== */
     #countdown {
-      position: absolute;
+      /*position: absolute;
       top: 50%;
       left: 50%;
       transform: translateX(-50%) scale(0.6);
@@ -460,7 +460,8 @@
 
               // 5️⃣ Countdown con effetto pop
               countdown.style.opacity = 1;
-              countdown.style.transform = "translateX(-50%) scale(1)";
+              countdown.style.transform = "scale(1)";
+             /*countdown.style.transform = "translateX(-50%) scale(1)";*/
 
               const boxes = document.querySelectorAll(".box");
               boxes.forEach(box => box.style.opacity = 1);
