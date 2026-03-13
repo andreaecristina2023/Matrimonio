@@ -157,138 +157,141 @@
         }
 
         /* ===== LEGENDA ===== */
-.legend-container {
-    background: transparent;
-    border-radius: 10px;
-    box-shadow: none;
-    overflow: hidden;
-    position: relative;
-    min-width: 180px;
-}
+        .legend-container {
+            background: transparent;
+            border-radius: 10px;
+            box-shadow: none;
+            overflow: visible;
+            position: relative;
+            min-width: 180px;
+        }
 
-.info.legend {
-    font-family: 'Kaushan Script', cursive;
-    background: transparent;
-    border-radius: 10px;
-    padding-top: 0;
-    text-align: left;
-    font-size: 0.95rem;
-    max-width: 200px;
-    position: relative;
-}
+        .info.legend {
+            font-family: 'Kaushan Script', cursive;
+            background: transparent;
+            border-radius: 10px;
+            padding-top: 0;
+            text-align: left;
+            font-size: 0.95rem;
+            max-width: 200px;
+            position: relative;
+            overflow: visible;
+        }
 
-.legend-content {
-    background: #fff;
-    border-radius: 0 0 10px 10px;
-    padding: 8px 14px 16px 14px;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    border-top: 1px solid #f0f0f0;
-    transform: scaleY(0);
-    transform-origin: top;
-    opacity: 0;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        .legend-content {
+            background: #fff;
+            border-radius: 0 0 10px 10px;
+            padding: 8px 14px 16px 14px;
+            overflow: hidden;
+            opacity: 0;
+            border-top: 1px solid #f0f0f0;
+            transform: scaleY(0);
+            transform-origin: top;
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                 opacity 0.2s ease;
-}
+        }
 
-.legend-show .legend-content {
-    /*max-height: 500px;*/
-    transform: scaleY(1);
-    opacity: 1;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
-    border-radius: 0 0 10px 10px;
-}
+        .legend-show .legend-content {
+            /*max-height: 500px;*/
+            transform: scaleY(1);
+            opacity: 1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+            border-radius: 0 0 10px 10px;
+        }
 
-.legend-row {
-    display: flex;
-    align-items: center;
-    margin-top: 8px;
-    cursor: pointer;
-    gap: 8px;
-}
+        .legend-row {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            cursor: pointer;
+            gap: 8px;
+        }
 
-.legend-row input[type=checkbox] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 14px;
-    height: 14px;
-    border: 1.5px solid #ccc;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    flex-shrink: 0;
-}
-
-
-/* Quando è selezionato */
-.legend-row input[type=checkbox]:checked {
-    border-color: var(--color);
-    background-color: var(--color);
-}
-
-.legend-row label {
-    color: #444;
-    cursor: pointer;
-    font-size: 0.9rem;
-    letter-spacing: 0.02em;
-}
-
-/* Cerchio colorato dietro il checkbox */
-.legend-row span.color-circle {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 8px;
-    border: 2px solid grey; /* default */
-    vertical-align: middle;
-}
+        .legend-row input[type=checkbox] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            flex-shrink: 0;
+        }
 
 
+        /* Quando è selezionato */
+        .legend-row input[type=checkbox]:checked {
+            border-color: var(--color);
+            background-color: var(--color);
+        }
 
-.legend-toggle {
-    width: 100%;
-    text-align: left;
-    font-family: 'Kaushan Script', cursive;
-    font-size: 1rem;
-    background: #e43737;   /* rosso morbido, non aggressivo */
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 8px 14px;
-    cursor: pointer;
-    position: relative;
-    letter-spacing: 0.04em;
-}
+        .legend-row label {
+            color: #444;
+            cursor: pointer;
+            font-size: 0.9rem;
+            letter-spacing: 0.02em;
+        }
 
-.legend-open {
-    border-radius: 10px 10px 0 0;  /* in alto tondo, in basso dritto quando aperta */
-}
+        /* Cerchio colorato dietro il checkbox */
+        .legend-row span.color-circle {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            border: 2px solid grey;
+            /* default */
+            vertical-align: middle;
+        }
 
-.legend-toggle::after {
-    content: '▾';
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1rem;
-    transition: transform 0.3s ease;
-}
 
-.legend-open::after {
-    transform: translateY(-50%) rotate(180deg);
-}
+
+        .legend-toggle {
+            width: 100%;
+            text-align: left;
+            font-family: 'Kaushan Script', cursive;
+            font-size: 1rem;
+            background: #e43737;
+            /* rosso morbido, non aggressivo */
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 14px;
+            cursor: pointer;
+            position: relative;
+            letter-spacing: 0.04em;
+        }
+
+        .legend-open {
+            border-radius: 10px 10px 0 0;
+            /* in alto tondo, in basso dritto quando aperta */
+        }
+
+        .legend-toggle::after {
+            content: '▾';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .legend-open::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
 
         @media(max-width:768px) {
             .legend-content {
-                max-height: 0;
+                transform: scaleY(0);
                 opacity: 0;
             }
 
             .legend-show .legend-content {
-                max-height: 500px;
+                transform: scaleY(1);
                 opacity: 1;
             }
         }
@@ -412,33 +415,33 @@
                 marker.category = p.Categoria || "Altro";
                 marker.bindPopup(popupHTML).addTo(map);
                 const visibleInitially = ["Luoghi principali", "Parcheggi"];
-allMarkers.push(marker);
-if (visibleInitially.includes(marker.category)) {
-    marker.addTo(map);
-}
+                allMarkers.push(marker);
+                if (visibleInitially.includes(marker.category)) {
+                    marker.addTo(map);
+                }
             });
 
             // Evento globale per centrare popup
-map.on('popupopen', function (e) {
+            map.on('popupopen', function (e) {
 
-    const markerLatLng = e.popup.getLatLng();
+                const markerLatLng = e.popup.getLatLng();
 
-    const mapSize = map.getSize();
+                const mapSize = map.getSize();
 
-    // punto desiderato sullo schermo (centro orizzontale, 1/4 altezza)
-    const targetPoint = L.point(mapSize.x / 2, mapSize.y * 0.75);
+                // punto desiderato sullo schermo (centro orizzontale, 1/4 altezza)
+                const targetPoint = L.point(mapSize.x / 2, mapSize.y * 0.75);
 
-    // posizione attuale del marker
-    const markerPoint = map.latLngToContainerPoint(markerLatLng);
+                // posizione attuale del marker
+                const markerPoint = map.latLngToContainerPoint(markerLatLng);
 
-    // differenza
-    const dx = markerPoint.x - targetPoint.x;
-    const dy = markerPoint.y - targetPoint.y;
+                // differenza
+                const dx = markerPoint.x - targetPoint.x;
+                const dy = markerPoint.y - targetPoint.y;
 
-    // sposta la mappa
-    map.panBy([dx, dy], { animate: true });
+                // sposta la mappa
+                map.panBy([dx, dy], { animate: true });
 
-});
+            });
 
             // LEGENDA
             const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))];
@@ -473,12 +476,12 @@ map.on('popupopen', function (e) {
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
                     checkbox.checked = defaultOrder.includes(cat);
-updateMarkers(cat, checkbox.checked); // Assicurati che lo stato dei marker corrisponda
+                    updateMarkers(cat, checkbox.checked); // Assicurati che lo stato dei marker corrisponda
                     checkbox.id = "chk_" + cat.replace(/\s/g, '');
 
                     // Imposta colore dinamico
-checkbox.style.setProperty('--color', color);
-checkbox.style.borderColor = color; // bordo iniziale
+                    checkbox.style.setProperty('--color', color);
+                    checkbox.style.borderColor = color; // bordo iniziale
                     // Pallino colorato
                     const colorCircle = document.createElement('span');
                     colorCircle.style.display = 'inline-block';
@@ -487,7 +490,7 @@ checkbox.style.borderColor = color; // bordo iniziale
                     colorCircle.style.borderRadius = '50%';
                     colorCircle.style.backgroundColor = color;
                     colorCircle.style.marginRight = '8px';
-colorCircle.style.borderColor = color;
+                    colorCircle.style.borderColor = color;
 
                     const label = document.createElement('label');
                     label.setAttribute('for', checkbox.id);
@@ -505,9 +508,9 @@ colorCircle.style.borderColor = color;
                     });
 
                     label.addEventListener('click', () => {
-    checkbox.checked = !checkbox.checked;
-    updateMarkers(cat, checkbox.checked);
-});
+                        checkbox.checked = !checkbox.checked;
+                        updateMarkers(cat, checkbox.checked);
+                    });
 
                     // Cambio checkbox direttamente
                     checkbox.addEventListener('change', () => {
