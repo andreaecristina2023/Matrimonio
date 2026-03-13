@@ -175,7 +175,19 @@
             <p>e per aiutarci nei nostri progetti in Africa</p>
             <p>sarà profondamente apprezzato</p>
             <p>sia in busta che qui:</p>
-            <h1>IBAN: IT 37 F 36081 05138 20765 7707667<h1>
+            <h1>
+                IBAN:
+                <a href="#" onclick="copyIBAN(); return false;">
+                    IT 37 F 36081 05138 20765 7707667
+                </a>
+            </h1>
+
+            <script>
+                function copyIBAN() {
+                    navigator.clipboard.writeText("IT37F3608105138207657707667");
+                    alert("IBAN copiato negli appunti");
+                }
+            </script>
         </div>
     </div>
 
