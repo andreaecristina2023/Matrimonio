@@ -304,10 +304,25 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            font-size: clamp(60px, 12vw, 100px);
             background: rgba(0, 0, 0, 0.55);
             border-radius: 15px;
+            flex-direction: column;
+            /* ← aggiungi */
+            gap: 12px;
+            /* ← aggiungi */
+        }
+
+        #loadingText {
+            font-family: 'Kaushan Script', cursive;
+            font-size: clamp(16px, 3vw, 22px);
+            color: white;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        #hourglassIcon {
+            font-size: clamp(30px, 5vw, 50px);
             animation: spinHourglass 1.2s infinite;
+            display: inline-block;
         }
 
         @keyframes spinHourglass {
@@ -337,7 +352,10 @@
     <div class="central-wrapper" id="centralWrapper">
         <div class="central-container">
             <div id="map">
-                <div id="loadingOverlay">⏳</div>
+                <div id="loadingOverlay">
+                    <span id="hourglassIcon">⏳</span>
+                    <span id="loadingText">Caricamento mappa...</span>
+                </div>
             </div>
         </div>
     </div>
