@@ -111,12 +111,6 @@
             text-align: center;
         }
 
-        .leaflet-popup-content b {
-            color: #ff0000;
-            /* rosso elegante */
-            font-weight: bold;
-        }
-
         .leaflet-popup-content a {
             color: #0000ff;
             text-decoration: none;
@@ -127,16 +121,179 @@
             text-decoration: underline;
         }
 
-        /* Sfondo popup elegante */
+        .leaflet-popup-content b {
+            color: #ff0000;
+            /* rosso elegante */
+            font-weight: bold;
+        }
+
         .leaflet-popup-content-wrapper {
-            background: white;
-            border-radius: 15px;
+            background: transparent;
+            border-radius: 10px;
+            padding: 0 !important;
+            border: 2px solid transparent;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
         }
 
-        /* Freccetta popup */
         .leaflet-popup-tip {
-            background: white;
+            background: transparent;
+            color: transparent;
+        }
+
+        @media(max-width:600px) {
+            .leaflet-popup-content {
+                font-size: 1rem !important;
+                max-width: 250px;
+            }
+
+            .leaflet-popup-content div {
+                font-size: 16px !important;
+            }
+
+            .leaflet-popup-content a[target="_blank"] {
+                padding: 5px 8px !important;
+                font-size: 14px !important;
+            }
+        }
+
+        /* ===== LEGENDA ===== */
+        .legend-container {
+            background: transparent;
+            border-radius: 10px;
+            box-shadow: none;
+            overflow: visible;
+            position: relative;
+            min-width: 180px;
+        }
+
+        .info.legend {
+            font-family: 'Kaushan Script', cursive;
+            background: transparent;
+            border-radius: 10px;
+            padding-top: 0;
+            text-align: left;
+            font-size: 0.95rem;
+            max-width: 200px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .legend-content {
+            background: #fff;
+            border-radius: 0 0 10px 10px;
+            padding: 8px 14px 16px 14px;
+            overflow: hidden;
+            opacity: 0;
+            border-top: 1px solid #f0f0f0;
+            transform: scaleY(0);
+            transform-origin: top;
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.2s ease;
+        }
+
+        .legend-show .legend-content {
+            /*max-height: 500px;*/
+            transform: scaleY(1);
+            opacity: 1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+            border-radius: 0 0 10px 10px;
+        }
+
+        .legend-row {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            cursor: pointer;
+            gap: 8px;
+        }
+
+        .legend-row input[type=checkbox] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+
+        /* Quando è selezionato */
+        .legend-row input[type=checkbox]:checked {
+            border-color: var(--color);
+            background-color: var(--color);
+        }
+
+        .legend-row label {
+            color: #444;
+            cursor: pointer;
+            font-size: 0.9rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* Cerchio colorato dietro il checkbox */
+        .legend-row span.color-circle {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            border: 2px solid grey;
+            /* default */
+            vertical-align: middle;
+        }
+
+
+
+        .legend-toggle {
+            width: 100%;
+            text-align: left;
+            font-family: 'Kaushan Script', cursive;
+            font-size: 1rem;
+            background: #e43737;
+            /* rosso morbido, non aggressivo */
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 14px;
+            cursor: pointer;
+            position: relative;
+            letter-spacing: 0.04em;
+        }
+
+        .legend-open {
+            border-radius: 10px 10px 0 0;
+            /* in alto tondo, in basso dritto quando aperta */
+        }
+
+        .legend-toggle::after {
+            content: '▾';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .legend-open::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        @media(max-width:768px) {
+            .legend-content {
+                transform: scaleY(0);
+                opacity: 0;
+            }
+
+            .legend-show .legend-content {
+                transform: scaleY(1);
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -197,117 +354,202 @@
                 wrapper.style.visibility = 'visible';
             }
         }
-/*-----------------------------------------*/
+        /*-----------------------------------------*/
         // ===== MAPPA =====
         const CENTRO = { lat: 44.15058, lon: 12.141665 };
-        const csvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQoiq8woGXo_hibNIDK3gsBSR56zgU4FEvPP0-lmdfv24Bt_l0hz6Jyh0jCsG8W_pKYsB2JKEGzaURo/pub?gid=436600834&single=true&output=csv";
-
         const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lon], 13);
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        function parseCSV(text) {
-            const lines = text.split("\n").filter(l => l.trim() !== "");
-            return lines.map(line => {
-                const separator = line.includes(";") ? ";" : ",";
-                return line.split(separator).map(c => c.replace(/^"|"$/g, '').trim());
+        const tsvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBV9faZqgv88uu4_Z790474hIu-ik9XnOOQckWEWuPeMKSQ26VQrXwGCBeFn-WLRb7nbU0sd1pqkBg/pub?gid=279539594&single=true&output=tsv";
+
+        // ===== UTILITY =====
+        function parseTSVtoObjects(text) {
+            text = text.replace(/^\uFEFF/, '');
+            const lines = text.split(/\r?\n/).filter(l => l.trim() !== '');
+            const header = lines[0].split(/\t/).map(h => h.trim());
+            return lines.slice(1).map(line => {
+                const cols = line.split(/\t/);
+                const obj = {};
+                header.forEach((h, i) => { obj[h] = (cols[i] || "").trim(); });
+                return obj;
             });
         }
 
-        // icona proporzionale
-        function getIconSize() {
-            return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.06);
-        }
+        // ===== MARKER UTILS =====
+        function getIconSize() { const base = Math.min(window.innerWidth, window.innerHeight) * 0.06; if (window.innerWidth < 600) return base * 1.1; return base; }
+        function getFontSize(size) { return Math.round(size * 0.45); }
+        function createCustomIcon(symbol, color = "#ff0000") { const size = getIconSize(), fontSize = getFontSize(size); return L.divIcon({ className: 'marker-special', html: `<div style="font-family:'Kaushan Script', cursive;font-size:${fontSize}px;background:${color};border:2px solid grey;  /* BORDO GRIGIO */;border-radius:50%;width:${size}px;height:${size}px;display:flex;align-items:center;justify-content:center;color:white;">${symbol}</div>`, iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2] }); }
+        function createNumberIcon(symbol, color = "#2196f3") { const size = getIconSize(), fontSize = getFontSize(size); return L.divIcon({ className: 'marker-number', html: `<div style="font-family:'Kaushan Script', cursive;font-size:${fontSize}px;background:${color};border:2px solid grey;  /* BORDO GRIGIO */;border-radius:50%;width:${size}px;height:${size}px;display:flex;align-items:center;justify-content:center;color:white;">${symbol}</div>`, iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2] }); }
 
-        function getFontSize(size) {
-            return Math.round(size * 0.45);
-            // 45% della dimensione icona → proporzione equilibrata
-        }
+        // ===== CARICAMENTO MARKER + LEGENDA =====
+        const allMarkers = [];
+        fetch(tsvURL).then(r => r.text()).then(text => {
+            const points = parseTSVtoObjects(text);
 
-        function createNumberIcon(text) {
-            const size = getIconSize();
-            const fontSize = getFontSize(size);
-            return L.divIcon({
-                className: 'marker-number',
-                html: `<div style="font-size:${fontSize}px;">${text}</div>`,
-                iconSize: [size, size],
-                iconAnchor: [size / 2, size / 2],
-                popupAnchor: [0, -size / 2]
+            // MARKER
+            points.forEach(p => {
+                const lat = parseFloat(p.Latitudine), lon = parseFloat(p.Longitudine);
+                if (isNaN(lat) || isNaN(lon)) { console.warn("⚠ Punto ignorato:", p); return; }
+                const color = (p.Colore || "#ff0000").trim();
+                const markerIcon = (p.Categoria === "Parcheggi") ? createNumberIcon(p.Simbolo, color) : createCustomIcon(p.Simbolo, color);
+                const popupHTML = `<div style="line-height:1.4;background:rgba(255,255,255,0.9);padding:8px;text-align:left;border-radius:10px;border:2px solid ${color};">
+                    <div style="background:white;color:${color};padding:6px 10px;border-radius:6px;margin-bottom:6px;text-align:center;width:100%;box-sizing:border-box;box-shadow:0 2px 6px rgba(0,0,0,0.25);">
+                        <div style="font-size:18px;font-weight:bold;">${p.Descrizione}</div>
+                        ${p.Indirizzo ? `<div style="font-size:14px;margin-top:4px;color:#555;">📍 ${p.Indirizzo}</div>` : ""}
+                    </div>
+                    ${p.Telefono ? `<div style="color:#555;">📞 Telefono: <a href="tel:${p.Telefono}" style="color:${color}; text-decoration:underline;">${p.Telefono}</a></div>` : ""}
+                    ${p["Posti auto"] ? `<div style="color:#555;">🅿️ Posti: ${p["Posti auto"]}</div>` : ""}
+                    ${p.Accessibilità ? `<div style="color:#555;">♿ Accessibilità: ${p.Accessibilità}</div>` : ""}
+                    ${p["Distanza dal Comune"] ? `<div style="color:#555;">📏 Distanza: ${p["Distanza dal Comune"]}</div>` : ""}
+                    ${p["Lunghezza percorso dal Comune"] ? `<div style="color:#555;">📐 Lunghezza percorso: ${p["Lunghezza percorso dal Comune"]}</div>` : ""}
+                    ${p.Dislivello ? `<div style="color:#555;">⛰️ Dislivello: ${p.Dislivello}</div>` : ""}
+                    ${p.Link ? `<div style="color:#555;">🌐 Sito Web: <a href="${p.Link}" target="_blank" style="color:${color}; text-decoration:underline;">Link</a></div>` : ""}
+                    ${p.Note ? `<div style="color:#555;"><strong>📝 Note degli Sposi!</strong><br>${p.Note}</div>` : ""}
+                    <div style="display:flex;justify-content:center;margin-top:6px;">
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank"
+                        style="background:white; color:${color}; padding:${window.innerWidth < 600 ? '4px 8px' : '6px 12px'}; border-radius:5px; font-weight:bold; font-size:${window.innerWidth < 600 ? '0.85rem' : '1rem'}; text-decoration:none; box-shadow:0 1px 4px rgba(0,0,0,0.2);">🚗 Naviga 🚗</a>
+                    </div>
+                </div>`;
+                const marker = L.marker([lat, lon], { icon: markerIcon });
+                marker.category = p.Categoria || "Altro";
+                marker.bindPopup(popupHTML).addTo(map);
+                const visibleInitially = ["Luoghi principali", "Parcheggi"];
+                allMarkers.push(marker);
+                if (visibleInitially.includes(marker.category)) {
+                    marker.addTo(map);
+                }
             });
-        }
 
-        function createSpecialIcon(symbol) {
-            const size = getIconSize();
-            const fontSize = getFontSize(size);
-            return L.divIcon({
-                className: 'marker-special',
-                html: `<div style="font-size:${fontSize}px;">${symbol}</div>`,
-                iconSize: [size, size],
-                iconAnchor: [size / 2, size / 2],
-                popupAnchor: [0, -size / 2]
+            // Evento globale per centrare popup
+            map.on('popupopen', function (e) {
+
+                const markerLatLng = e.popup.getLatLng();
+
+                const mapSize = map.getSize();
+
+                // punto desiderato sullo schermo (centro orizzontale, 1/4 altezza)
+                const targetPoint = L.point(mapSize.x / 2, mapSize.y * 0.75);
+
+                // posizione attuale del marker
+                const markerPoint = map.latLngToContainerPoint(markerLatLng);
+
+                // differenza
+                const dx = markerPoint.x - targetPoint.x;
+                const dy = markerPoint.y - targetPoint.y;
+
+                // sposta la mappa
+                map.panBy([dx, dy], { animate: true });
+
             });
-        }
 
-        // Punti speciali
-        const specialPoints = [
-            { lat: 44.14268, lon: 12.09886, label: "La Casa degli Sposi", symbol: "🤍" },
-            { lat: 44.14919, lon: 12.13341, label: "Palazzo Ordelaffi", symbol: "🏛️" },
-            { lat: 44.14925, lon: 12.13385, label: "Enoteca Colonna Panorama", symbol: "🥂" },
-            { lat: 44.15848, lon: 12.18447, label: "Agriturismo Al Colle", symbol: "🍴" }
-        ];
-        const specialMarkers = [];
-        specialPoints.forEach(p => {
-            const m = L.marker([p.lat, p.lon], { icon: createSpecialIcon(p.symbol) })
-                .addTo(map)
-                .bindPopup(`<b>${p.label}</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" target="_blank">🚗 Naviga!</a>`);
-            specialMarkers.push(m);
-        });
-        console.log("✨ Punti speciali aggiunti");
+            // LEGENDA
+            const categories = [...new Set(points.map(p => p.Categoria).filter(c => c))];
+            const legendControl = L.control({ position: 'topright' });
 
-        // CSV parcheggi
-        const parkingMarkers = [];
-        fetch(csvURL)
-            .then(r => r.text())
-            .then(text => {
-                const rows = parseCSV(text).slice(1); // salta intestazioni
-                rows.forEach((cols, i) => {
-                    const lat = parseFloat(cols[0]);
-                    const lon = parseFloat(cols[1]);
-                    const descrizione = cols[2] || `Parcheggio ${i + 1}`;
-                    if (!isNaN(lat) && !isNaN(lon)) {
-                        const m = L.marker([lat, lon], { icon: createNumberIcon(`P${String(i + 1).padStart(2, '0')}`) })
-                            .addTo(map)
-                            .bindPopup(`<b>${descrizione}</b><br><a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank">🚗 Naviga</a>`);
-                        parkingMarkers.push(m);
-                        console.log(`🅿️ Parcheggio caricato: ${descrizione} (${lat},${lon})`);
-                    }
+            legendControl.onAdd = function () {
+                const wrapper = L.DomUtil.create('div');
+                L.DomEvent.disableClickPropagation(wrapper);
+                L.DomEvent.disableScrollPropagation(wrapper);
+
+                const container = L.DomUtil.create('div', 'legend-container', wrapper);
+
+                const toggleBtn = L.DomUtil.create('button', 'legend-toggle', container);
+                toggleBtn.innerHTML = "☰ Legenda";
+
+                const legendDiv = L.DomUtil.create('div', 'info legend', container);
+                const legendContent = document.createElement('div');
+                legendContent.className = 'legend-content';
+                legendDiv.appendChild(legendContent);
+
+                // ORDINE
+                const defaultOrder = ["Luoghi principali", "Parcheggi"];
+                const otherCats = categories.filter(c => !defaultOrder.includes(c));
+                const orderedCategories = [...defaultOrder, ...otherCats];
+
+                orderedCategories.forEach(cat => {
+                    const color = points.find(p => p.Categoria === cat)?.Colore || "#ff0000";
+
+                    const row = document.createElement('div');
+                    row.className = 'legend-row';
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = defaultOrder.includes(cat);
+                    updateMarkers(cat, checkbox.checked); // Assicurati che lo stato dei marker corrisponda
+                    checkbox.id = "chk_" + cat.replace(/\s/g, '');
+
+                    // Imposta colore dinamico
+                    checkbox.style.setProperty('--color', color);
+                    checkbox.style.borderColor = color; // bordo iniziale
+                    // Pallino colorato
+                    const colorCircle = document.createElement('span');
+                    colorCircle.style.display = 'inline-block';
+                    colorCircle.style.width = '12px';
+                    colorCircle.style.height = '12px';
+                    colorCircle.style.borderRadius = '50%';
+                    colorCircle.style.backgroundColor = color;
+                    colorCircle.style.marginRight = '8px';
+                    colorCircle.style.borderColor = color;
+
+                    const label = document.createElement('label');
+                    label.setAttribute('for', checkbox.id);
+                    label.innerText = cat;
+
+                    row.appendChild(checkbox);
+                    /*row.appendChild(colorCircle);*/
+                    row.appendChild(label);
+                    legendContent.appendChild(row);
+
+                    // Toggle riga cliccando ovunque tranne il checkbox
+                    row.addEventListener('click', e => {
+                        if (e.target !== checkbox) checkbox.checked = !checkbox.checked;
+                        updateMarkers(cat, checkbox.checked);
+                    });
+
+                    label.addEventListener('click', () => {
+                        checkbox.checked = !checkbox.checked;
+                        updateMarkers(cat, checkbox.checked);
+                    });
+
+                    // Cambio checkbox direttamente
+                    checkbox.addEventListener('change', () => {
+                        updateMarkers(cat, checkbox.checked);
+                    });
                 });
-            })
-            .catch(err => console.warn('❌ Errore caricamento CSV:', err));
 
-        // Ridimensionamento dinamico icone
-        function resizeMarkers() {
-            const allMarkers = [municipioMarker, ...specialMarkers, ...parkingMarkers];
-            allMarkers.forEach(m => {
-                const oldLatLng = m.getLatLng();
-                const oldText = m.options.icon.options.html;
-                let newIcon;
-                if (m.options.icon.options.className === 'marker-number') newIcon = createNumberIcon(oldText.match(/<div>(.*)<\/div>/)[1]);
-                else if (m.options.icon.options.className === 'marker-special') newIcon = createSpecialIcon(oldText.match(/<div>(.*)<\/div>/)[1]);
-                else if (m.options.icon.options.className === 'marker-municipio') newIcon = createMunicipioIcon();
-                m.setIcon(newIcon);
-            });
-            console.log("🔄 Icone ridimensionate");
-        }
+                function updateMarkers(cat, visible) {
+                    allMarkers.forEach(m => {
+                        if (m.category === cat) visible ? m.addTo(map) : map.removeLayer(m);
+                    });
+                }
 
-        window.addEventListener('resize', resizeMarkers);
+                // Toggle legenda
+                toggleBtn.addEventListener('click', () => {
+                    legendDiv.classList.toggle('legend-show');
+                    toggleBtn.classList.toggle('legend-open');
+                });
 
-        // Localizzazione utente
-        function locateUser() { map.locate({ setView: true, maxZoom: 16 }); }
-        map.on('locationfound', e => {
-            L.marker(e.latlng).addTo(map).bindPopup("Sei qui").openPopup();
+                function updateLegend() {
+                    if (window.innerWidth > 768) {
+                        legendDiv.classList.add('legend-show');
+                        toggleBtn.classList.add('legend-open');
+                    } else {
+                        legendDiv.classList.remove('legend-show');
+                        toggleBtn.classList.remove('legend-open');
+                    }
+                }
+                updateLegend();
+                window.addEventListener("resize", updateLegend);
+
+                return wrapper;
+            };
+
+            legendControl.addTo(map);
+
         });
+
     </script>
 </body>
 
-</html>>
+</html>
