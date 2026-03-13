@@ -295,11 +295,32 @@
                 opacity: 1;
             }
         }
+
+        /* ===== LOADER ===== */
+#loader{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    z-index: 9999;
+    backdrop-filter: blur(3px);
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin{
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
     </style>
 </head>
 
 <body>
-
+    <div id="loader">
+        ⏳
+    </div>
     <div id="menu-placeholder"></div>
 
     <div class="central-wrapper" id="centralWrapper">
@@ -546,7 +567,8 @@
             };
 
             legendControl.addTo(map);
-
+// nasconde loader
+document.getElementById("loader").style.display = "none";
         });
 
     </script>
