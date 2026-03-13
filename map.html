@@ -10,6 +10,8 @@
         href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+    <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
 
     <style>
         * {
@@ -296,45 +298,67 @@
             }
         }
 
-/* ===== LOADER ===== */
-#loader{
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    pointer-events: none;
-}
+        /* ===== LOADER ===== */
+        #loader {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            pointer-events: none;
+        }
 
-.loader-box{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
-}
+        .loader-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
 
-.spinner{
-    font-size:60px;
-    animation: spin 1.5s linear infinite;
-}
+        .spinner {
+            font-size: 60px;
+            animation: spin 1.5s linear infinite;
+        }
 
-.loader-text{
-    font-size:20px;
-    color:white;
-    text-shadow:0 2px 6px rgba(0,0,0,0.5);
-}
+        .loader-text {
+            font-size: 20px;
+            color: white;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+        }
 
-@keyframes spin{
-    0%{transform: rotate(0deg);}
-    100%{transform: rotate(360deg);}
-}
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
-/* Mappa sfocata durante caricamento */
-.map-loading{
-    filter: blur(4px);
-    transition: filter 0.4s ease;
-}
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Mappa sfocata durante caricamento */
+        .map-loading {
+            filter: blur(4px);
+            transition: filter 0.4s ease;
+        }
+
+        /* Menu sopra alla legenda */
+        nav {
+            position: relative;
+            z-index: 2000;
+        }
+
+        /* Menu mobile sopra a tutto */
+        .mobile-menu {
+            position: relative;
+            z-index: 3000;
+        }
+
+        /* Legenda sotto al menu */
+        .leaflet-top.leaflet-right {
+            z-index: 500;
+        }
     </style>
 </head>
 
@@ -404,6 +428,14 @@
         // ===== MAPPA =====
         const CENTRO = { lat: 44.15058, lon: 12.141665 };
         const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lon], 13);
+        L.control.locate({
+            position: "bottomleft",
+            flyTo: true,
+            showCompass: true,
+            strings: {
+                title: "Mostra la mia posizione"
+            }
+        }).addTo(map);
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         document.getElementById("map").classList.add("map-loading");
@@ -593,9 +625,9 @@
             };
 
             legendControl.addTo(map);
-            
-document.getElementById("loader").style.display = "none";
-document.getElementById("map").classList.remove("map-loading");
+
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("map").classList.remove("map-loading");
         });
 
     </script>
