@@ -395,7 +395,7 @@
                         <div style="font-size:18px;font-weight:bold;">${p.Descrizione}</div>
                         ${p.Indirizzo ? `<div style="font-size:14px;margin-top:4px;color:#555;">📍 ${p.Indirizzo}</div>` : ""}
                     </div>
-                    ${p.Telefono ? `<div style="color:#555;">📞 Telefono: <a href="tel:${p.Telefono}" style="color:${color}; text-decoration:none; user-select:text; -webkit-user-select:text;">${p.Telefono}</a></div>` : ""}
+                    ${p.Telefono ? `<div style="color:#555;">📞 Telefono: <a href="tel:${p.Telefono}" style="color:${color}; text-decoration:underline;">${p.Telefono}</a></div>` : ""}
                     ${p["Posti auto"] ? `<div style="color:#555;">🅿️ Posti: ${p["Posti auto"]}</div>` : ""}
                     ${p.Accessibilità ? `<div style="color:#555;">♿ Accessibilità: ${p.Accessibilità}</div>` : ""}
                     ${p["Distanza dal Comune"] ? `<div style="color:#555;">📏 Distanza: ${p["Distanza dal Comune"]}</div>` : ""}
