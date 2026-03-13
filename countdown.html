@@ -94,12 +94,44 @@
 
     #btnSi {
       background: #2e7d32;
+            animation: pulseSi 1.5s infinite alternate;
     }
 
     #btnNo {
       background: #a32f2f;
+            animation: pulseNo 1.5s infinite alternate;
     }
 
+        @keyframes pulseSi {
+            from {
+                box-shadow: 0 0 5px rgba(46, 125, 50, 0.4);
+            }
+
+            to {
+                box-shadow: 0 0 24px 4px rgba(46, 125, 50, 1), 0 0 10px rgba(255, 255, 255, 0.3);
+            }
+        }
+        
+        @keyframes pulseNo {
+            from {
+                box-shadow: 0 0 5px rgba(163, 47, 47, 0.4);
+            }
+
+            to {
+                box-shadow: 0 0 24px 4px rgba(163, 47, 47, 1), 0 0 10px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        @keyframes pulseBlue {
+            from {
+                box-shadow: 0 0 5px rgba(21, 101, 192, 0.4);
+            }
+
+            to {
+                box-shadow: 0 0 24px 4px rgba(21, 101, 192, 1), 0 0 10px rgba(255, 255, 255, 0.3);
+            }
+        }
+        
     /* Stato: grigio (non scelto) */
     .main-btn.greyed {
       background: #777 !important;
