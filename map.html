@@ -53,6 +53,8 @@
         }
 
         #map {
+            position: relative;
+            /* ← aggiungi */
             width: 90%;
             max-width: 1000px;
             height: 70vh;
@@ -296,13 +298,15 @@
 
         /* ===== LOADING ===== */
         #loadingOverlay {
-            position: fixed;
+            position: absolute;
             inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             font-size: clamp(60px, 12vw, 100px);
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 15px;
             animation: spinHourglass 1.2s infinite;
         }
 
@@ -327,12 +331,14 @@
 </head>
 
 <body>
-    <div id="loadingOverlay">⏳</div>
+
     <div id="menu-placeholder"></div>
 
     <div class="central-wrapper" id="centralWrapper">
         <div class="central-container">
-            <div id="map"></div>
+            <div id="map">
+                <div id="loadingOverlay">⏳</div>
+            </div>
         </div>
     </div>
 
@@ -574,6 +580,9 @@
             };
 
             legendControl.addTo(map);
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }).catch(err => {
+            console.warn("❌ Errore TSV:", err);
             document.getElementById('loadingOverlay').style.display = 'none';
         });
 
