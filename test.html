@@ -62,6 +62,7 @@
     /* ===== PULSANTI SI / NO ===== */
     #btnWrapper {
       display: flex; gap: 30px;
+      margin-bottom: 30px;
       transition: opacity 0.5s ease;
     }
 
@@ -92,6 +93,7 @@
       border-radius: 30px;
       background: #a32f2f;
       color: white; border: none; cursor: pointer;
+      margin-bottom: 25px;
       opacity: 0;
       transition: opacity 0.5s ease;
       pointer-events: none;
@@ -106,6 +108,7 @@
       position: relative;
       height: 44px;
       width: 100%;
+      margin-bottom: 20px;
     }
 
     .title-wrapper span {
@@ -207,6 +210,8 @@
 
   <div class="central-container">
 
+    <div id="playTitle">Siete pront*?</div>
+
     <div id="btnWrapper">
       <button class="main-btn" id="btnSi">Sì!!!</button>
       <button class="main-btn" id="btnNo">No!!!</button>
@@ -272,19 +277,16 @@
     function updateLayout() {
         const nav       = document.querySelector('nav');
         const container = document.querySelector('.central-container');
-        const title     = document.getElementById('playTitle');
         const btnWrap   = document.getElementById('btnWrapper');
-        if (!nav || !container || !title) return;
+        if (!nav || !container) return;
 
-        const navH       = nav.offsetHeight;
-        const available  = window.innerHeight - navH;       // spazio utile sotto la nav
-        const paddingTop = Math.max(20, available * 0.12);  // 12% come respiro sopra il titolo
-        const gapTitle   = Math.max(16, available * 0.08);  // 8% tra titolo e pulsanti
-        const gapBtns    = Math.max(16, available * 0.06);  // 6% tra pulsanti e pause/titoli
+        const navH      = nav.offsetHeight;
+        const available = window.innerHeight - navH;
+        const padTop    = Math.max(20, available * 0.20);  // 20% di respiro sopra i pulsanti
+        const gapBtns   = Math.max(16, available * 0.06);  // 6% tra pulsanti e pausa
 
         container.style.marginTop  = navH + 'px';
-        container.style.paddingTop = paddingTop + 'px';
-        title.style.marginBottom   = gapTitle + 'px';
+        container.style.paddingTop = padTop + 'px';
         if (btnWrap) btnWrap.style.marginBottom = gapBtns + 'px';
     }
 
