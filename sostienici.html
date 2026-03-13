@@ -133,7 +133,7 @@ fetch('menu.html')
     document.getElementById('menu-placeholder').innerHTML = html;
 
     const menuTitle = document.getElementById('menuPageTitle');
-    if(menuTitle) menuTitle.textContent = "Sostienici";
+    if(menuTitle) menuTitle.textContent = ""; //Titolo vuoto
 
     // Configura menu mobile
     const hamburger = document.getElementById('hamburger');
