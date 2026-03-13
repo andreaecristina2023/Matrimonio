@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png"
         href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
@@ -309,7 +309,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 999;
+            z-index: 1000;
+            /* sopra la mappa */
             pointer-events: none;
         }
 
@@ -435,8 +436,8 @@
         }
 
         // ===== MAPPA =====
-        const CENTRO = { lat: 44.15058, lon: 12.141665 };
-        const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lon], 13);
+        const CENTRO = { lat: 44.15058, lng: 12.141665 };
+        const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lng], 13);
         L.control.locate({
             position: "bottomleft",
             flyTo: true,
@@ -448,6 +449,7 @@
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         document.getElementById("map").classList.add("map-loading");
+        const mapEl = document.getElementById("map");
 
         const tsvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBV9faZqgv88uu4_Z790474hIu-ik9XnOOQckWEWuPeMKSQ26VQrXwGCBeFn-WLRb7nbU0sd1pqkBg/pub?gid=279539594&single=true&output=tsv";
 
@@ -469,6 +471,8 @@
         function getFontSize(size) { return Math.round(size * 0.45); }
         function createCustomIcon(symbol, color = "#ff0000") { const size = getIconSize(), fontSize = getFontSize(size); return L.divIcon({ className: 'marker-special', html: `<div style="font-family:'Kaushan Script', cursive;font-size:${fontSize}px;background:${color};border:2px solid grey;  /* BORDO GRIGIO */;border-radius:50%;width:${size}px;height:${size}px;display:flex;align-items:center;justify-content:center;color:white;">${symbol}</div>`, iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2] }); }
         function createNumberIcon(symbol, color = "#2196f3") { const size = getIconSize(), fontSize = getFontSize(size); return L.divIcon({ className: 'marker-number', html: `<div style="font-family:'Kaushan Script', cursive;font-size:${fontSize}px;background:${color};border:2px solid grey;  /* BORDO GRIGIO */;border-radius:50%;width:${size}px;height:${size}px;display:flex;align-items:center;justify-content:center;color:white;">${symbol}</div>`, iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2] }); }
+        const mapEl = document.getElementById("map");
+        mapEl.classList.add("map-loading"); // sfoca la mappa
 
         // ===== CARICAMENTO MARKER + LEGENDA =====
         const allMarkers = [];
@@ -634,9 +638,9 @@
             };
 
             legendControl.addTo(map);
-
-            document.getElementById("loader").style.display = "none";
-            document.getElementById("map").classList.remove("map-loading");
+            
+    document.getElementById("loader").style.display = "none"; // nasconde la clessidra
+    mapEl.classList.remove("map-loading"); // rimuove blur solo alla mappa
         });
 
     </script>
