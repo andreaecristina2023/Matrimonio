@@ -157,67 +157,75 @@
         }
 
         /* ===== LEGENDA ===== */
-        .legend-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
-            position: relative;
-        }
+.legend-container {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+    position: relative;
+    min-width: 180px;
+}
 
-        .info.legend {
-            font-family: 'Kaushan Script', cursive;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            padding-top: 0;
-            text-align: left;
-            font-size: 1rem;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-            max-width: 220px;
-            position: relative;
-        }
+.info.legend {
+    font-family: 'Kaushan Script', cursive;
+    background: #fff;
+    border-radius: 10px;
+    padding-top: 0;
+    text-align: left;
+    font-size: 0.95rem;
+    max-width: 200px;
+    position: relative;
+}
 
-        .legend-content {
-            background: white;
-            border-radius: 0 0 12px 12px;
-            padding: 8px 12px 20px 12px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, opacity 0.3s ease;
-            opacity: 0;
-        }
+.legend-content {
+    background: #fff;
+    border-radius: 0 0 10px 10px;
+    padding: 8px 14px 16px 14px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    border-top: 1px solid #f0f0f0;
+}
 
-        .legend-show .legend-content {
-            max-height: 500px;
-            opacity: 1;
-        }
+.legend-show .legend-content {
+    max-height: 500px;
+    opacity: 1;
+}
 
-        .legend-row {
-            display: flex;
-            align-items: center;
-            margin-top: 6px;
-            cursor: pointer;
-        }
+.legend-row {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    cursor: pointer;
+    gap: 8px;
+}
 
-        .legend-row input[type=checkbox] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            border: 2px solid grey;
-            border-radius: 50%;
-            margin-right: 8px;
-            cursor: pointer;
+.legend-row input[type=checkbox] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
     transition: all 0.2s;
-            position: relative;
-        }
+    position: relative;
+    flex-shrink: 0;
+}
 
 
 /* Quando è selezionato */
 .legend-row input[type=checkbox]:checked {
-    color: white;
-    border-color: var(--color); /* usa la variabile CSS */
+    border-color: var(--color);
     background-color: var(--color);
+}
+
+.legend-row label {
+    color: #444;
+    cursor: pointer;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
 }
 
 /* Cerchio colorato dietro il checkbox */
@@ -233,33 +241,34 @@
 
 
 
-        .legend-toggle {
-            width: 100%;
-            text-align: left;
-            font-family: 'Kaushan Script', cursive;
-            font-size: 1.1rem;
-            background: #ff0000;
-            color: white;
-            border: none;
-            border-radius: 12px 12px 0 0;
-            padding: 8px 12px;
-            cursor: pointer;
-            position: relative;
-        }
+.legend-toggle {
+    width: 100%;
+    text-align: left;
+    font-family: 'Kaushan Script', cursive;
+    font-size: 1rem;
+    background: #b85c5c;   /* rosso morbido, non aggressivo */
+    color: #fff;
+    border: none;
+    border-radius: 10px 10px 0 0;
+    padding: 8px 14px;
+    cursor: pointer;
+    position: relative;
+    letter-spacing: 0.04em;
+}
 
-        .legend-toggle::after {
-            content: '▼';
-            position: absolute;
-            left: 50%;
-            bottom: -10px;
-            transform: translateX(-50%);
-            font-size: 1rem;
-            transition: transform 0.3s ease;
-        }
+.legend-toggle::after {
+    content: '▾';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
 
-        .legend-open::after {
-            transform: translateX(-50%) rotate(180deg);
-        }
+.legend-open::after {
+    transform: translateY(-50%) rotate(180deg);
+}
 
         @media(max-width:768px) {
             .legend-content {
