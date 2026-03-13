@@ -1,187 +1,374 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Andrea e Cristina 04.06.2026</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Andrea e Cristina 04.06.2026</title>
 
-<link rel="icon" type="image/png"
-      href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+  <link rel="icon" type="image/png"
+    href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<style>
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      font-family: 'Kaushan Script', cursive;
+    }
 
-/* ===== RESET ===== */
-* { margin:0; padding:0; box-sizing:border-box; }
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background:
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        url("https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg") no-repeat center center;
+      background-size: cover;
+      z-index: -1;
+    }
 
-html, body {
-    height:100%;
-    font-family:'Kaushan Script', cursive;
-    overflow-x:hidden;
-}
+    /* ===== MENU ===== */
+    nav .menu a, .mobile-menu a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+    }
+    nav .menu a:hover:not(.active), .mobile-menu a:hover:not(.active) {
+      border-bottom: 2px solid #ff0000;
+    }
+    nav .menu a.active, .mobile-menu a.active {
+      color: #ff0000; font-weight: bold;
+    }
 
-/* ===== STRUTTURA BASE FLEX ===== */
-body {
-    display:flex;
-    flex-direction:column;
-    min-height:100vh;
-}
+    /* ===== CONTENITORE ===== */
+    .central-container {
+      width: 100%; height: 100vh;
+      margin-top: 70px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
+      padding-top: 40px; text-align: center;
+    }
 
-/* ===== SFONDO ===== */
-body::before {
-    content:"";
-    position:fixed;
-    inset:0;
-    background:
-        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-        url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg')
-        center/cover no-repeat;
-    z-index:-1;
-}
+    /* ===== TITOLO PRINCIPALE ===== */
+    #playTitle {
+      font-size: 2.5em;
+      color: white;
+      margin-bottom: 30px;
+      transition: opacity 0.5s ease;
+    }
 
-/* ===== WRAPPER CENTRALE ===== */
-.central-wrapper {
-    flex:1;                       /* prende spazio rimanente */
-    display:flex;
-    justify-content:center;       /* centro verticale */
-    align-items:center;           /* centro orizzontale */
-    text-align:center;
-    visibility:hidden;
-    padding:20px;
-}
+    /* ===== PULSANTI SI / NO ===== */
+    #btnWrapper {
+      display: flex; gap: 30px;
+      margin-bottom: 40px;
+      transition: opacity 0.5s ease;
+    }
 
-.central-container {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
+    .main-btn {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 26px;
+      padding: 10px 30px;
+      border-radius: 30px;
+      color: white; border: none; cursor: pointer;
+      animation: glowBtn 1.5s infinite alternate;
+      transition: transform 0.15s;
+    }
+    .main-btn:hover { transform: scale(1.07); }
 
-/* ===== TESTI ===== */
-h1 { font-size:2.5em; margin-bottom:10px; color:white; }
-h2 { font-size:3em; margin-bottom:20px; color:white; }
-p  { font-size:2em; color:white; }
+    #btnSi { background: #2e7d32; }
+    #btnNo { background: #a32f2f; }
 
-/* ===== BUTTON ===== */
-a.button {
-    display:inline-block;
-    padding:12px 25px;
-    margin-top:20px;
-    background-color:#ff0000;
-    color:#fff;
-    text-decoration:none;
-    font-weight:bold;
-    border-radius:8px;
-    transition:0.3s;
-}
-a.button:hover { background-color:#cc0000; }
+    @keyframes glowBtn {
+      from { box-shadow: 0 0 4px rgba(255,255,255,0.2); }
+      to   { box-shadow: 0 0 18px rgba(255,255,255,0.5); }
+    }
 
-/* ===== MENU LINK STYLE ===== */
-nav .menu a,
-.mobile-menu a {
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s;
-}
+    /* ===== PULSANTE PAUSA ===== */
+    #pauseBtn {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 20px;
+      padding: 7px 22px;
+      border-radius: 30px;
+      background: #555;
+      color: white; border: none; cursor: pointer;
+      margin-bottom: 30px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    #pauseBtn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-nav .menu a:hover:not(.active),
-.mobile-menu a:hover:not(.active) {
-    border-bottom: 2px solid #ff0000;
-}
+    /* ===== TITOLI SOVRAPPOSTI ===== */
+    .title-wrapper {
+      position: relative;
+      height: 44px;
+      width: 100%;
+      margin-bottom: 18px;
+    }
 
-nav .menu a.active,
-.mobile-menu a.active {
-    color: #ff0000;
-    font-weight: bold;
-}
+    .title-wrapper span {
+      position: absolute;
+      left: 50%; top: 0;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: clamp(22px, 5vw, 28px);
+      color: #ff0000;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
 
-nav .menu a.active:hover,
-.mobile-menu a.active:hover {
-    border-bottom: 2px solid #ff0000;
-}
+    /* ===== LISTA ===== */
+    .sequence {
+      display: flex; flex-direction: column;
+      gap: 14px; align-items: center;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
 
-/* ===== RESPONSIVE ===== */
-@media(max-width:768px){
-    h1{font-size:2em;}
-    h2{font-size:1.5em;}
-    p{font-size:1.2em;}
-    a.button{padding:10px 20px;font-size:1em;}
-}
+    .sequence p {
+      opacity: 0;
+      font-size: clamp(17px, 4vw, 23px);
+      transition: opacity 0.6s ease;
+    }
 
-@media(max-width:480px){
-    h1{font-size:1.5em;}
-    h2{font-size:1.2em;}
-    p{font-size:1em;}
-    a.button{padding:8px 16px;font-size:0.9em;}
-}
+    .light     { color: white; }
+    .highlight { color: #ff0000; }
 
-</style>
+    /* ===== COUNTDOWN ===== */
+    #countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+      pointer-events: none;
+      margin-top: 28px;
+    }
+
+    .box {
+      aspect-ratio: 1/1;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.9);
+      width: 110px;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      animation: blinkShadow 1.5s infinite alternate;
+    }
+
+    @keyframes blinkShadow {
+      from { box-shadow: 0 0 10px rgba(255,0,0,0.4); }
+      to   { box-shadow: 0 0 30px rgba(255,0,0,0.9); }
+    }
+
+    .number { font-size: 36px; color: #ff0000; }
+    .label  { font-size: 16px; color: #ff0000; }
+
+    @media(max-width:768px) {
+      #countdown { grid-template-columns: repeat(2, 1fr); }
+      .box { width: 90px; }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- MENU -->
-<div id="menu-placeholder"></div>
+  <div id="menu-placeholder"></div>
 
-<!-- CONTENUTO CENTRALE -->
-<div class="central-wrapper" id="centralWrapper">
-    <div class="central-container">
-        <div id="slider-container-placeholder"></div>
-        <div class="dots-container" id="dots-container"></div>
+  <div class="central-container">
+
+    <div id="playTitle">Siete pront*?</div>
+
+    <div id="btnWrapper">
+      <button class="main-btn" id="btnSi">Sì!!!</button>
+      <button class="main-btn" id="btnNo">No!!!</button>
     </div>
-</div>
 
-<script>
+    <button id="pauseBtn">⏸️ Pause</button>
 
-/* ===== CARICAMENTO MENU ===== */
-fetch('menu.html')
-.then(resp => resp.text())
-.then(html => {
+    <!-- Titoli in rosso, sovrapposti nello stesso punto -->
+    <div class="title-wrapper">
+      <span id="titleRicorda">Ricordatevi di portare:</span>
+      <span id="titleMancano">...perché mancano solo...</span>
+    </div>
 
-    document.getElementById('menu-placeholder').innerHTML = html;
+    <!-- Lista (solo percorso "No") -->
+    <div class="sequence" id="sequence">
+      <p class="light">1. Il vostro sorriso migliore!</p>
+      <p class="light">2. Un costume!</p>
+      <p class="light">3. Tanta voglia di divertirvi!</p>
+      <p class="highlight">4. Scarpe rosse e comode!</p>
+    </div>
 
-    const menuTitle = document.getElementById('menuPageTitle');
-    if(menuTitle) menuTitle.textContent = "";
+    <div id="countdown">
+      <div class="box"><div class="number" id="days">0</div><div class="label">gg</div></div>
+      <div class="box"><div class="number" id="hours">0</div><div class="label">hh</div></div>
+      <div class="box"><div class="number" id="minutes">0</div><div class="label">mm</div></div>
+      <div class="box"><div class="number" id="seconds">0</div><div class="label">ss</div></div>
+    </div>
 
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
+  </div>
 
-    if(hamburger && mobileMenu){
-        hamburger.addEventListener('click', () => {
-            mobileMenu.style.display =
-                mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+  <audio id="bgMusic"
+    src="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/music/Are_You_Ready_For_This.mp3"></audio>
+
+  <script>
+    // ===== MENU =====
+    fetch('menu.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('menu-placeholder').innerHTML = html;
+        const menuTitle = document.getElementById('menuPageTitle');
+        if (menuTitle) menuTitle.textContent = "Siete pronti?!";
+
+        const hamburger  = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (hamburger && mobileMenu) {
+          hamburger.addEventListener('click', () =>
+            mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex'
+          );
+          mobileMenu.querySelectorAll('a').forEach(l =>
+            l.addEventListener('click', () => mobileMenu.style.display = 'none')
+          );
+          window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) mobileMenu.style.display = 'none';
+          });
+        }
+
+        const currentPage = location.pathname.split("/").pop() || 'countdown.html';
+        document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
+          if (link.getAttribute('href') === currentPage) link.classList.add('active');
         });
+      })
+      .catch(err => console.warn('Errore menu:', err));
 
-        mobileMenu.querySelectorAll('a').forEach(link =>
-            link.addEventListener('click', () =>
-                mobileMenu.style.display = 'none'
-            )
-        );
+    // ===== ELEMENTI =====
+    const bgMusic      = document.getElementById("bgMusic");
+    const btnWrapper   = document.getElementById("btnWrapper");
+    const playTitle    = document.getElementById("playTitle");
+    const pauseBtn     = document.getElementById("pauseBtn");
+    const titleRicorda = document.getElementById("titleRicorda");
+    const titleMancano = document.getElementById("titleMancano");
+    const sequence     = document.getElementById("sequence");
+    const lines        = document.querySelectorAll("#sequence p");
+    const countdown    = document.getElementById("countdown");
 
-        window.addEventListener('resize', () => {
-            if(window.innerWidth > 768)
-                mobileMenu.style.display = 'none';
-        });
+    let timeouts = [], isPaused = false, resumeFn = null;
+
+    // ===== HELPERS =====
+    function wait(ms, fn) {
+      const t = setTimeout(() => { if (!isPaused) fn(); else resumeFn = fn; }, ms);
+      timeouts.push(t);
     }
 
-    /* Evidenzia pagina attiva */
-    const currentPage =
-        location.pathname.split("/").pop() || 'homepage.html';
+    function hideBtns(chosen) {
+      // Nasconde solo il pulsante NON scelto
+      const other = chosen === 'si' ? document.getElementById('btnNo') : document.getElementById('btnSi');
+      other.style.opacity = '0';
+      other.style.pointerEvents = 'none';
+      setTimeout(() => { other.style.display = 'none'; }, 400);
 
-    document.querySelectorAll('nav .menu a, nav .mobile-menu a')
-        .forEach(link => {
-            if(link.getAttribute('href') === currentPage)
-                link.classList.add('active');
-        });
+      // Disabilita il pulsante scelto (resta visibile)
+      const picked = document.getElementById(chosen === 'si' ? 'btnSi' : 'btnNo');
+      picked.disabled = true;
+      picked.style.animation = 'none';
+      picked.style.opacity = '0.75';
+      picked.style.cursor = 'default';
 
-    /* Mostra wrapper quando pronto */
-    document.getElementById('centralWrapper').style.visibility = 'visible';
+      pauseBtn.classList.add('visible');
+    }
 
-})
-.catch(err => console.warn('Errore caricamento menu:', err));
+    function showCountdown() {
+      if (isPaused) { resumeFn = showCountdown; return; }
+      titleMancano.style.opacity = 1;
+      countdown.style.opacity = 1;
+      document.querySelectorAll(".box").forEach(b => b.style.opacity = 1);
+    }
 
-</script>
+    // ===== PERCORSO "Sì" =====
+    function startSi() {
+      hideBtns('si');
+      bgMusic.play();
+      resumeFn = showCountdown;
+      wait(1500, showCountdown);
+    }
 
+    // ===== PERCORSO "No" =====
+    function startNo() {
+      hideBtns('no');
+      bgMusic.play();
+
+      let idx = 0;
+
+      function showNextLine() {
+        if (isPaused) { resumeFn = showNextLine; return; }
+        if (idx === 0) {
+          sequence.style.opacity = 1;
+          titleRicorda.style.opacity = 1;
+        }
+        if (idx < lines.length) {
+          lines[idx].style.opacity = 1;
+          idx++;
+          resumeFn = showNextLine;
+          wait(1800, showNextLine);
+        } else {
+          resumeFn = doTransition;
+          wait(2500, doTransition);
+        }
+      }
+
+      function doTransition() {
+        if (isPaused) { resumeFn = doTransition; return; }
+        // Fade out lista + "Ricordatevi"
+        sequence.style.opacity = 0;
+        titleRicorda.style.opacity = 0;
+        // Fade in "...perché mancano solo..." + countdown
+        resumeFn = showCountdown;
+        wait(1000, showCountdown);
+      }
+
+      resumeFn = showNextLine;
+      wait(1000, showNextLine);
+    }
+
+    // ===== CLICK PULSANTI =====
+    document.getElementById('btnSi').addEventListener('click', startSi);
+    document.getElementById('btnNo').addEventListener('click', startNo);
+
+    // ===== PAUSA / PLAY =====
+    pauseBtn.addEventListener('click', () => {
+      if (!isPaused) {
+        isPaused = true;
+        pauseBtn.innerText = "▶️ Play";
+        bgMusic.pause();
+        timeouts.forEach(t => clearTimeout(t));
+        timeouts = [];
+      } else {
+        isPaused = false;
+        pauseBtn.innerText = "⏸️ Pause";
+        bgMusic.play();
+        if (resumeFn) resumeFn();
+      }
+    });
+
+    // ===== TIMER =====
+    const target = new Date("2026-06-04T18:00:00").getTime();
+    setInterval(() => {
+      const diff = target - Date.now();
+      if (diff <= 0) return;
+      document.getElementById('days').innerText    = Math.floor(diff / 86400000);
+      document.getElementById('hours').innerText   = Math.floor(diff / 3600000) % 24;
+      document.getElementById('minutes').innerText = Math.floor(diff / 60000) % 60;
+      document.getElementById('seconds').innerText = Math.floor(diff / 1000) % 60;
+    }, 1000);
+  </script>
 </body>
 </html>
