@@ -296,39 +296,56 @@
             }
         }
 
-        /* ===== LOADER ===== */
-        #loader {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            backdrop-filter: blur(3px);
-        }
+/* ===== LOADER ===== */
+#loader{
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    pointer-events: none;
+}
 
-        .spinner {
-            font-size: 60px;
-            animation: spin 1.5s linear infinite;
-        }
+.loader-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+}
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
+.spinner{
+    font-size:60px;
+    animation: spin 1.5s linear infinite;
+}
 
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+.loader-text{
+    font-size:20px;
+    color:white;
+    text-shadow:0 2px 6px rgba(0,0,0,0.5);
+}
+
+@keyframes spin{
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
+}
+
+/* Mappa sfocata durante caricamento */
+.map-loading{
+    filter: blur(4px);
+    transition: filter 0.4s ease;
+}
     </style>
 </head>
 
 <body>
     <div id="loader">
-        <div class="spinner">⏳</div>
+        <div class="loader-box">
+            <div class="spinner">⏳</div>
+            <div class="loader-text">Caricamento mappa…</div>
+        </div>
     </div>
+
     <div id="menu-placeholder"></div>
 
     <div class="central-wrapper" id="centralWrapper">
@@ -389,6 +406,7 @@
         const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lon], 13);
         L.control.zoom({ position: 'bottomleft' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        document.getElementById("map").classList.add("map-loading");
 
         const tsvURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQBV9faZqgv88uu4_Z790474hIu-ik9XnOOQckWEWuPeMKSQ26VQrXwGCBeFn-WLRb7nbU0sd1pqkBg/pub?gid=279539594&single=true&output=tsv";
 
@@ -575,8 +593,9 @@
             };
 
             legendControl.addTo(map);
-            // nasconde loader
-            document.getElementById("loader").style.display = "none";
+            
+document.getElementById("loader").style.display = "none";
+document.getElementById("map").classList.remove("map-loading");
         });
 
     </script>
