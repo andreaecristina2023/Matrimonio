@@ -75,6 +75,7 @@
       transition: opacity 0.5s ease;
     }
 
+
     .main-btn {
       font-family: 'Kaushan Script', cursive;
       font-size: 26px;
@@ -83,9 +84,8 @@
       color: white;
       border: none;
       cursor: pointer;
-      animation: glowBtn 1.5s infinite alternate;
       transition: background 0.4s, opacity 0.4s, transform 0.15s;
-      min-width: 120px;
+      min-width: 160px;
     }
 
     .main-btn:not(:disabled):hover {
@@ -94,43 +94,43 @@
 
     #btnSi {
       background: #2e7d32;
-            animation: pulseSi 1.5s infinite alternate;
+      animation: pulseSi 1.5s infinite alternate;
     }
 
     #btnNo {
       background: #a32f2f;
-            animation: pulseNo 1.5s infinite alternate;
+      animation: pulseNo 1.5s infinite alternate;
     }
 
-        @keyframes pulseSi {
-            from {
-                box-shadow: 0 0 5px rgba(46, 125, 50, 0.4);
-            }
+    @keyframes pulseSi {
+      from {
+        box-shadow: 0 0 5px rgba(46, 125, 50, 0.4);
+      }
 
-            to {
-                box-shadow: 0 0 24px 4px rgba(46, 125, 50, 1), 0 0 10px rgba(255, 255, 255, 0.3);
-            }
-        }
-        
-        @keyframes pulseNo {
-            from {
-                box-shadow: 0 0 5px rgba(163, 47, 47, 0.4);
-            }
+      to {
+        box-shadow: 0 0 24px 4px rgba(46, 125, 50, 1), 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+    }
 
-            to {
-                box-shadow: 0 0 24px 4px rgba(163, 47, 47, 1), 0 0 10px rgba(255, 255, 255, 0.3);
-            }
-        }
+    @keyframes pulseNo {
+      from {
+        box-shadow: 0 0 5px rgba(163, 47, 47, 0.4);
+      }
 
-        @keyframes pulseBlue {
-            from {
-                box-shadow: 0 0 5px rgba(21, 101, 192, 0.4);
-            }
+      to {
+        box-shadow: 0 0 24px 4px rgba(163, 47, 47, 1), 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+    }
 
-            to {
-                box-shadow: 0 0 24px 4px rgba(21, 101, 192, 1), 0 0 10px rgba(255, 255, 255, 0.3);
-            }
-        }
+    @keyframes pulseBlue {
+      from {
+        box-shadow: 0 0 5px rgba(21, 101, 192, 0.4);
+      }
+
+      to {
+        box-shadow: 0 0 24px 4px rgba(21, 101, 192, 1), 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+    }
 
     /* Stato: grigio (non scelto) */
     .main-btn.greyed {
@@ -257,10 +257,12 @@
     @keyframes blinkShadow {
       from {
         box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+        transform: scale(1);
       }
 
       to {
         box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+        transform: scale(1.07);
       }
     }
 

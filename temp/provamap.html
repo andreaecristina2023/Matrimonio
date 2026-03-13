@@ -84,7 +84,7 @@
             border: none;
             cursor: pointer;
             transition: background 0.4s, opacity 0.4s, transform 0.15s;
-            min-width: 120px;
+            min-width: 160px;
         }
 
         .main-btn:not(:disabled):hover {
@@ -248,10 +248,12 @@
         @keyframes blinkShadow {
             from {
                 box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+                transform: scale(1);
             }
 
             to {
                 box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+                transform: scale(1.07);
             }
         }
 
