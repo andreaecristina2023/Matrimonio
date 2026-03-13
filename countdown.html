@@ -140,12 +140,17 @@
       animation: none;
     }
 
-    /* Stato: pause (scelto, in esecuzione) */
-    .main-btn.is-pause {
-      background: #a32f2f !important;
-      animation: none;
-      opacity: 1;
-    }
+/* Stato: pause — colore uguale al pulsante di partenza */
+#btnSi.is-pause {
+  background: #2e7d32 !important;
+  animation: pulseSi 1.5s infinite alternate !important;
+  opacity: 1;
+}
+#btnNo.is-pause {
+  background: #a32f2f !important;
+  animation: pulseNo 1.5s infinite alternate !important;
+  opacity: 1;
+}
 
     /* Stato: play (scelto, in pausa) */
     .main-btn.is-play {
