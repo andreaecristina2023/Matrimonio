@@ -129,7 +129,7 @@
     #playTitle {
       font-size: 2.5em;
       color: white;
-            margin-bottom: 40px;
+      margin-bottom: 40px;
     }
 
     /* ===== PULSANTE ===== */
@@ -206,7 +206,6 @@
       white-space: nowrap;
     }
 
-    #titleStart,
     #finalText {
       font-size: clamp(24px, 6vw, 30px);
       /* da 28px a max 60px */
@@ -385,9 +384,9 @@
         playBtn.innerText = "⏸️ Pause";
         bgMusic.play();
 
-        timeouts.push(setTimeout(() => {
+        /*timeouts.push(setTimeout(() => {
           titleStart.style.opacity = 1;
-        }, 600));
+        }, 600));*/
 
         timeouts.push(setTimeout(() => {
           startSequence();
@@ -461,7 +460,7 @@
               // 5️⃣ Countdown con effetto pop
               countdown.style.opacity = 1;
               countdown.style.transform = "scale(1)";
-             /*countdown.style.transform = "translateX(-50%) scale(1)";*/
+              /*countdown.style.transform = "translateX(-50%) scale(1)";*/
 
               const boxes = document.querySelectorAll(".box");
               boxes.forEach(box => box.style.opacity = 1);
