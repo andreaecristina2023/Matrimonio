@@ -49,7 +49,9 @@
         .central-container {
             width: 100%;
             display: flex;
+    flex: 1; 
             justify-content: center;
+    padding: 12px 0; 
         }
 
         #map {
@@ -57,7 +59,7 @@
             /* ← aggiungi */
             width: 90%;
             max-width: 1000px;
-            height: 70vh;
+            /*height: 70vh;*/
             border-radius: 15px;
             overflow: hidden;
         }
@@ -157,6 +159,10 @@
                 font-size: 14px !important;
             }
         }
+
+.leaflet-top.leaflet-right {
+    z-index: 400 !important;
+}
 
         /* ===== LEGENDA ===== */
         .legend-container {
@@ -342,6 +348,10 @@
                 transform: rotate(180deg);
             }
         }
+
+nav {
+    z-index: 500 !important;
+}
     </style>
 </head>
 
@@ -393,20 +403,19 @@
             .catch(err => console.warn('❌ Errore caricamento menu:', err));
 
         // Centra wrapper verticale
-        function updateCentralPosition() {
-            const nav = document.querySelector('nav');
-            const wrapper = document.getElementById('centralWrapper');
-            const menuTitle = document.getElementById('menuPageTitle');
+function updateCentralPosition() {
+    const nav       = document.querySelector('nav');
+    const menuTitle = document.getElementById('menuPageTitle');
+    const wrapper   = document.getElementById('centralWrapper');
+    if (!nav || !wrapper) return;
 
-            if (nav) {
-                const totalHeight = 2 * nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
-                const availableHeight = window.innerHeight - totalHeight;
-                wrapper.style.height = `${availableHeight}px`;
-                wrapper.style.paddingTop = `${availableHeight * 0.35}px`;
-                wrapper.style.visibility = 'visible';
-            }
-        }
-        /*-----------------------------------------*/
+    const navH    = nav.getBoundingClientRect().height;
+    const titleH  = menuTitle ? menuTitle.getBoundingClientRect().height : 0;
+    const totalOffset = (navH + titleH) * 1.0;
+    wrapper.style.paddingTop  = `${totalOffset}px`;
+    wrapper.style.visibility  = 'visible';
+}
+
         // ===== MAPPA =====
         const CENTRO = { lat: 44.15058, lon: 12.141665 };
         const map = L.map('map', { zoomControl: false }).setView([CENTRO.lat, CENTRO.lon], 13);
