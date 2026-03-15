@@ -133,9 +133,11 @@
     <!-- contenitore centrale -->
     <div class="central-wrapper" id="centralWrapper">
         <div class="central-container">
-            <p>Se vorrete essere dei nostri, Vi chiediamo gentilmente conferma entro il 30 aprile 2026 e sappiate che la Vostra presenza è il regalo più bello.</p>
+            <p>Se vorrete essere dei nostri, Vi chiediamo gentilmente conferma entro il 30 aprile 2026 e sappiate che la
+                Vostra presenza è il regalo più bello.</p>
             <p style="margin-bottom: 1.2vh;"></p>
-            <p style="margin-bottom: 1.2vh;">Tuttavia se desideraste farci un dono, un contributo per il nostro futuro e per aiutarci nei nostri progetti in Africa sarà profondamente apprezzato sia in busta che qui:</p>
+            <p style="margin-bottom: 1.2vh;">Tuttavia se desideraste farci un dono, un contributo per il nostro futuro e
+                per aiutarci nei nostri progetti in Africa sarà profondamente apprezzato sia in busta che qui:</p>
             <p style="margin-bottom: 1.2vh;">
                 <!--IBAN:<br>-->
                 <a href="#" onclick="copyIBAN(); return false;" style="color:white;"> <!--; text-decoration:underline-->
@@ -164,6 +166,7 @@
                 if (menuTitle) {
                     menuTitle.textContent = "Grazie";
                     menuTitle.style.color = "red";
+                    menuTitle.style.webkitTextStroke = "1px white";
                 }
 
                 // Configura menu mobile
@@ -183,21 +186,21 @@
                 });
 
                 // Centra il contenuto verticalmente e lo mostra
- function updateCentralPosition() {
-    const nav       = document.querySelector('nav');
-    const menuTitle = document.getElementById('menuPageTitle');
-    const wrapper   = document.getElementById('centralWrapper');
-    if (!nav || !wrapper) return;
+                function updateCentralPosition() {
+                    const nav = document.querySelector('nav');
+                    const menuTitle = document.getElementById('menuPageTitle');
+                    const wrapper = document.getElementById('centralWrapper');
+                    if (!nav || !wrapper) return;
 
-    const navH   = nav.getBoundingClientRect().height;
-    const titleH = menuTitle ? menuTitle.getBoundingClientRect().height : 0;
-    const offset = navH + titleH;
+                    const navH = nav.getBoundingClientRect().height;
+                    const titleH = menuTitle ? menuTitle.getBoundingClientRect().height : 0;
+                    const offset = navH + titleH;
 
-    wrapper.style.paddingTop  = `${offset}px`;
-    wrapper.style.marginTop   = '0';
-    wrapper.style.height      = '100vh';
-    wrapper.style.visibility  = 'visible';
-}
+                    wrapper.style.paddingTop = `${offset}px`;
+                    wrapper.style.marginTop = '0';
+                    wrapper.style.height = '100vh';
+                    wrapper.style.visibility = 'visible';
+                }
 
                 updateCentralPosition();
                 window.addEventListener('resize', updateCentralPosition);
