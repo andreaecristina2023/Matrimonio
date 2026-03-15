@@ -644,6 +644,7 @@
 
     <script>
         document.body.addEventListener('touchmove', function (e) {
+            if (e.touches.length > 1) return; // due dita → lascia passare
             if (!e.target.closest('#map')) {
                 e.preventDefault();
             }
