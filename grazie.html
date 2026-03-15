@@ -44,7 +44,21 @@
             visibility: hidden;
             width: 100%;
             height: 100vh;
-            /*overflow: hidden;*/
+            overflow: hidden;
+            /*
+            .central-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    visibility: hidden;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+            
+            */
             overflow: hidden;
         }
 
@@ -240,22 +254,21 @@
                                     wrapper.style.visibility = 'visible';
                                 }
                 */
-                function updateCentralPosition() {
-                    const nav = document.querySelector('nav');
-                    const menuTitle = document.getElementById('menuPageTitle');
-                    const wrapper = document.getElementById('centralWrapper');
-                    if (!nav || !wrapper) return;
+ function updateCentralPosition() {
+    const nav       = document.querySelector('nav');
+    const menuTitle = document.getElementById('menuPageTitle');
+    const wrapper   = document.getElementById('centralWrapper');
+    if (!nav || !wrapper) return;
 
-                    const navBottom = nav.getBoundingClientRect().bottom;
-                    const titleHeight = menuTitle ? menuTitle.getBoundingClientRect().height : 0;
-                    const titleMargin = menuTitle ? parseInt(getComputedStyle(menuTitle).marginTop) : 0;
-                    const offset = navBottom + titleMargin + titleHeight; /* +10px spazio sotto il titolo */
+    const navH   = nav.getBoundingClientRect().height;
+    const titleH = menuTitle ? menuTitle.getBoundingClientRect().height : 0;
+    const offset = navH + titleH;
 
-                    wrapper.style.paddingTop = '0';
-                    wrapper.style.marginTop = `${offset}px`;
-                    wrapper.style.height = `calc(100vh - ${offset}px)`;
-                    wrapper.style.visibility = 'visible';
-                }
+    wrapper.style.paddingTop  = `${offset}px`;
+    wrapper.style.marginTop   = '0';
+    wrapper.style.height      = '100vh';
+    wrapper.style.visibility  = 'visible';
+}
 
                 updateCentralPosition();
                 window.addEventListener('resize', updateCentralPosition);
