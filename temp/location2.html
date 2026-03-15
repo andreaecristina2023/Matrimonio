@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrea e Cristina 04.06.2026</title>
+<link rel="icon" type="image/png"
+      href="https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { font-family:'Kaushan Script', cursive; width:100%; height:100%; overflow-x:hidden; }
+
+/* ===== SFONDO ===== */
+body::before {
+    content:"";
+    position:fixed;
+    inset:0;
+    background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+                url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg') center/cover no-repeat;
+    z-index:-1;
+}
+
+.central-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* ===== MENU ===== */
+nav .menu a, .mobile-menu a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+}
+nav .menu a:hover:not(.active), .mobile-menu a:hover:not(.active) {
+    border-bottom: 2px solid #ff0000;
+    color: rgba(255,255,255,0.85);
+}
+nav .menu a.active, .mobile-menu a.active {
+    color: #ff0000;
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
+}
+nav .menu a.active:hover, .mobile-menu a.active:hover {
+    border-bottom: 2px solid #ff0000;
+    color: #ff0000;
+}
+
+/* ===== WRAPPER CENTRALE ===== */
+.central-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    visibility: hidden;
+    width: 100%;
+    padding-top: 5vh;
+    min-height: 100vh;
+}
+
+/* ===== SLIDER ===== */
+.slider-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.slider-container {
+    width: 92%;                  /* più largo su mobile */
+    max-width: 1000px;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    border-radius: 15px;
+    position: relative;
+    /* Garantisce che le frecce non escano fuori */
+    touch-action: pan-y;
+}
+
+/* Su schermi stretti usa proporzione più quadrata */
+@media (max-width: 600px) {
+    .slider-container {
+        width: 96%;
+        aspect-ratio: 4/3;
+        border-radius: 10px;
+    }
+}
+
+.slider {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s ease-in-out;
+    will-change: transform;     /* ottimizzazione GPU mobile */
+}
+
+.slide {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.slide img {
+    width: 100%;
+    flex: 1;
+    object-fit: cover;
+    display: block;
+    /* Evita il flash bianco su iOS durante lo swipe */
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+.caption {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to top right, rgba(0,0,0,1.0), rgba(255,255,255,0.6));
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    /* padding adattivo invece di fisso */
+    padding: clamp(8px, 3vw, 20px);
+    font-size: clamp(0.75rem, 2.5vw, 1rem);
+    /* altezza massima invece di fissa */
+    max-height: 25%;
+    min-height: 14%;
+}
+
+/* NAV BUTTONS */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    /* area tap minima 44px raccomandata da Apple/Google */
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 18px;
+    z-index: 10;
+    transition: all 0.3s ease;
+    /* Migliora la risposta touch */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+.nav-btn:hover, .nav-btn:active {
+    background: #ff0000;
+    transform: translateY(-50%) scale(1.1);
+}
+.prev { left: 8px; }
+.next { right: 8px; }
+
+/* Nascondi le frecce se si usa lo swipe (opzionale: togliere per tenerle sempre) */
+@media (hover: none) and (pointer: coarse) {
+    /* Su touch screen riduci opacità frecce — ci sarà lo swipe */
+    .nav-btn { opacity: 0.7; }
+}
+
+/* ===== DOTS ===== */
+.dots-container {
+    text-align: center;
+    margin-top: 12px;
+    width: 100%;
+    /* Padding per facilitare il tap */
+    padding: 6px 0;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+    /* area tap più ampia senza ingrandire visivamente */
+    padding: 4px;
+    background-clip: content-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dot.active {
+    background: red;
+    background-clip: content-box;
+}
+
+</style>
+</head>
+<body>
+
+<!-- MENU -->
+<div id="menu-placeholder"></div>
+
+<!-- CENTRAL WRAPPER -->
+<div class="central-wrapper" id="centralWrapper">
+    <div class="central-container">
+        <div id="slider-container-placeholder"></div>
+        <div class="dots-container" id="dots-container"></div>
+    </div>
+</div>
+
+<script>
+// ===== CARICA MENU =====
+fetch('menu.html')
+.then(resp => resp.text())
+.then(html => {
+    document.getElementById('menu-placeholder').innerHTML = html;
+    const menuTitle = document.getElementById('menuPageTitle');
+    if(menuTitle) menuTitle.textContent = "I nostri luoghi";
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(hamburger && mobileMenu){
+        hamburger.addEventListener('click', ()=> mobileMenu.style.display = mobileMenu.style.display==='flex'?'none':'flex');
+        mobileMenu.querySelectorAll('a').forEach(link=> link.addEventListener('click', ()=> mobileMenu.style.display='none'));
+        window.addEventListener('resize', ()=> { if(window.innerWidth>768) mobileMenu.style.display='none'; });
+    }
+
+    const currentPage = location.pathname.split("/").pop() || 'homepage.html';
+    document.querySelectorAll('nav .menu a, nav .mobile-menu a')
+        .forEach(link => { if(link.getAttribute('href') === currentPage) link.classList.add('active'); });
+
+    // ===== CENTRA WRAPPER — versione robusta =====
+    function updateCentralPosition(){
+        const nav = document.querySelector('nav');
+        const wrapper = document.getElementById('centralWrapper');
+        if(!nav || !wrapper) return;
+
+        // Usa ResizeObserver-safe offsetHeight
+        const navH = nav.getBoundingClientRect().height;
+        const available = window.innerHeight - navH;
+        wrapper.style.minHeight = `${available}px`;
+        wrapper.style.paddingTop = `${navH}px`;  /* spinge il contenuto sotto il nav */
+        wrapper.style.visibility = 'visible';
+    }
+
+    updateCentralPosition();
+    window.addEventListener('resize', updateCentralPosition);
+    // Gestisce il resize quando la tastiera virtuale appare/sparisce su mobile
+    if(window.visualViewport){
+        window.visualViewport.addEventListener('resize', updateCentralPosition);
+    }
+})
+.catch(err => console.warn('Errore caricamento menu:', err));
+
+
+// ===== CARICA SLIDER =====
+fetch('sliderlocation.html')
+.then(resp => resp.text())
+.then(html => {
+    const placeholder = document.getElementById('slider-container-placeholder');
+    placeholder.innerHTML = html;
+
+    // Preload immagini
+    placeholder.querySelectorAll('.slide img').forEach(img => {
+        const tmp = new Image();
+        tmp.src = img.src;
+    });
+
+    const sliderEl      = placeholder.querySelector('#slider');
+    const slides        = placeholder.querySelectorAll('.slide');
+    const dotsContainer = document.getElementById('dots-container');
+    const prevBtn       = placeholder.querySelector('.prev');
+    const nextBtn       = placeholder.querySelector('.next');
+    const container     = placeholder.querySelector('.slider-container');
+    let currentIndex    = 0;
+    let autoPlayTimer   = null;
+
+    // ===== DOTS =====
+    dotsContainer.innerHTML = '';
+    slides.forEach((_,i)=>{
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        if(i===0) dot.classList.add('active');
+        dot.addEventListener('click', ()=> goToSlide(i));
+        dotsContainer.appendChild(dot);
+    });
+    const dots = dotsContainer.querySelectorAll('.dot');
+
+    function updateSlider(){
+        sliderEl.style.transform = `translateX(-${currentIndex * 100}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        if(dots[currentIndex]) dots[currentIndex].classList.add('active');
+    }
+
+    function nextSlide(){ currentIndex = (currentIndex + 1) % slides.length; updateSlider(); }
+    function prevSlide(){ currentIndex = (currentIndex - 1 + slides.length) % slides.length; updateSlider(); }
+    function goToSlide(index){ currentIndex = index; updateSlider(); }
+
+    function startAutoPlay(){ autoPlayTimer = setInterval(nextSlide, 5000); }
+    function stopAutoPlay(){  clearInterval(autoPlayTimer); }
+
+    if(prevBtn && nextBtn){
+        nextBtn.addEventListener('click', ()=>{ stopAutoPlay(); nextSlide(); startAutoPlay(); });
+        prevBtn.addEventListener('click', ()=>{ stopAutoPlay(); prevSlide(); startAutoPlay(); });
+    }
+
+    // ===== TOUCH SWIPE =====
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isDragging  = false;
+
+    container.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isDragging  = true;
+        stopAutoPlay();
+    }, { passive: true });
+
+    container.addEventListener('touchend', e => {
+        if(!isDragging) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+
+        // Swipe orizzontale solo se il movimento X è prevalente
+        if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40){
+            dx < 0 ? nextSlide() : prevSlide();
+        }
+        isDragging = false;
+        startAutoPlay();
+    }, { passive: true });
+
+    // ===== AVVIA =====
+    updateSlider();
+    startAutoPlay();
+
+    // Pausa autoplay quando la tab non è visibile (risparmio batteria)
+    document.addEventListener('visibilitychange', () => {
+        document.hidden ? stopAutoPlay() : startAutoPlay();
+    });
+})
+.catch(err => console.warn('Errore caricamento slider:', err));
+</script>
+
+</body>
+</html>
