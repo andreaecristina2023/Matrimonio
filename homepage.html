@@ -161,6 +161,20 @@
                 });
 
                 // Centra il contenuto verticalmente e lo mostra
+function updateCentralPosition() {
+    const nav     = document.querySelector('nav');
+    const wrapper = document.getElementById('centralWrapper');
+    if (!nav || !wrapper) return;
+
+    const navH = nav.getBoundingClientRect().height;
+
+    wrapper.style.paddingTop = '0';
+    wrapper.style.marginTop  = `${navH}px`;
+    wrapper.style.height     = `calc(100vh - ${navH}px)`;
+    wrapper.style.visibility = 'visible';
+}
+
+                /*
                  function updateCentralPosition() {
     const nav       = document.querySelector('nav');
     const menuTitle = document.getElementById('menuPageTitle');
