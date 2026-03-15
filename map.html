@@ -67,6 +67,7 @@ padding-bottom: 5vh;
             overflow: hidden;
         }
 
+        /* Stato normale link desktop e mobile */
         nav .menu a,
         .mobile-menu a {
             color: rgba(255, 255, 255, 0.85);
@@ -75,15 +76,26 @@ padding-bottom: 5vh;
             transition: all 0.3s;
         }
 
+        /* Hover link non attivo */
         nav .menu a:hover:not(.active),
         .mobile-menu a:hover:not(.active) {
             border-bottom: 2px solid #ff0000;
+            color: rgba(255, 255, 255, 0.85);
         }
 
+        /* Link attivo */
         nav .menu a.active,
         .mobile-menu a.active {
             color: #ff0000;
             font-weight: bold;
+            border-bottom: 2px solid transparent;
+        }
+
+        /* Hover su link attivo */
+        nav .menu a.active:hover,
+        .mobile-menu a.active:hover {
+            border-bottom: 2px solid #ff0000;
+            color: #ff0000;
         }
 
         .marker-number div,
