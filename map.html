@@ -392,7 +392,10 @@
                 console.log("✅ Menu caricato");
 
                 const menuTitle = document.getElementById('menuPageTitle');
-                if (menuTitle) menuTitle.textContent = "Mappa dei consigli";
+                if (menuTitle) {
+                    menuTitle.textContent = "Mappa dei consigli";
+                    menuTitle.style.color = "red";
+                }
 
                 const hamburger = document.getElementById('hamburger');
                 const mobileMenu = document.getElementById('mobileMenu');
@@ -610,7 +613,7 @@
                         toggleBtn.classList.remove('legend-open');
                     }
                 });
-                
+
                 function updateLegend() {
                     if (window.innerWidth > 768) {
                         legendDiv.classList.add('legend-show');

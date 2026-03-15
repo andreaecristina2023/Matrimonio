@@ -132,10 +132,11 @@
     <!-- contenitore centrale -->
     <div class="central-wrapper" id="centralWrapper">
         <div class="central-container">
-            <p>La storia di <span style="color: red; font-weight: bold;">Scarpe Rosse - Zapatos Rojos</span> nasce dall’artista messicana Elina Chauvet.<br>
+            <p>La storia di <span style="color: red; font-weight: bold;">Scarpe Rosse - Zapatos Rojos</span> nasce
+                dall’artista messicana Elina Chauvet.<br>
                 Nel suo Paese, soprattutto nella città di Ciudad Juárez, per anni molte donne sono state vittime di
                 violenza e femminicidio.<br>
-                Anche la sorella dell’artista fu uccisa dal marito, un evento che segnò profondamente la sua vita.</p>            
+                Anche la sorella dell’artista fu uccisa dal marito, un evento che segnò profondamente la sua vita.</p>
             <p style="margin-bottom: 1.2vh;"></p>
             <p>
                 Nel 2009 Chauvet realizzò l’installazione Zapatos Rojos:<br>
@@ -154,7 +155,10 @@
                 document.getElementById('menu-placeholder').innerHTML = html;
 
                 const menuTitle = document.getElementById('menuPageTitle');
-                if (menuTitle) menuTitle.textContent = "Scarpe rosse"; //Titolo vuoto
+                if (menuTitle) {
+                    menuTitle.textContent = "Scarpe rosse";
+                    menuTitle.style.color = "red";
+                }
 
                 // Configura menu mobile
                 const hamburger = document.getElementById('hamburger');
