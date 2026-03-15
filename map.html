@@ -364,13 +364,19 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <script>
-        const _hgInterval = setInterval(() => {
-            const h = document.getElementById('hourglassIcon');
-            if (!h) { clearInterval(_hgInterval); return; }
+<script>
+    let _hgLast = 0;
+    function _animateHg(ts) {
+        const h = document.getElementById('hourglassIcon');
+        if (!h) return; // overlay rimosso, si ferma da solo
+        if (ts - _hgLast > 600) {
             h.textContent = h.textContent === '⏳' ? '⌛' : '⏳';
-        }, 600);
-    </script>
+            _hgLast = ts;
+        }
+        requestAnimationFrame(_animateHg);
+    }
+    requestAnimationFrame(_animateHg);
+</script>
 
     <script>
         console.log("🚀 Inizio script mappa");
