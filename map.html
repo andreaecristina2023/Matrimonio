@@ -604,6 +604,13 @@
                     toggleBtn.classList.toggle('legend-open');
                 });
 
+                document.addEventListener('click', (e) => {
+                    if (!container.contains(e.target)) {
+                        legendDiv.classList.remove('legend-show');
+                        toggleBtn.classList.remove('legend-open');
+                    }
+                });
+                
                 function updateLegend() {
                     if (window.innerWidth > 768) {
                         legendDiv.classList.add('legend-show');
