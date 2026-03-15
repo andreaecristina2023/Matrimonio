@@ -27,6 +27,17 @@ body::before {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    flex: 1;
+    min-height: 0; 
+}
+
+#slider-container-placeholder {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 /* ===== MENU ===== */
@@ -55,12 +66,13 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     text-align: center;
     visibility: hidden;
     width: 100%;
     padding-top: 5vh;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 }
 
 /* ===== SLIDER ===== */
@@ -72,13 +84,14 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
 }
 
 .slider-container {
-    width: 92%;                  /* più largo su mobile */
+    width: 92%;
     max-width: 1000px;
-    aspect-ratio: 16/9;
+    /*aspect-ratio: 16/9;*/
+    flex: 1;
+    min-height: 0;
     overflow: hidden;
     border-radius: 15px;
     position: relative;
-    /* Garantisce che le frecce non escano fuori */
     touch-action: pan-y;
 }
 
@@ -86,7 +99,7 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
 @media (max-width: 600px) {
     .slider-container {
         width: 96%;
-        aspect-ratio: 4/3;
+        /*aspect-ratio: 4/3;*/
         border-radius: 10px;
     }
 }
@@ -175,8 +188,9 @@ nav .menu a.active:hover, .mobile-menu a.active:hover {
 .dots-container {
     text-align: center;
     margin-top: 12px;
+    margin-bottom: 10px; 
     width: 100%;
-    /* Padding per facilitare il tap */
+    flex-shrink: 0;
     padding: 6px 0;
 }
 
@@ -245,10 +259,8 @@ function updateCentralPosition(){
 
     const navH    = nav.getBoundingClientRect().height;
     const titleH  = menuTitle ? menuTitle.getBoundingClientRect().height : 0;
-    const totalOffset = navH + 1.2*titleH;
+    const totalOffset = navH + titleH;
 
-    const available = window.innerHeight - totalOffset;
-    wrapper.style.minHeight  = `${available}px`;
     wrapper.style.paddingTop = `${totalOffset}px`;
     wrapper.style.visibility = 'visible';
 }
