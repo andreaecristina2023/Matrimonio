@@ -56,6 +56,9 @@
         font-size: 2em;
         color: #fff;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
     /* Menu mobile */
@@ -82,12 +85,13 @@
         transition: color 0.3s;
     }
 
-.mobile-menu a.active {
-    color: #ff0000;
-    font-weight: bold;
-    border-left: 3px solid #ff0000;
-    padding-left: 13px;   /* 16px originale - 3px bordo = stesso allineamento */
-}
+    .mobile-menu a.active {
+        color: #ff0000;
+        font-weight: bold;
+        border-left: 3px solid #ff0000;
+        padding-left: 13px;
+        /* 16px originale - 3px bordo = stesso allineamento */
+    }
 
     /* Responsive */
     @media (max-width: 768px) {
