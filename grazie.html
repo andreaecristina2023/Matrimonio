@@ -44,7 +44,9 @@
             visibility: hidden;
             width: 100%;
             height: 100vh;
-            overflow: hidden;
+            /*overflow: hidden;*/
+    overflow-y: auto;
+    overflow-x: hidden;
         }
 
         .central-container {
@@ -53,6 +55,7 @@
             align-items: center;
             width: 90%;
             max-width: 700px;
+    padding: 16px;
         }
 
         /* Font scalabile con clamp invece di em fissi */
@@ -64,7 +67,7 @@
 
         h2 {
             font-size: clamp(1rem, 3.5vw, 3em);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: white;
         }
 
@@ -124,7 +127,7 @@
 
 
         /* ===== RESPONSIVE ===== */
-        @media(max-width:768px) {
+/*        @media(max-width:768px) {
             h1 {
                 font-size: 2em;
             }
@@ -161,6 +164,8 @@
                 font-size: 0.9em;
             }
         }
+*/
+
     </style>
 </head>
 
@@ -227,7 +232,7 @@
                 });
 
                 // Centra il contenuto verticalmente e lo mostra
-                function updateCentralPosition() {
+/*                function updateCentralPosition() {
                     const nav = document.querySelector('nav');
                     const menuTitle = document.getElementById('menuPageTitle');
                     const wrapper = document.getElementById('centralWrapper');
@@ -240,6 +245,22 @@
                     wrapper.style.paddingTop = `${offset}px`;
                     wrapper.style.visibility = 'visible';
                 }
+*/
+function updateCentralPosition() {
+    const nav       = document.querySelector('nav');
+    const menuTitle = document.getElementById('menuPageTitle');
+    const wrapper   = document.getElementById('centralWrapper');
+    if (!nav || !wrapper) return;
+
+    // Aspetta che il titolo abbia un'altezza reale prima di calcolare
+    const navBottom   = nav.getBoundingClientRect().bottom;
+    const titleHeight = menuTitle ? menuTitle.getBoundingClientRect().height : 0;
+    const titleMargin = menuTitle ? parseInt(getComputedStyle(menuTitle).marginTop) : 0;
+    const offset = navBottom + titleMargin + titleHeight;
+
+    wrapper.style.paddingTop = `${offset}px`;
+    wrapper.style.visibility = 'visible';
+}
 
                 updateCentralPosition();
                 window.addEventListener('resize', updateCentralPosition);
