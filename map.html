@@ -380,7 +380,36 @@
 
                 const menuTitle = document.getElementById('menuPageTitle');
                 if (menuTitle) menuTitle.textContent = "Mappa dei consigli";
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+const hamburger  = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay    = document.getElementById('menuOverlay');
 
+function openMenu() {
+    mobileMenu.style.display = 'flex';
+    const menuH = mobileMenu.getBoundingClientRect().height;
+    overlay.style.height = `${menuH}px`;
+    overlay.classList.add('visible');
+}
+function closeMenu() {
+    mobileMenu.style.display = 'none';
+    overlay.classList.remove('visible');
+}
+
+if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () =>
+        mobileMenu.style.display === 'flex' ? closeMenu() : openMenu()
+    );
+    mobileMenu.querySelectorAll('a').forEach(link =>
+        link.addEventListener('click', closeMenu)
+    );
+    overlay.addEventListener('click', closeMenu);
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeMenu();
+    });
+}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+/*
                 const hamburger = document.getElementById('hamburger');
                 const mobileMenu = document.getElementById('mobileMenu');
                 if (hamburger && mobileMenu) {
@@ -388,7 +417,7 @@
                     mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.style.display = 'none'));
                     window.addEventListener('resize', () => { if (window.innerWidth > 768) mobileMenu.style.display = 'none'; });
                 }
-
+*/
                 const currentPage = location.pathname.split("/").pop() || 'homepage.html';
                 document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
                     if (link.getAttribute('href') === currentPage) link.classList.add('active');
