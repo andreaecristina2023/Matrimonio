@@ -156,7 +156,19 @@
 
                 const menuTitle = document.getElementById('menuPageTitle');
                 if (menuTitle) {
-                    menuTitle.textContent = "Scarpe rosse";
+                    //menuTitle.textContent = "Scarpe rosse";
+                    menuTitle.textContent = "";
+
+                    const img = document.createElement('img');
+                    img.src = "https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/zapatosrojos.png";
+                    img.style.height = "1.2em";
+                    img.style.verticalAlign = "middle";
+                    img.style.marginRight = "8px";
+
+                    menuTitle.appendChild(img);
+                    menuTitle.appendChild(document.createTextNode("Scarpe rosse"));
+
+                    
                     menuTitle.style.color = "red";
                     menuTitle.style.textShadow = "1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white";
                     menuTitle.style.fontWeight = "bold";
