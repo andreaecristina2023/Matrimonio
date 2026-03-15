@@ -42,17 +42,17 @@
             align-items: center;
             text-align: center;
             visibility: hidden;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
         }
 
         .central-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-    width: 90%;
-    padding: 0 16px;
+            width: 90%;
+            padding: 0 16px;
         }
 
         /* clamp(minimo, preferito, massimo) — cresce su mobile, non si rimpicciolisce */
@@ -202,16 +202,16 @@
                 // Centra il contenuto verticalmente e lo mostra
                 function updateCentralPosition() {
                     const nav = document.querySelector('nav');
-                    if (nav) {
-                        const totalHeight = nav.offsetHeight + (menuTitle ? menuTitle.offsetHeight : 0);
-                        const wrapper = document.getElementById('centralWrapper');
-                        const availableHeight = window.innerHeight - totalHeight;
+                    const menuTitle = document.getElementById('menuPageTitle');
+                    const wrapper = document.getElementById('centralWrapper');
+                    if (!nav || !wrapper) return;
 
-                        // sposta centro visivo leggermente verso il basso (45%)
-                        wrapper.style.height = `${availableHeight}px`;
-                        wrapper.style.paddingTop = `${availableHeight * 0.45}px`;
-                        wrapper.style.visibility = 'visible';
-                    }
+                    const offset = menuTitle
+                        ? menuTitle.getBoundingClientRect().bottom
+                        : nav.getBoundingClientRect().bottom;
+
+                    wrapper.style.paddingTop = `${offset}px`;
+                    wrapper.style.visibility = 'visible';
                 }
 
                 updateCentralPosition();
