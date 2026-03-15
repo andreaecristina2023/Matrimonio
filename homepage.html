@@ -187,7 +187,7 @@
 
                 // Evidenzia voce attiva (desktop + mobile)
                 const currentPage = location.pathname.split("/").pop() || 'homepage.html';
-                document.querySelectorAll('nav .menu a, nav .mobile-menu a').forEach(link => {
+                document.querySelectorAll('nav .menu a, .mobile-menu a').forEach(link => {
                     if (link.getAttribute('href') === currentPage) link.classList.add('active');
                 });
 

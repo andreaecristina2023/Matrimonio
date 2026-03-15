@@ -282,7 +282,7 @@
                 }
 
                 const currentPage = location.pathname.split("/").pop() || 'homepage.html';
-                document.querySelectorAll('nav .menu a, nav .mobile-menu a')
+                document.querySelectorAll('nav .menu a, .mobile-menu a')
                     .forEach(link => { if (link.getAttribute('href') === currentPage) link.classList.add('active'); });
 
                 // ===== CENTRA WRAPPER — versione robusta =====
