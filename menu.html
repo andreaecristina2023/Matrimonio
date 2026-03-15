@@ -10,7 +10,7 @@
         align-items: center;
         padding: 0 20px;
         height: 70px;
-        background-color: rgba(0, 0, 0, 0.7); 
+        background-color: rgba(0, 0, 0, 0.7);
         box-sizing: border-box;
         position: fixed;
         top: 0;
@@ -70,6 +70,7 @@
         overflow: hidden;
         border-radius: 0 0 12px 12px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        z-index: 1100;
     }
 
     .mobile-menu a {
@@ -119,20 +120,21 @@
             padding: 6px 12px;
         }
     }
-        /* Titolo pagina sotto il nav */
-#menuPageTitle {
-    position: fixed;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-family: 'Kaushan Script', cursive;
-    font-size: 2em;
-    color: #fff;
-    margin-top: 80px;
-    padding: 10px 0;
-    /*background-color: rgba(0, 0, 0, 0.35);                          /*                  RIMUOVERE                  */
-    z-index: 999;
-}
+
+    /* Titolo pagina sotto il nav */
+    #menuPageTitle {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-family: 'Kaushan Script', cursive;
+        font-size: 2em;
+        color: #fff;
+        margin-top: 80px;
+        padding: 10px 0;
+        /*background-color: rgba(0, 0, 0, 0.35);                          /*                  RIMUOVERE                  */
+        z-index: 999;
+    }
 
     /* Opzionale: adattamento mobile */
     @media (max-width: 768px) {
