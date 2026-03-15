@@ -21,7 +21,7 @@
             font-family: 'Kaushan Script', cursive;
             width: 100%;
             height: 100%;
-            overflow-x: hidden;
+            overflow: hidden;
         }
 
         /* ===== SFONDO ===== */
@@ -42,29 +42,36 @@
             align-items: center;
             text-align: center;
             visibility: hidden;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
         }
 
         .central-container {
             display: flex;
             flex-direction: column;
             align-items: center;
+    width: 90%;
+    padding: 0 16px;
         }
 
+        /* clamp(minimo, preferito, massimo) — cresce su mobile, non si rimpicciolisce */
         h1 {
-            font-size: 2.5em;
+            font-size: clamp(1.8rem, 6vw, 3.5em);
             margin-bottom: 10px;
             color: white;
         }
 
         h2 {
-            font-size: 3em;
+            font-size: clamp(1.5rem, 5vw, 3em);
             margin-bottom: 20px;
             color: white;
         }
 
         p {
-            font-size: 2.0em;
+            font-size: clamp(1.2rem, 4vw, 2em);
             color: white;
+            line-height: 1.6;
         }
 
         a.button {
