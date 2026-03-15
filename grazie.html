@@ -249,7 +249,7 @@
                     const navBottom = nav.getBoundingClientRect().bottom;
                     const titleHeight = menuTitle ? menuTitle.getBoundingClientRect().height : 0;
                     const titleMargin = menuTitle ? parseInt(getComputedStyle(menuTitle).marginTop) : 0;
-                    const offset = navBottom + titleMargin + titleHeight + 10; /* +10px spazio sotto il titolo */
+                    const offset = navBottom + titleMargin + titleHeight; /* +10px spazio sotto il titolo */
 
                     wrapper.style.paddingTop = '0';
                     wrapper.style.marginTop = `${offset}px`;
