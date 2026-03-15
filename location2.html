@@ -237,18 +237,21 @@ fetch('menu.html')
         .forEach(link => { if(link.getAttribute('href') === currentPage) link.classList.add('active'); });
 
     // ===== CENTRA WRAPPER — versione robusta =====
-    function updateCentralPosition(){
-        const nav = document.querySelector('nav');
-        const wrapper = document.getElementById('centralWrapper');
-        if(!nav || !wrapper) return;
+function updateCentralPosition(){
+    const nav       = document.querySelector('nav');
+    const menuTitle = document.getElementById('menuPageTitle');
+    const wrapper   = document.getElementById('centralWrapper');
+    if(!nav || !wrapper) return;
 
-        // Usa ResizeObserver-safe offsetHeight
-        const navH = nav.getBoundingClientRect().height;
-        const available = window.innerHeight - navH;
-        wrapper.style.minHeight = `${available}px`;
-        wrapper.style.paddingTop = `${navH}px`;  /* spinge il contenuto sotto il nav */
-        wrapper.style.visibility = 'visible';
-    }
+    const navH    = nav.getBoundingClientRect().height;
+    const titleH  = menuTitle ? menuTitle.getBoundingClientRect().height : 0;
+    const totalOffset = navH + titleH;
+
+    const available = window.innerHeight - totalOffset;
+    wrapper.style.minHeight  = `${available}px`;
+    wrapper.style.paddingTop = `${totalOffset}px`;
+    wrapper.style.visibility = 'visible';
+}
 
     updateCentralPosition();
     window.addEventListener('resize', updateCentralPosition);
