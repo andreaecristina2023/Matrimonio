@@ -150,27 +150,6 @@
             margin-top: 70px;
         }
     }
-
-    #menuOverlay {
-    display: none;
-    position: fixed;
-    top: 70px;
-    right: 0;
-    width: 200px;
-    height: 0;
-    z-index: 998;
-    border-radius: 0 0 0 12px;
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-    background:
-        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-        url('https://raw.githubusercontent.com/andreaecristina2023/Matrimonio/main/images/background.jpg')
-        center / cover no-repeat fixed;
-}
-#menuOverlay.visible { display: block; opacity: 1; }
-@media (max-width: 768px) { #menuOverlay { width: 160px; } }
-@media (max-width: 480px) { #menuOverlay { width: 140px; } }
 </style>
 
 <nav>
@@ -198,7 +177,5 @@
         <a href="grazie.html">Grazie</a>
     </div>
 </nav>
-
-<div id="menuOverlay"></div>
 
 <div class="page-title" id="menuPageTitle"></div>
